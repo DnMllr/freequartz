@@ -1,0 +1,421 @@
+/****************************************************************************
+**
+** Copyright (C) 2010 Smartmobili.
+** All rights reserved.
+** Contact: Smartmobili (contact@smartmobili.com)
+**	
+** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+**
+**
+** GNU Lesser General Public License Usage	
+** Alternatively, this file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements	
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+****************************************************************************/
+#include <CoreGraphics/CGImage.h>
+#include <CoreGraphics/CGColorSpace.h>
+
+#include "CGBasePriv.h"
+#include "CGImagePriv.h"
+#include "CGColorSpacePriv.h"
+
+
+
+/* CoreFoundation runtime class for CGPath.  */
+static CFRuntimeClass CGImageClass =  {
+    0,							/* version */
+    "CGImage",					/* Name of class.  */
+    0,							/* init */
+    0,							/* copy  */
+    CGImageDestroy,				/* finalize  */
+	0,							/* equal  */
+	0,							/* hash  */
+	0,							/* copyFormattingDesc */
+	0							/* copyDebugDesc */
+  };
+static CFTypeID __kCGImageID = _kCFRuntimeNotATypeID;
+
+CFTypeID CGImageGetTypeID(void)
+{	
+	return CGTypeRegisterWithCallbacks(&__kCGImageID, &CGImageClass );
+}
+
+void CGImageDestroy(CFTypeRef ctf)
+{
+	CGImageRef image = (CGImageRef) (ctf);
+	if (!image) { return ;}
+
+	CGColorSpaceRelease(image->space);
+	CGDataProviderRelease(image->provider);
+	//CGImageJPEGRepRelease(image->imageJPEGRep);
+	//CGImageEPSRepRelease(image->imageEPSRep);
+	CGPathRelease(image->path);
+	free(image->decode);
+	free(image->components);
+	free(image->components2);
+}
+
+Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo)
+{
+	CGColorSpaceDevice spaceType;
+
+	if (!space) { return FALSE; }
+
+	spaceType = CGColorSpaceGetType(space);
+	if (spaceType == 5)
+		return TRUE;
+
+	if (spaceType == 7) {
+		if ((bitmapInfo & kCGBitmapAlphaInfoMask) == kCGImageAlphaPremultipliedFirst) {
+			return TRUE;
+		}
+	}
+
+	// ALWAYS RETURN TRUE FOR NOW
+	return TRUE;
+}
+
+CGImageRef CGImageCreate(size_t width, size_t height,
+						 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
+						 CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
+						 const CGFloat decode[], bool shouldInterpolate,
+						 CGColorRenderingIntent intent)
+{
+	CGImageRef image;
+	size_t numComponents;
+	int nSize;
+	size_t i;
+
+	if (!width || !height) {
+		CGPostError("%s: invalid image size: %d x %d.", "CGImageCreate", width, height);
+		return NULL;
+	}
+
+	if (bitsPerComponent == 32) {
+		return NULL;
+	}
+	if (bitsPerPixel == 31) {
+		return NULL;
+	}
+
+	// Check colorspace
+	if (valid_image_colorspace(space, bitmapInfo)) {
+		//invalid image colorspace
+		return NULL;
+	}
+	numComponents = CGColorSpaceGetNumberOfComponents(space);
+	if ((bitmapInfo & kCGBitmapAlphaInfoMask) >= kCGImageAlphaOnly) {
+		return NULL;
+	}
+	
+	if ((bitsPerComponent * numComponents != bitsPerPixel) ||
+		(bytesPerRow != (width * bitsPerComponent * numComponents + 7)/8)) {
+			CGPostError("%s: invalid image bits/pixel or bytes/row", "CGImageCreate");
+			return NULL;
+	}
+
+	if (!provider) {
+		CGPostError("%s: invalid image provider: NULL.", "CGImageCreate");
+		return NULL;
+	}
+	
+	nSize = sizeof(struct CGImage) - sizeof(CFRuntimeBase);
+	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
+	if (!image) return NULL;
+	
+	image->nextID = 42/*CGTypeGetNextIdentifier()*/;
+	image->width = width;
+	image->height = height;
+	image->bitsPerComponent = bitsPerComponent;
+	image->bitsPerPixel = bitsPerPixel;
+	image->bytesPerRow = bytesPerRow;
+	image->space = CGColorSpaceRetain(space);
+	image->bitmapInfo = bitmapInfo;
+	image->provider = CGDataProviderRetain(provider);
+	image->intent = intent;
+	//image->flags = ?????????;
+
+	if (decode) {
+		image->decode = (CGFloat*)malloc(numComponents * 2 * sizeof(CGFloat));
+		for (i = 0; i <  numComponents * 2; i++) {
+			image->decode[i] = decode[i];
+		}
+	}
+
+	return image;
+}
+
+
+CGImageRef CGImageMaskCreate(size_t width, size_t height,
+							 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
+							 CGDataProviderRef provider, const CGFloat decode[], bool shouldInterpolate)
+{
+	CGImageRef image;
+	int nSize;
+
+	if (bitsPerComponent >= 8) {
+		return NULL;
+	}
+	if (bitsPerPixel < bitsPerComponent) {
+		return NULL;
+	}
+	if (bytesPerRow != (((width * bitsPerPixel) + 7)/8)) {
+		return NULL;
+	}
+	if (!provider) {
+		return NULL;
+	}
+
+	nSize = sizeof(struct CGImage) - sizeof(CFRuntimeBase);
+	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
+	if (!image) return NULL;
+
+	image->nextID = 42/*CGTypeGetNextIdentifier()*/;
+	image->width = width;
+	image->height = height;
+	image->bitsPerComponent = bitsPerComponent;
+	image->bitsPerPixel = bitsPerPixel;
+	image->bytesPerRow = bytesPerRow;
+	image->space = NULL;
+	image->bitmapInfo = 0;
+	image->provider = CGDataProviderRetain(provider);
+	image->intent = kCGRenderingIntentDefault;
+	//image->flags = ?????????;
+
+	if (decode) {
+		image->decode = (CGFloat*)malloc(2 * sizeof(CGFloat));
+		image->decode[0] = decode[0];
+		image->decode[1] = decode[1];
+	}
+
+	return image;
+}
+
+CGImageRef CGImageCreateCopy(CGImageRef image)
+{
+	CGImageRef imageCopy;
+	size_t numComponents;
+	int i;
+
+	if (!image)
+		return NULL;
+
+	if (CGImageIsMask(image) == TRUE) {
+
+		imageCopy = CGImageMaskCreate(image->width, image->height, 
+			image->bitsPerComponent, image->bitsPerPixel, 
+			image->bytesPerRow,
+			image->provider, 
+			image->decode,
+			(image->flags & kCGImageInterpolate));
+	}
+	else {
+
+		imageCopy = CGImageCreate(image->width, image->height,
+			image->bitsPerComponent,
+			image->bitsPerPixel,
+			image->bytesPerRow,
+			image->space,
+			image->bitmapInfo,
+			image->provider,
+			image->decode,
+			(image->flags & kCGImageInterpolate),
+			image->intent);
+		if (imageCopy == NULL) { return NULL; }
+
+		imageCopy->flags = image->flags;
+		imageCopy->refs = CGImageRetain(image->refs);
+
+		if (image->components != NULL) {
+
+			numComponents = CGColorSpaceGetNumberOfComponents(imageCopy->space);
+			imageCopy->components = (CGFloat*)malloc(numComponents*sizeof(float));
+			for (i = 0; i < numComponents; i++) {
+				imageCopy->components[i] = image->components[i];
+			}
+		}
+		
+		if (image->components2 != NULL) {
+			numComponents = CGColorSpaceGetNumberOfComponents(imageCopy->space);
+			imageCopy->components2 = (CGFloat*)malloc(numComponents*sizeof(float));
+			if (!imageCopy->components2) {
+				CGImageRelease(imageCopy);
+				return NULL;
+			}
+			for (i = 0; i < numComponents; i++) {
+				imageCopy->components2[i] = image->components2[i];
+			}
+		}
+		
+		//imageCopy->imageJPEGRep = CGImageJPEGRepRetain(image->imageJPEGRep);
+		//imageCopy->imageEPSRep  = CGImageEPSRepRetain(image->imageEPSRep);
+		imageCopy->path = CGPathRetain(image->path);
+	}
+
+	
+
+	return imageCopy;
+}
+
+CGImageRef CGImageCreateWithJPEGDataProvider(CGDataProviderRef source, 
+											 const CGFloat decode[], 
+											 bool shouldInterpolate,
+											 CGColorRenderingIntent intent)
+{
+	return NULL;
+}
+
+CGImageRef CGImageCreateWithPNGDataProvider(CGDataProviderRef source,
+											const CGFloat decode[],
+											bool shouldInterpolate,
+											CGColorRenderingIntent intent)
+{
+	return NULL;
+}
+
+CGImageRef CGImageCreateWithImageInRect(CGImageRef image, CGRect rect)
+{
+	if (!image || !image->imageEPSRep)
+		return NULL;
+
+	return NULL;
+}
+
+
+CGImageRef CGImageCreateWithMask(CGImageRef image, CGImageRef mask)
+{
+	return NULL;
+}
+
+CGImageRef CGImageCreateWithMaskingColors(CGImageRef image,const CGFloat components[])
+{
+	return NULL;
+}
+
+CGImageRef CGImageCreateCopyWithColorSpace(CGImageRef image,CGColorSpaceRef space)
+{
+	CGImageRef imageRef;
+
+	if (!image || !space)
+		return NULL;
+	
+	if ((image->flags & kCGImageMask))
+		return NULL;
+	
+	if (CGColorSpaceGetNumberOfComponents(image->space) != CGColorSpaceGetNumberOfComponents(space))  {
+		return NULL;
+	}
+	
+	if (valid_image_colorspace(space, image->bitmapInfo) == FALSE) {
+		return NULL;
+	}
+
+	if (image->space == space) {
+		imageRef = CGImageRetain(image);
+	}
+	else {
+		imageRef = CGImageCreateCopy(image);
+		if (imageRef) {
+			CGColorSpaceRelease(imageRef->space);
+			imageRef->space = CGColorSpaceRetain(space);
+		}	
+	}
+
+	return imageRef;
+}
+
+CGImageRef CGImageRetain(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return ((CGImageRef)CFRetain((CFTypeRef) image));
+}
+
+void CGImageRelease(CGImageRef image)
+{
+	if (!image) { return; }
+	CFRelease((CFTypeRef)image);
+}
+
+bool CGImageIsMask(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->flags & kCGImageMask);
+}
+
+size_t CGImageGetWidth(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->width);
+}
+
+size_t CGImageGetHeight(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->height);
+}
+
+size_t CGImageGetBitsPerComponent(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->bitsPerComponent);
+}
+
+
+
+size_t CGImageGetBitsPerPixel(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->bitsPerPixel);
+}
+
+size_t CGImageGetBytesPerRow(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->bytesPerRow);
+}
+
+CGColorSpaceRef CGImageGetColorSpace(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->space);
+}
+
+CGImageAlphaInfo CGImageGetAlphaInfo(CGImageRef image)
+{
+	if (!image) { return kCGImageAlphaNone; }
+	return ((CGImageAlphaInfo)(image->bitmapInfo & kCGBitmapAlphaInfoMask)); 
+}
+
+CGDataProviderRef CGImageGetDataProvider(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->provider); 
+}
+
+const CGFloat *CGImageGetDecode(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->decode);
+}
+
+bool CGImageGetShouldInterpolate(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->flags & kCGImageInterpolate);
+}
+
+CGColorRenderingIntent CGImageGetRenderingIntent(CGImageRef image)
+{
+	if (!image) { return kCGRenderingIntentDefault; }
+	return (image->intent);
+}
+
+CGBitmapInfo CGImageGetBitmapInfo(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return (image->bitmapInfo);
+}

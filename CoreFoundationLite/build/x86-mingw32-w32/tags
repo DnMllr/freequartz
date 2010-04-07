@@ -1,0 +1,1 @@
+main	C:\lal\openquartz\openquartz_20091227\openquartz\src\UIKit\examples\helloworld\build\x86-mingw32-w32\main.c	/^int main(int argc, char **argv)$/;"	function	line:3	signature:(int argc, char **argv)
