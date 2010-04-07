@@ -147,7 +147,10 @@ CGGStateRef	CGGStateCreateCopy(CGGStateRef stateSrc)
 	CGGStateStrokeCopy(stateCopy, stateSrc);
 	CGGStateTextCopy(stateCopy, stateSrc);
 
-	return NULL;
+	stateCopy->CTM = stateSrc->CTM;
+	stateCopy->fillColor = CGColorRetain(stateSrc->fillColor);
+
+	return stateCopy;
 }
 
 
