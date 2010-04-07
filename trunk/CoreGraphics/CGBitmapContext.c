@@ -94,7 +94,10 @@ Error:
 void 
 finalize_bitmap_context(CGContextRef context)
 {
+	if (!context || context->contextType != kCGContextBitmap)
+		return;
 
+	release_bitmap_info(context->bitmapContextInfo);
 }
 
 void
