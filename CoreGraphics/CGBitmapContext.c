@@ -91,6 +91,12 @@ Error:
 	return NULL;
 }
 
+void 
+finalize_bitmap_context(CGContextRef context)
+{
+
+}
+
 void
 release_bitmap_info(CGBitmapContextInfoRef bitmapInfo)
 {
@@ -203,8 +209,42 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 
 
 CGContextRef
-createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, size_t toto, const char* dic)
+createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef theDict, const void* key)
 {
+	CGContextRef context;
+	void* unknown;
+
+	context = CGContextCreate();
+	if (!context) {
+		CGPostError("%s: failed to create bitmap context.", theDict);
+		release_bitmap_info(bitmapContextInfo);
+		goto Error;
+	}
+
+	context->contextType = kCGContextBitmap;
+	context->bitmapContextInfo = bitmapContextInfo;
+	context->finalize = finalize_bitmap_context;
+
+	CGRenderingStateSetRenderingResolution(
+		context->rendering, 
+		context->bitmapContextInfo->horzRes,
+		context->bitmapContextInfo->vertRes);
+
+	context->ctxDelegate = __CGBitmapContextDelegateCreate(bitmapContextInfo, theDict);
+	if (!context->ctxDelegate) {
+		CGPostError("%s: failed to create delegate.", "createBitmapContext");
+		CGContextRelease(context);
+		goto Error;
+	}
+
+	unknown = (void*)CFDictionaryGetValue(theDict, key);
+	if (!unknown)
+		goto Error;
+
+	context = CGContextAddFilter(context, unknown, 0);
+
+	return context;
+Error:
 	return NULL;
 }
 
