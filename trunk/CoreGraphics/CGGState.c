@@ -227,6 +227,7 @@ CGGStateRef	CGGStateCreate()
 	if (!state) { return NULL; }
 
 	state->refcount = 1;
+	state->CTM = CGAffineTransformIdentity;
 
 	CGGStateClipReset(state);
 	CGGStateReset(state);
