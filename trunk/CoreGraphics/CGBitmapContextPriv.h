@@ -15,7 +15,7 @@ CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerCompone
 														   Boolean d,
 														   Boolean e,
 														   CGFloat vRes,
-														   CGFloat u);
+														   CFDictionaryRef theDict);
 
 CG_EXTERN CGContextRef CGBitmapContextCreateWithDictionary(void *data, 
 														   size_t width, size_t height, 
@@ -25,7 +25,7 @@ CG_EXTERN CGContextRef CGBitmapContextCreateWithDictionary(void *data,
 														   CGBitmapInfo bitmapInfo,
 														   CGFloat hRes, 
 														   CGFloat vRes, 
-														   CGFloat u);
+														   CFDictionaryRef theDict);
 
 
 

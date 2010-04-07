@@ -33,7 +33,7 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 						  Boolean d,
 						  Boolean e,
 						  CGFloat vRes,
-						  CGFloat u)
+						  CFDictionaryRef theDict)
 {
 	CGBitmapContextInfoRef bitmapContextInfo;
 	CGColorSpaceDevice csType;
@@ -187,17 +187,18 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 									size_t height, size_t bitsPerComponent,
 									size_t bytesPerRow,
 									CGColorSpaceRef colorspace, 
-									CGBitmapInfo bitmapInfo, CGFloat hRes, CGFloat vRes, CGFloat u)
+									CGBitmapInfo bitmapInfo, CGFloat hRes, CGFloat vRes, 
+									CFDictionaryRef theDict)
 {
 
 	CGContextRef context;
 	CGBitmapContextInfoRef bitmapCtxInfo;
 
 	bitmapCtxInfo = CGBitmapContextInfoCreate( bitsPerComponent, 
-		bytesPerRow, colorspace, bitmapInfo, hRes,0,0, 0,0,0, vRes, u);
+		bytesPerRow, colorspace, bitmapInfo, hRes,0,0, 0,0,0, vRes, theDict);
 	if (bitmapCtxInfo)
 	{
-		context = createBitmapContext(bitmapCtxInfo, height, "CGBitmapContextCreateWithDictionary");
+		context = createBitmapContext(bitmapCtxInfo, theDict, "CGBitmapContextCreateWithDictionary");
 	}
 	else
 	{
