@@ -1,0 +1,62 @@
+#ifndef CGBITMAPCONTEXTPRIV_H_
+#define CGBITMAPCONTEXTPRIV_H_
+
+#include "CGBasePriv.h"
+#include "CGContextPriv.h"
+
+CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerComponent,
+														   size_t bytesPerRow,
+														   CGColorSpaceRef colorspace, 
+														   CGBitmapInfo bitmapInfo, 
+														   CGFloat hRes,
+														   Boolean a,
+														   Boolean b,
+														   Boolean c,
+														   Boolean d,
+														   Boolean e,
+														   CGFloat vRes,
+														   CGFloat u);
+
+CG_EXTERN CGContextRef CGBitmapContextCreateWithDictionary(void *data, 
+														   size_t width, size_t height, 
+														   size_t bitsPerComponent, 
+														   size_t bytesPerRow,
+														   CGColorSpaceRef colorspace, 
+														   CGBitmapInfo bitmapInfo,
+														   CGFloat hRes, 
+														   CGFloat vRes, 
+														   CGFloat u);
+
+
+
+CG_EXTERN void * 
+CGBitmapAllocateData(size_t len);
+
+CG_EXTERN void
+CGBitmapFreeData(void *data);
+
+CGContextRef
+createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, 
+					size_t toto, const char* dic);
+
+void
+release_bitmap_info(CGBitmapContextInfoRef bitmapInfo);
+
+bool
+validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+
+bool
+validate_rgb_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+
+bool
+validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+
+bool
+validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+
+
+
+
+#endif /* CGBITMAPCONTEXTPRIV_H_ */
+
+

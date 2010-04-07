@@ -1,0 +1,2 @@
+compat4ce will be moved into a more general compat4msvc project
+that will handle win32 and wince.
