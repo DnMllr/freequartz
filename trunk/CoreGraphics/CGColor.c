@@ -116,7 +116,7 @@ bool CGColorEqualToColor(CGColorRef color1, CGColorRef color2)
 		 CGColorSpaceEqualToColorSpace(color1->colorSpace, color2->colorSpace))
 		 return TRUE;
 	
-	return FALSE
+	return FALSE;
 }
 
 

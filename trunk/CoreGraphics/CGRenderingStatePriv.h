@@ -33,7 +33,8 @@ CF_EXTERN_C_BEGIN
 typedef struct CGRenderingState {
 	signed long refcount;		//0x00
 
-	CGSize resolution;			//0x04
+	CGFloat hRes;				//0x04
+	CGFloat vRes;				//0x04
 	CGAffineTransform baseCTM;	//0x0C
 	int	 minInterpolQuality;	//0x24
 	int	 maxInterpolQuality;	//0x28 
@@ -52,7 +53,7 @@ CG_EXTERN CGRenderingStateRef		CGRenderingStateCreate();
 CG_EXTERN CGRenderingStateRef		CGRenderingStateCreateCopy(CGRenderingStateRef rendering);
 CG_EXTERN void						CGRenderingStateReset(CGRenderingStateRef rendering);
 CG_EXTERN void						CGRenderingStateRelease(CGRenderingStateRef rendering);
-
+CG_EXTERN void						CGRenderingStateSetRenderingResolution(CGRenderingStateRef rendering, CGFloat hRes, CGFloat vRes);
 
 CF_EXTERN_C_END
 

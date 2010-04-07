@@ -37,22 +37,19 @@ CGBitmapFreeData(void *data);
 
 CGContextRef
 createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, 
-					size_t toto, const char* dic);
+					CFDictionaryRef theDict, const void* dic);
 
-void
-release_bitmap_info(CGBitmapContextInfoRef bitmapInfo);
+void finalize_bitmap_context(CGContextRef context);
 
-bool
-validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+void release_bitmap_info(CGBitmapContextInfoRef bitmapInfo);
 
-bool
-validate_rgb_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+bool validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
 
-bool
-validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+bool validate_rgb_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
 
-bool
-validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+bool validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
+
+bool validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
 
 
 

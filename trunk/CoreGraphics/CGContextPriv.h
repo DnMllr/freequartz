@@ -87,7 +87,7 @@ typedef enum {
 	kCGContextDisplayList = 6
 	
 
-} KCGContextType;
+} CGContextType;
 
 
 typedef struct CGBitmapContextInfo {
@@ -120,7 +120,7 @@ typedef struct CGContext {
 	CFRuntimeBase obj;								//0x00
 
 	size_t magic;									//0x08
-	KCGContextType contextType;						//0x0C
+	CGContextType contextType;						//0x0C
 	CGBitmapContextInfoRef bitmapContextInfo;		//0x10
 	void* finalize;									//0x14
 	CGGStackRef stack;								//0x2C
@@ -147,6 +147,7 @@ CG_EXTERN CGContextRef CGContextCreateWithDelegate(CGContextDelegateRef ctxDeleg
 CG_EXTERN void CGContextSetDelegate(CGContextRef c, 
 									CGContextDelegateRef ctxDelegate);
 
+CG_EXTERN CGContextRef CGContextAddFilter(CGContextRef c, void* unknown1, void* unknown2);
 
 CG_EXTERN void		CGContextDestroy(CFTypeRef c);
 CG_EXTERN void		CGContextResetState(CGContextRef c);

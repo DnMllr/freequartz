@@ -144,6 +144,28 @@ CGContextRef CGContextCreateWithDelegate(CGContextDelegateRef ctxDelegate,
 	return NULL;
 }
 
+CGContextRef CGContextAddFilter(CGContextRef c, void* unknown1, void* unknown2)
+{
+	//CGContextDelegateRef delegate;
+
+	if (!c) {
+		CGPostError("%s: invalid context", "CGContextAddFilter");
+		goto Error;
+	}
+
+	/*
+	if (c->ctxDelegate) {
+		delegate = CGContextFilterContextDelegate(c->ctxDelegate);
+		CGContextSetDelegate(c, delegate);
+		CGContextDelegateRelease(delegate);
+	}
+	*/
+
+	return c;
+Error:
+	return NULL;
+}
+
 void CGContextSetDelegate(CGContextRef c, CGContextDelegateRef ctxDelegate)
 {
 	if (!c) { return; }

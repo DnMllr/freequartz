@@ -65,7 +65,10 @@ void CGRenderingStateReset(CGRenderingStateRef rendering)
 	rendering->allowFontSubQuant = true;		
 }
 
-void CGRenderingStateSetRenderingResolution(CGSize resolution)
+void 
+CGRenderingStateSetRenderingResolution(CGRenderingStateRef rendering, CGFloat hRes, CGFloat vRes)
 {
-
+	rendering->hRes = hRes;
+	rendering->vRes = vRes;
 }
+
