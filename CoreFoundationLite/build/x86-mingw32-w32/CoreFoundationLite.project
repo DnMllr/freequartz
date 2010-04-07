@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="CoreFoundationLite" InternalType="Library">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="..\..\CFApplicationPreferences.c"/>
+    <File Name="..\..\CFArray.c"/>
+    <File Name="..\..\CFBag.c"/>
+    <File Name="..\..\CFBase.c"/>
+    <File Name="..\..\CFBinaryHeap.c"/>
+    <File Name="..\..\CFBinaryPList.c"/>
+    <File Name="..\..\CFBitVector.c"/>
+    <File Name="..\..\CFBuiltinConverters.c"/>
+    <File Name="..\..\CFBundle.c"/>
+    <File Name="..\..\CFBundle_Resources.c"/>
+    <File Name="..\..\CFCalendar.c"/>
+    <File Name="..\..\CFCharacterSet.c"/>
+    <File Name="..\..\CFConcreteStreams.c"/>
+    <File Name="..\..\CFData.c"/>
+    <File Name="..\..\CFDate.c"/>
+    <File Name="..\..\CFDateFormatter.c"/>
+    <File Name="..\..\CFDictionary.c"/>
+    <File Name="..\..\CFError.c"/>
+    <File Name="..\..\CFFileDescriptor.c"/>
+    <File Name="..\..\CFFileUtilities.c"/>
+    <File Name="..\..\CFLocale.c"/>
+    <File Name="..\..\CFLocaleIdentifier.c"/>
+    <File Name="..\..\CFMachPort.c"/>
+    <File Name="..\..\CFMessagePort.c"/>
+    <File Name="..\..\CFNotificationCenter.c"/>
+    <File Name="..\..\CFNumber.c"/>
+    <File Name="..\..\CFNumberFormatter.c"/>
+    <File Name="..\..\CFPlatform.c"/>
+    <File Name="..\..\CFPlugIn.c"/>
+    <File Name="..\..\CFPlugIn_Factory.c"/>
+    <File Name="..\..\CFPlugIn_Instance.c"/>
+    <File Name="..\..\CFPlugIn_PlugIn.c"/>
+    <File Name="..\..\CFPreferences.c"/>
+    <File Name="..\..\CFPropertyList.c"/>
+    <File Name="..\..\CFRunLoop.c"/>
+    <File Name="..\..\CFRuntime.c"/>
+    <File Name="..\..\CFSet.c"/>
+    <File Name="..\..\CFSocket.c"/>
+    <File Name="..\..\CFSocketStream.c"/>
+    <File Name="..\..\CFSortFunctions.c"/>
+    <File Name="..\..\CFStorage.c"/>
+    <File Name="..\..\CFStream.c"/>
+    <File Name="..\..\CFString.c"/>
+    <File Name="..\..\CFStringEncodingConverter.c"/>
+    <File Name="..\..\CFStringEncodings.c"/>
+    <File Name="..\..\CFStringScanner.c"/>
+    <File Name="..\..\CFStringUtilities.c"/>
+    <File Name="..\..\CFSystemDirectories.c"/>
+    <File Name="..\..\CFTimeZone.c"/>
+    <File Name="..\..\CFTree.c"/>
+    <File Name="..\..\CFUniChar.c"/>
+    <File Name="..\..\CFUnicodeDecomposition.c"/>
+    <File Name="..\..\CFUnicodePrecomposition.c"/>
+    <File Name="..\..\CFURL.c"/>
+    <File Name="..\..\CFURLAccess.c"/>
+    <File Name="..\..\CFUserNotification.c"/>
+    <File Name="..\..\CFUtilities.c"/>
+    <File Name="..\..\CFUUID.c"/>
+    <File Name="..\..\CFVersion.c"/>
+    <File Name="..\..\CFWindowsMessageQueue.c"/>
+    <File Name="..\..\CFXMLInputStream.c"/>
+    <File Name="..\..\CFXMLNode.c"/>
+    <File Name="..\..\CFXMLParser.c"/>
+    <File Name="..\..\CFXMLPreferencesDomain.c"/>
+    <File Name="..\..\CFXMLTree.c"/>
+    <VirtualDirectory Name="compat">
+      <File Name="..\..\compat\dirent.c"/>
+      <File Name="..\..\compat\dirent.h"/>
+      <File Name="..\..\compat\flsl.c"/>
+      <File Name="..\..\compat\gettimeofday.c"/>
+      <File Name="..\..\compat\strlcat.c"/>
+      <File Name="..\..\compat\strlcpy.c"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="..\..\auto_stubs.h"/>
+    <File Name="..\..\CFArray.h"/>
+    <File Name="..\..\CFBag.h"/>
+    <File Name="..\..\CFBase.h"/>
+    <File Name="..\..\CFBinaryHeap.h"/>
+    <File Name="..\..\CFBitVector.h"/>
+    <File Name="..\..\CFBundle.h"/>
+    <File Name="..\..\CFBundle_BinaryTypes.h"/>
+    <File Name="..\..\CFBundle_Internal.h"/>
+    <File Name="..\..\CFBundlePriv.h"/>
+    <File Name="..\..\CFByteOrder.h"/>
+    <File Name="..\..\CFCalendar.h"/>
+    <File Name="..\..\CFCharacterSet.h"/>
+    <File Name="..\..\CFCharacterSetPriv.h"/>
+    <File Name="..\..\CFData.h"/>
+    <File Name="..\..\CFDate.h"/>
+    <File Name="..\..\CFDateFormatter.h"/>
+    <File Name="..\..\CFDictionary.h"/>
+    <File Name="..\..\CFError.h"/>
+    <File Name="..\..\CFError_Private.h"/>
+    <File Name="..\..\CFFileDescriptor.h"/>
+    <File Name="..\..\CFInternal.h"/>
+    <File Name="..\..\CFLocale.h"/>
+    <File Name="..\..\CFLogUtilities.h"/>
+    <File Name="..\..\CFMachPort.h"/>
+    <File Name="..\..\CFMessagePort.h"/>
+    <File Name="..\..\CFNotificationCenter.h"/>
+    <File Name="..\..\CFNumber.h"/>
+    <File Name="..\..\CFNumberFormatter.h"/>
+    <File Name="..\..\CFPlugIn.h"/>
+    <File Name="..\..\CFPlugIn_Factory.h"/>
+    <File Name="..\..\CFPlugInCOM.h"/>
+    <File Name="..\..\CFPreferences.h"/>
+    <File Name="..\..\CFPriv.h"/>
+    <File Name="..\..\CFPropertyList.h"/>
+    <File Name="..\..\CFRunLoop.h"/>
+    <File Name="..\..\CFRunLoopPriv.h"/>
+    <File Name="..\..\CFRuntime.h"/>
+    <File Name="..\..\CFSet.h"/>
+    <File Name="..\..\CFSocket.h"/>
+    <File Name="..\..\CFStorage.h"/>
+    <File Name="..\..\CFStream.h"/>
+    <File Name="..\..\CFStreamAbstract.h"/>
+    <File Name="..\..\CFStreamInternal.h"/>
+    <File Name="..\..\CFStreamPriv.h"/>
+    <File Name="..\..\CFString.h"/>
+    <File Name="..\..\CFStringDefaultEncoding.h"/>
+    <File Name="..\..\CFStringEncodingConverter.h"/>
+    <File Name="..\..\CFStringEncodingConverterExt.h"/>
+    <File Name="..\..\CFStringEncodingConverterPriv.h"/>
+    <File Name="..\..\CFStringEncodingExt.h"/>
+    <File Name="..\..\CFTimeZone.h"/>
+    <File Name="..\..\CFTree.h"/>
+    <File Name="..\..\CFUniChar.h"/>
+    <File Name="..\..\CFUniCharPriv.h"/>
+    <File Name="..\..\CFUnicodeDecomposition.h"/>
+    <File Name="..\..\CFUnicodePrecomposition.h"/>
+    <File Name="..\..\CFURL.h"/>
+    <File Name="..\..\CFURLAccess.h"/>
+    <File Name="..\..\CFUserNotification.h"/>
+    <File Name="..\..\CFUUID.h"/>
+    <File Name="..\..\CFWindowsMessageQueue.h"/>
+    <File Name="..\..\CFXMLInputStream.h"/>
+    <File Name="..\..\CFXMLNode.h"/>
+    <File Name="..\..\CFXMLParser.h"/>
+    <File Name="..\..\CoreFoundation.h"/>
+    <File Name="..\..\ForFoundationOnly.h"/>
+  </VirtualDirectory>
+  <Dependencies Name="Release"/>
+  <Settings Type="Dynamic Library">
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" Required="yes" PreCompiledHeader="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../dist/include"/>
+        <IncludePath Value="../../include"/>
+        <IncludePath Value="../../icu"/>
+        <Preprocessor Value="CFLITELIB_EXPORTS"/>
+        <Preprocessor Value="DEPLOYMENT_TARGET_WINDOWS"/>
+        <Preprocessor Value="WIN32_LEAN_AND_MEAN"/>
+        <Preprocessor Value="__STDC_LIMIT_MACROS"/>
+        <Preprocessor Value="CF_BUILDING_CF"/>
+        <Preprocessor Value="_WIN32_WINNT=0x0500"/>
+        <Preprocessor Value="WINVER=0x0500"/>
+        <Preprocessor Value="_UNICODE"/>
+        <Preprocessor Value="UNICODE"/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="../../icu/lib/x86-mingw32-w32"/>
+        <Library Value="netapi32.a"/>
+        <Library Value="ole32.a"/>
+        <Library Value="ws2_32.a"/>
+        <Library Value="kernel32.a"/>
+        <Library Value="icuuc.a"/>
+        <Library Value="icuin.a"/>
+        <Library Value="rpcrt4.a"/>
+        <Library Value="msvcrt.a"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/CoreFoundation.dll" IntermediateDirectory="./Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands></PostConnectCommands>
+        <StartupCommands></StartupCommands>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="no">mkdir "..\..\dist\bin"</Command>
+        <Command Enabled="no">mkdir "..\..\dist\lib"</Command>
+        <Command Enabled="no">mkdir "..\..\dist\include\CoreFoundation"</Command>
+        <Command Enabled="no">copy "..\..\*.h" "..\..\dist\include\CoreFoundation\"</Command>
+        <Command Enabled="no">mkdir "..\..\dist\include\CoreFoundation\GNUCompatibility\"</Command>
+        <Command Enabled="no">copy "..\..\include\c99\*.h" "..\..\dist\include\"</Command>
+        <Command Enabled="no">copy "..\..\include\*.h" "..\..\dist\include\"</Command>
+      </PreBuild>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand></CleanCommand>
+        <BuildCommand></BuildCommand>
+        <PreprocessFileCommand></PreprocessFileCommand>
+        <SingleFileCommand></SingleFileCommand>
+        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory></WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild></CustomPostBuild>
+        <CustomPreBuild>
+
+</CustomPreBuild>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" Required="yes" PreCompiledHeader="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes">
+        <LibraryPath Value="../../icu/lib/x86-mingw32-w32"/>
+        <Library Value="netapi32.a"/>
+        <Library Value="ole32.a"/>
+        <Library Value="ws2_32.a"/>
+        <Library Value="kernel32.a"/>
+        <Library Value="icuuc.a"/>
+        <Library Value="icuin.a"/>
+        <Library Value="rpcrt4.a"/>
+        <Library Value="msvcrt.a"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).dll" IntermediateDirectory="./Release" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands></PostConnectCommands>
+        <StartupCommands></StartupCommands>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand></CleanCommand>
+        <BuildCommand></BuildCommand>
+        <PreprocessFileCommand></PreprocessFileCommand>
+        <SingleFileCommand></SingleFileCommand>
+        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory></WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild></CustomPostBuild>
+        <CustomPreBuild></CustomPreBuild>
+      </AdditionalRules>
+    </Configuration>
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+  </Settings>
+  <Dependencies Name="Debug"/>
+</CodeLite_Project>
