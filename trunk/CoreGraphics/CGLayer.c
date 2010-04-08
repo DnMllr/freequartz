@@ -17,6 +17,7 @@
 **
 ****************************************************************************/
 #include <CoreGraphics/CGContext.h>
+#include <pthread.h>
 
 #include "CGBasePriv.h"
 #include "CGContextPriv.h"
@@ -44,6 +45,11 @@ CFTypeID __kCGLayerID = _kCFRuntimeNotATypeID;
 CONST_STRING_DECL(kCGLayerWillDeallocate,   "kCGLayerWillDeallocate");
 #endif
 
+static pthread_once_t layer_once = PTHREAD_ONCE_INIT;
+static CGNotificationCenterRef layerNotificationCenter = NULL;
+
+
+
 CFTypeID CGLayerGetTypeID(void)
 {
 	return CGTypeRegisterWithCallbacks(&__kCGLayerID, &CGLayerClass);
@@ -59,9 +65,26 @@ void layerFinalize(CFTypeRef layer)
 	CGContextRelease(((CGLayerRef)layer)->ctx);
 }
 
+
+static void
+layerCreateNotificationCenter(void)
+{
+	layerNotificationCenter = CGNotificationCenterCreate();
+}
+
 CGNotificationCenterRef CGLayerNotificationCenter(CGLayerRef layer)
 {
-	return NULL;
+	CGNotificationCenterRef notifCenter;
+
+	if (layerNotificationCenter == NULL) {
+		notifCenter = layerNotificationCenter;
+		pthread_once(&layer_once, layerCreateNotificationCenter);
+	}
+	else {
+		notifCenter = layerNotificationCenter;
+	}
+
+	return notifCenter;
 }
 
 
