@@ -109,6 +109,9 @@
 #include <CoreFoundation/CFXMLNode.h>
 #include <CoreFoundation/CFXMLParser.h>
 
+#ifdef WIN32
+#include <CoreFoundation/CFWindowsMessageQueue.h>
+#endif
 
 #endif /* ! __COREFOUNDATION_COREFOUNDATION__ */
 

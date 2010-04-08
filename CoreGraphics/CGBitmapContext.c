@@ -190,7 +190,8 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 									size_t height, size_t bitsPerComponent,
 									size_t bytesPerRow,
 									CGColorSpaceRef colorspace, 
-									CGBitmapInfo bitmapInfo, CGFloat hRes, CGFloat vRes, 
+									CGBitmapInfo bitmapInfo, 
+									CGFloat hRes, CGFloat vRes, 
 									CFDictionaryRef theDict)
 {
 
