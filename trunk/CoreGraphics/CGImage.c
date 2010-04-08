@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -58,6 +58,26 @@ void CGImageDestroy(CFTypeRef ctf)
 	free(image->components);
 	free(image->components2);
 }
+
+CGImageRef CGImageJPEGRepRetain(CGImageRef image)
+{
+	// SEEMS CGImageJPEGRepRetain are not really CGImageRef because
+	// it uses refcount ...
+	if (!image) { return NULL; }
+	//image->refcount++;
+	return image;
+}
+
+CGImageRef CGImageEPSRepRetain(CGImageRef image)
+{
+	// SEEMS CGImageEPSRepRetain are not really CGImageRef because
+	// it uses refcount ...
+	if (!image) { return NULL; }
+	//image->refcount++;
+	return image;
+}
+
+
 
 Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo)
 {
@@ -251,8 +271,8 @@ CGImageRef CGImageCreateCopy(CGImageRef image)
 			}
 		}
 		
-		//imageCopy->imageJPEGRep = CGImageJPEGRepRetain(image->imageJPEGRep);
-		//imageCopy->imageEPSRep  = CGImageEPSRepRetain(image->imageEPSRep);
+		imageCopy->imageJPEGRep = CGImageJPEGRepRetain(image->imageJPEGRep);
+		imageCopy->imageEPSRep  = CGImageEPSRepRetain(image->imageEPSRep);
 		imageCopy->path = CGPathRetain(image->path);
 	}
 

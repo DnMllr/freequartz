@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -60,8 +60,8 @@ typedef struct CGImage CGImage, *CGImageRef;
 
 void	CGImageDestroy(CFTypeRef ctf);
 Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo);
-//CGImageJPEGRepRetain
-
+CGImageRef CGImageJPEGRepRetain(CGImageRef image);
+CGImageRef CGImageEPSRepRetain(CGImageRef image);
 
 CF_EXTERN_C_END
 

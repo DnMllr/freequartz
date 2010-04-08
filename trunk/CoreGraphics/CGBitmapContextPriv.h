@@ -35,7 +35,11 @@ CGBitmapAllocateData(size_t len);
 CG_EXTERN void
 CGBitmapFreeData(void *data);
 
-CGContextRef
+CG_EXTERN size_t
+CGBitmapGetAlignedBytesPerRow(size_t len);
+
+
+CG_EXTERN CGContextRef
 createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, 
 					CFDictionaryRef theDict, const void* dic);
 

@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -52,6 +52,11 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 	bitmapContextInfo->bitmapInfo = bitmapInfo;
 	bitmapContextInfo->unknown_34 = FALSE;
 	
+	//bitmapContextInfo->bytesPerRow = CGBitmapGetAlignedBytesPerRow();
+	
+
+
+
 	csType = CGColorSpaceGetType(bitmapContextInfo->colorspace);
 	switch(csType)
 	{

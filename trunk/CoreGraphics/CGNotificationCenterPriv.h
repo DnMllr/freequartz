@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -39,6 +39,11 @@ typedef struct CGNotificationCenter {
 CG_EXTERN CFTypeID CGNotificationCenterGetTypeID(void);
 
 CG_EXTERN CGNotificationCenterRef CGNotificationCenterCreate();
+
+CG_EXTERN void CGNotificationCenterPostNotification(CGNotificationCenterRef notifCenter, 
+													CFStringRef ref, 
+													CFTypeRef cftype,
+													void* unknown);
 
 void center_finalize(CFTypeRef cf);
 
