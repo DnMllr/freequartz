@@ -23,13 +23,7 @@
 #include "CGContextDelegatePriv.h"
 #include "CGGStatePriv.h"
 
-#if 0
-CONST_STRING_DECL(kCGContextErase,              "kCGContextErase");
-CONST_STRING_DECL(kCGContextClear,              "kCGContextClear");
-CONST_STRING_DECL(kCGContextWait,               "kCGContextWait");
-CONST_STRING_DECL(kCGContextSynchronize,        "kCGContextSynchronize");
-CONST_STRING_DECL(kCGContextFlush,              "kCGContextFlush");
-#endif
+
 
 static CFRuntimeClass CGContextDelegateClass = 
   {

@@ -29,6 +29,13 @@
 
 CF_EXTERN_C_BEGIN
 
+CG_EXTERN const CFStringRef kCGContextFilterInfo;
+CG_EXTERN const CFStringRef kCGContextErase;	   
+CG_EXTERN const CFStringRef kCGContextClear; 
+CG_EXTERN const CFStringRef kCGContextWait;		   
+CG_EXTERN const CFStringRef kCGContextSynchronize;
+CG_EXTERN const CFStringRef kCGContextFlush;
+
 #if 0
 typedef struct _ContextEGL {
 	EGLDisplay eglDisplay;

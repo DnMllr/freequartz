@@ -68,6 +68,16 @@ static CFRuntimeClass CGContextClass =
 CFTypeID __kCGContextID = _kCFRuntimeNotATypeID;
 
 
+//#if 0
+CONST_STRING_DECL(kCGContextFilterInfo,         "kCGContextFilterInfo");
+CONST_STRING_DECL(kCGContextErase,              "kCGContextErase");
+CONST_STRING_DECL(kCGContextClear,              "kCGContextClear");
+CONST_STRING_DECL(kCGContextWait,               "kCGContextWait");
+CONST_STRING_DECL(kCGContextSynchronize,        "kCGContextSynchronize");
+CONST_STRING_DECL(kCGContextFlush,              "kCGContextFlush");
+//#endif
+
+
 CFTypeID CGContextGetTypeID(void)
 {
 	return CGTypeRegisterWithCallbacks(&__kCGContextID, &CGContextClass);

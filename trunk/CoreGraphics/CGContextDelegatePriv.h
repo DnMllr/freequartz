@@ -32,11 +32,7 @@ CF_EXTERN_C_BEGIN
 typedef struct CGContextDelegate *CGContextDelegateRef;
 
 
-CG_EXTERN const CFStringRef kCGContextErase;	   
-CG_EXTERN const CFStringRef kCGContextClear; 
-CG_EXTERN const CFStringRef kCGContextWait;		   
-CG_EXTERN const CFStringRef kCGContextSynchronize;
-CG_EXTERN const CFStringRef kCGContextFlush;
+
 
 
 enum CGContextDelegateType {

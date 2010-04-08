@@ -238,14 +238,14 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 
 
 CGContextRef
-createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef theDict, const void* key)
+createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef theDict, const char* name)
 {
 	CGContextRef context;
-	void* unknown;
+	void* filterInfo;
 
 	context = CGContextCreate();
 	if (!context) {
-		CGPostError("%s: failed to create bitmap context.", theDict);
+		CGPostError("%s: failed to create bitmap context.", name);
 		release_bitmap_info(bitmapContextInfo);
 		goto Error;
 	}
@@ -266,11 +266,11 @@ createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef th
 		goto Error;
 	}
 
-	unknown = (void*)CFDictionaryGetValue(theDict, key);
-	if (!unknown)
+	filterInfo = (void*)CFDictionaryGetValue(theDict, kCGContextFilterInfo);
+	if (!filterInfo)
 		goto Error;
 
-	context = CGContextAddFilter(context, unknown, 0);
+	context = CGContextAddFilter(context, filterInfo, 0);
 
 	return context;
 Error:
