@@ -68,6 +68,7 @@
 /*
  * Set up standard Mac OS X versions
  */
+#ifndef	MAC_OS_X_VERSION_10_0
 #define MAC_OS_X_VERSION_10_0 1000
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_10_2 1020
@@ -75,7 +76,7 @@
 #define MAC_OS_X_VERSION_10_4 1040
 #define MAC_OS_X_VERSION_10_5 1050
 #define MAC_OS_X_VERSION_10_6 1060
-
+#endif
 
 /* 
  * If min OS not specified, assume 10.1 for ppc and 10.4 for all others
