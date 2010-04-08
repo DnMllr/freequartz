@@ -118,7 +118,7 @@ validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo)
 void 
 finalize_bitmap_context(CGContextRef context)
 {
-	if (!context || context->contextType != kCGContextBitmap)
+	if (!context || context->contextType != kCGContextTypeBitmap)
 		return;
 
 	release_bitmap_info(context->bitmapContextInfo);
@@ -250,7 +250,7 @@ createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef th
 		goto Error;
 	}
 
-	context->contextType = kCGContextBitmap;
+	context->contextType = kCGContextTypeBitmap;
 	context->bitmapContextInfo = bitmapContextInfo;
 	context->finalize = finalize_bitmap_context;
 
@@ -281,47 +281,47 @@ Error:
 
 void *CGBitmapContextGetData(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->data;
 }
 
 size_t CGBitmapContextGetWidth(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->width;
 }
 
 
 size_t CGBitmapContextGetHeight(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->height;
 }
 
 
 size_t CGBitmapContextGetBitsPerComponent(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->bitsPerComponent;
 }
 
 
 size_t CGBitmapContextGetBitsPerPixel(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->bitsPerPixel;
 }
 
 
 size_t CGBitmapContextGetBytesPerRow(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->bytesPerRow;
 }
 
 CGColorSpaceRef CGBitmapContextGetColorSpace(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextBitmap) { return 0; }
+	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->colorspace;
 }
 
@@ -329,7 +329,7 @@ CGImageAlphaInfo CGBitmapContextGetAlphaInfo(CGContextRef c)
 {
 	CGImageAlphaInfo alphaInfo;
 
-	if (!c || c->contextType != kCGContextBitmap) { 
+	if (!c || c->contextType != kCGContextTypeBitmap) { 
 		return kCGImageAlphaNone; 
 	}
 
@@ -348,7 +348,7 @@ CGImageRef CGBitmapContextCreateImage(CGContextRef c)
 {
 	size_t dataLen;
 
-	if (!c || c->contextType != kCGContextBitmap) { 
+	if (!c || c->contextType != kCGContextTypeBitmap) { 
 		CGPostError("");
 		return NULL; 
 	}
