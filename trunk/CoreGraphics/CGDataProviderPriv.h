@@ -20,6 +20,7 @@
 #define CGDATAPROVIDERPRIV_H_
 
 #include <CoreFoundation/CFRuntime.h>
+#include <pthread.h>
 #include "CGMacros.h"
 
 CF_EXTERN_C_BEGIN
@@ -54,7 +55,7 @@ struct CGDataProvider {
 	CGDataProviderReleaseBytePointerCallback releaseBytePointer;	//0x34
 	CGDataProviderGetBytesAtPositionCallback getBytesAtPosition;	//0x38
 	//...
-	//pthread_mutex_t* mutex;										//0x40
+	pthread_mutex_t* mutex;											//0x40
 	//...
 	uint32_t field6C;												//0x6C
 	const void* data;												//0x70;
