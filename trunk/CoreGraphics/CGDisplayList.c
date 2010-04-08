@@ -87,7 +87,7 @@ CGContextRef CGDisplayListContextCreate(void* dummy)
 		return NULL;
 	}
 
-	ctx->contextType = kCGContextDisplayList;
+	ctx->contextType = kCGContextTypeDisplayList;
 
 	return ctx;
 }

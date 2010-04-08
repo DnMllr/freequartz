@@ -29,12 +29,26 @@
 
 CF_EXTERN_C_BEGIN
 
+CG_EXTERN const CFStringRef kCGContextDisplayList;
+CG_EXTERN const CFStringRef kCGContextLog;
+CG_EXTERN const CFStringRef kCGContextBackgroundColor;
+CG_EXTERN const CFStringRef kCGContextBoundingBox;
+CG_EXTERN const CFStringRef kCGContextColorSpace;
+CG_EXTERN const CFStringRef kCGContextGroup;
+CG_EXTERN const CFStringRef kCGContextResolution;
 CG_EXTERN const CFStringRef kCGContextFilterInfo;
-CG_EXTERN const CFStringRef kCGContextErase;	   
-CG_EXTERN const CFStringRef kCGContextClear; 
-CG_EXTERN const CFStringRef kCGContextWait;		   
+CG_EXTERN const CFStringRef kCGContextFilterOptionsData;
+CG_EXTERN const CFStringRef kCGContextFilterOptionsURL;
+CG_EXTERN const CFStringRef kCGContextFilterInfo;
+CG_EXTERN const CFStringRef kCGContextFilterOptionsData;
+CG_EXTERN const CFStringRef kCGContextFilterOptionsURL;
+CG_EXTERN const CFStringRef kCGTransparencyLayerContentBounds;
+CG_EXTERN const CFStringRef kCGContextErase;
+CG_EXTERN const CFStringRef kCGContextClear;
+CG_EXTERN const CFStringRef kCGContextWait;
 CG_EXTERN const CFStringRef kCGContextSynchronize;
 CG_EXTERN const CFStringRef kCGContextFlush;
+
 
 #if 0
 typedef struct _ContextEGL {
@@ -88,10 +102,10 @@ typedef enum {
 } KBrushStyle;
 
 typedef enum {
-	kCGContextGeneric = 0,
-	kCGContextPDF = 1,
-	kCGContextBitmap = 4,
-	kCGContextDisplayList = 6
+	kCGContextTypeGeneric = 0,
+	kCGContextTypePDF = 1,
+	kCGContextTypeBitmap = 4,
+	kCGContextTypeDisplayList = 6
 	
 
 } CGContextType;
