@@ -91,6 +91,25 @@ Error:
 	return NULL;
 }
 
+
+bool
+validate_rgb_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo)
+{
+	return TRUE;
+}
+
+bool
+validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo)
+{
+	return TRUE;
+}
+
+bool
+validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo)
+{
+	return TRUE;
+}
+
 void 
 finalize_bitmap_context(CGContextRef context)
 {
