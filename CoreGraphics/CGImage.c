@@ -51,8 +51,8 @@ void CGImageDestroy(CFTypeRef ctf)
 
 	CGColorSpaceRelease(image->space);
 	CGDataProviderRelease(image->provider);
-	//CGImageJPEGRepRelease(image->imageJPEGRep);
-	//CGImageEPSRepRelease(image->imageEPSRep);
+	CGImageJPEGRepRelease(image->imageJPEGRep);
+	CGImageEPSRepRelease(image->imageEPSRep);
 	CGPathRelease(image->path);
 	free(image->decode);
 	free(image->components);
