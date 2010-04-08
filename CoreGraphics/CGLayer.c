@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -23,6 +23,7 @@
 #include "CGLayerPriv.h"
 
 
+
 static CFRuntimeClass CGLayerClass = 
   {
     0,							// version
@@ -37,20 +38,30 @@ static CFRuntimeClass CGLayerClass =
   };
 CFTypeID __kCGLayerID = _kCFRuntimeNotATypeID;
 
+//constants
+#if 0
+// NEED TO ADD DEPENDENCY TO COREFOUNDATION
+CONST_STRING_DECL(kCGLayerWillDeallocate,   "kCGLayerWillDeallocate");
+#endif
 
 CFTypeID CGLayerGetTypeID(void)
 {
 	return CGTypeRegisterWithCallbacks(&__kCGLayerID, &CGLayerClass);
 }
 
-void layerFinalize(CFTypeRef c)
+void layerFinalize(CFTypeRef layer)
 {
+	CGNotificationCenterRef notifCenter;
 
+	notifCenter = CGLayerNotificationCenter((CGLayerRef)layer);
+	//CGNotificationCenterPostNotification(notifCenter, kCGLayerWillDeallocate, layer, 0);
+
+	CGContextRelease(((CGLayerRef)layer)->ctx);
 }
 
-void CGLayerNotificationCenter(CGLayerRef layer)
+CGNotificationCenterRef CGLayerNotificationCenter(CGLayerRef layer)
 {
-
+	return NULL;
 }
 
 

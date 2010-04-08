@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the Coconuts Toolkit.
+** This file is part of the CoreGraphics module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -21,7 +21,7 @@
 
 #include "CoreFoundation/CFRuntime.h"
 #include "CGTypesPriv.h"
-
+#include "CGNotificationCenterPriv.h"
 
 CF_EXTERN_C_BEGIN
 
@@ -35,7 +35,7 @@ typedef  struct CGLayer {
 
 
 
-CG_EXTERN void CGLayerNotificationCenter(CGLayerRef layer);
+CG_EXTERN CGNotificationCenterRef CGLayerNotificationCenter(CGLayerRef layer);
 
 
 
