@@ -32,7 +32,7 @@ CONST_STRING_DECL(True,							"True");
 CONST_STRING_DECL(False,						"False");
 CONST_STRING_DECL(CGAllowDebuggingDefaults,		"CGAllowDebuggingDefaults");
 
-typedef CFTypeRef (*copyDefVal) (const char* propName);
+
 
 CFStringRef
 CGCFStringCreate(const char* cStr)
@@ -103,7 +103,7 @@ copyDefaultValue(const char* propName)
 }
 
 Boolean
-getBool(CFPropertyListRef preference, Boolean* boolean)
+getBool(CFTypeRef preference, Boolean* boolean)
 {
 	Boolean ret;
 
@@ -132,10 +132,30 @@ getBool(CFPropertyListRef preference, Boolean* boolean)
 }
 
 Boolean 
-getBooleanProperty(void* boolRef)
+getBooleanProperty(const char* propName, copyDefVal fnCopyVal, Boolean* boolean)
 {
-	return FALSE;
+	CFTypeRef cftype;
+	Boolean bValue;
+	Boolean bRet;
+
+	cftype = fnCopyVal(propName);
+
+	if (bRet = getBool(cftype, &bValue)) {
+		if (boolean)
+			*boolean = bValue;
+	}
+	
+	CFRelease(cftype);
+
+	return bRet;
 }
+
+Boolean 
+CGDefaultsGetBoolean(const char* propName, Boolean* boolean)
+{
+	return getBooleanProperty(propName, copyDefaultValue, boolean);
+}
+
 
 Boolean
 CGDefaultsGetInteger(const char* propName/*, ... */)
@@ -143,11 +163,7 @@ CGDefaultsGetInteger(const char* propName/*, ... */)
 	return FALSE;
 }
 
-Boolean 
-CGDefaultsGetBoolean(const char* propName /*, ... */)
-{
-	return FALSE;
-}
+
 
 
 
