@@ -24,6 +24,8 @@
 static pthread_once_t	allow_debug_once = PTHREAD_ONCE_INIT;
 static Boolean			allowDebuggingDefaults = FALSE;
 
+
+CONST_STRING_DECL(Com_apple_core,				"Com_apple_core");
 CONST_STRING_DECL(Yes,							"Yes");
 CONST_STRING_DECL(No,							"No");
 CONST_STRING_DECL(True,							"True");
@@ -31,6 +33,12 @@ CONST_STRING_DECL(False,						"False");
 CONST_STRING_DECL(CGAllowDebuggingDefaults,		"CGAllowDebuggingDefaults");
 
 typedef CFTypeRef (*copyDefVal) (const char* propName);
+
+CFStringRef
+CGCFStringCreate(const char* cStr)
+{
+	return CFStringCreateWithCString(NULL, cStr, kCFStringEncodingASCII);
+}
 
 void
 loadAllowDebuggingDefaults(void)
@@ -54,9 +62,44 @@ loadAllowDebuggingDefaults(void)
 CFTypeRef
 copyDefaultValue(const char* propName)
 {
+	char* p;
+	CFStringRef str;
+	CFPropertyListRef pref;
+
 	pthread_once(&allow_debug_once, loadAllowDebuggingDefaults);
 
-	return 0;
+	if (allowDebuggingDefaults == FALSE)
+		return 0;
+
+	p  = getenv(propName);
+	if (p) {
+		str = CGCFStringCreate((const char*)p);
+		return ((CFTypeRef)str);
+	}
+	else {
+		str = CGCFStringCreate(propName);
+		if (str) {
+			pref = CFPreferencesCopyValue(str,
+				kCFPreferencesCurrentApplication, 
+				kCFPreferencesCurrentUser,
+				kCFPreferencesAnyHost);
+			
+			if (pref == NULL) {
+				pref = CFPreferencesCopyValue(str,
+					Com_apple_core,
+					kCFPreferencesCurrentUser,
+					kCFPreferencesAnyHost);
+			}
+
+			CFRelease((CFTypeRef)str);
+		}
+		else {
+			pref = NULL;
+		}
+		
+	}
+
+	return pref;
 }
 
 Boolean
