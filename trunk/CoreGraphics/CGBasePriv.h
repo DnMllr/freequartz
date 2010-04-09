@@ -19,13 +19,20 @@
 #ifndef CGBASEPRIV_H_
 #define CGBASEPRIV_H_
 
+#define HAVE_COREFOUNDATION 1
+
+#if HAVE_COREFOUNDATION
+#define CF_BUILDING_CF 1
+#include <CoreFoundation/CoreFoundation.h>
+#include "CFInternal.h"
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#endif /* HAVE_COREFOUNDATION */
 
-#include <CoreFoundation/CoreFoundation.h>
-//#define CF_BUILDING_CF 1
-//#include "CFInternal.h"
+
+
 
 #include "CGTypesPriv.h"
 #include "CGErrorPriv.h"

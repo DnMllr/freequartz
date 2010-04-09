@@ -36,4 +36,5 @@ CGLibraryLoadFunction(const char* moduleName, const char* symName)
 {
 	pthread_once(&libraryload_once, initialize_dylib_paths);
 
+	return NULL;
 }
