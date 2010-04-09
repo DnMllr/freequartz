@@ -106,8 +106,10 @@
 #include <CoreFoundation/CFURL.h>
 #include <CoreFoundation/CFURLAccess.h>
 #include <CoreFoundation/CFUUID.h>
+#if (TARGET_OS_MAC && !(TARGET_OS_EMBEDDED || TARGET_OS_IPHONE))
 #include <CoreFoundation/CFXMLNode.h>
 #include <CoreFoundation/CFXMLParser.h>
+#endif
 
 #ifdef WIN32
 #include <CoreFoundation/CFWindowsMessageQueue.h>
