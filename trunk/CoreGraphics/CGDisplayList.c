@@ -72,7 +72,6 @@ void dl_Finalize(CFTypeRef cf)
 CGContextRef CGDisplayListContextCreate(void* dummy)
 {
 	CGContextRef ctx;
-	CGContextDelegateRef ctxDelegate;
 
 	ctx = CGContextCreate();
 	if (!ctx) {
@@ -94,8 +93,6 @@ CGContextRef CGDisplayListContextCreate(void* dummy)
 
 CGContextDelegateRef CGDisplayListContextDelegateCreate(void* dummy)
 {
-	CGContextDelegateRef ctxDelegate;
-
 	return NULL;
 }
 

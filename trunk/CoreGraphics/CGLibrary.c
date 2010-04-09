@@ -20,9 +20,11 @@
 #include "CGDefaultsPriv.h"
 #include <pthread.h>
 
-
-static pthread_once_t libraryload_once = PTHREAD_ONCE_INIT;
 static CFArrayRef dylib_paths = NULL;
+static CFMutableDictionaryRef handles = NULL;
+static pthread_once_t  libraryload_once		= PTHREAD_ONCE_INIT;
+static pthread_mutex_t functionload_mutex	= PTHREAD_MUTEX_INITIALIZER;
+
 
 CONST_STRING_DECL(separator,				":");
 
@@ -31,6 +33,10 @@ CONST_STRING_DECL(separator,				":");
 #else
 #define DYLIB_FORMAT "lib%s.A.dylib"
 #endif
+
+//TODO put inside CGLibraryPriv.h
+void*
+load_function(CFArrayRef paths, const char* fullLibName, const char* symName);
 
 void
 initialize_dylib_paths(void)
@@ -67,7 +73,23 @@ CGLibraryLoadFunction(const char* libName, const char* symName)
 }
 
 void*
-load_function(CFArrayRef paths, const char* libPath, const char* symName)
+load_function(CFArrayRef paths, const char* fullLibName, const char* symName)
 {
+	CFStringRef cStr;
+
+	pthread_mutex_lock(&functionload_mutex);
+	if (!handles) {
+		handles = CFDictionaryCreateMutable(0,0, &kCFTypeDictionaryKeyCallBacks, 0);
+	}
+	
+	cStr = CFStringCreateWithFileSystemRepresentation(NULL, fullLibName);
+	if (!cStr)
+		return NULL;
+
+	/*str = (const char*)CFDictionaryGetValue((CFDictionaryRef)handles, (const void*)cStr);
+	if (!str && paths) {
+		CFArrayGetCount(paths);
+	}*/
+
 	return NULL;
 }
