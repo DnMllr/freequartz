@@ -17,24 +17,57 @@
 **
 ****************************************************************************/
 #include "CGBasePriv.h"
+#include "CGDefaultsPriv.h"
 #include <pthread.h>
 
 
 static pthread_once_t libraryload_once = PTHREAD_ONCE_INIT;
+static CFArrayRef dylib_paths = NULL;
 
+CONST_STRING_DECL(separator,				":");
 
+#ifdef __WIN32__
+#define DYLIB_FORMAT "lib%s.dll"
+#else
+#define DYLIB_FORMAT "lib%s.A.dylib"
+#endif
 
 void
 initialize_dylib_paths(void)
 {
-	//CGDefaultsGetBoolean("CGAllowDylibSearchPath",
+	Boolean bValue;
+	CFStringRef strValue;
+
+	if (!CGDefaultsGetBoolean("CGAllowDylibSearchPath", &bValue) || !bValue)
+		return;
+
+	if (!CGDefaultsCopyString("CGS_LIBRARY_PATH", &strValue) || !strValue)
+		return;
+	
+	dylib_paths = CFStringCreateArrayBySeparatingStrings(NULL, NULL/* FIXME*/, separator);
+
+	// FIXME
+	//CFRelease();
+
 }
 
 
 void* 
-CGLibraryLoadFunction(const char* moduleName, const char* symName)
+CGLibraryLoadFunction(const char* libName, const char* symName)
 {
-	pthread_once(&libraryload_once, initialize_dylib_paths);
+	char buffer[MAX_PATH+1];
 
+	pthread_once(&libraryload_once, initialize_dylib_paths);
+	if (!strcmp(libName, "CSync"))
+		return NULL;
+
+	snprintf(buffer, MAX_PATH, DYLIB_FORMAT, libName);
+
+	return load_function(dylib_paths, buffer, symName);
+}
+
+void*
+load_function(CFArrayRef paths, const char* libPath, const char* symName)
+{
 	return NULL;
 }
