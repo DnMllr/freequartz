@@ -69,27 +69,27 @@ CFTypeID __kCGContextID = _kCFRuntimeNotATypeID;
 
 
 #if 0
-CONST_STRING_DECL(kCGContextDisplayList,				"kCGContextDisplayList");
-CONST_STRING_DECL(kCGContextLog,						"kCGContextLog");
-CONST_STRING_DECL(kCGContextBackgroundColor,			"kCGContextBackgroundColor");
-CONST_STRING_DECL(kCGContextBoundingBox,				"kCGContextBoundingBox");
-CONST_STRING_DECL(kCGContextColorSpace,					"kCGContextColorSpace");
-CONST_STRING_DECL(kCGContextGroup,						"kCGContextGroup");
-CONST_STRING_DECL(kCGContextResolution,					"kCGContextResolution");
+CONST_STRING_DECL(kCGContextDisplayList,				      "kCGContextDisplayList");
+CONST_STRING_DECL(kCGContextLog,						          "kCGContextLog");
+CONST_STRING_DECL(kCGContextBackgroundColor,			    "kCGContextBackgroundColor");
+CONST_STRING_DECL(kCGContextBoundingBox,				      "kCGContextBoundingBox");
+CONST_STRING_DECL(kCGContextColorSpace,					      "kCGContextColorSpace");
+CONST_STRING_DECL(kCGContextGroup,						        "kCGContextGroup");
+CONST_STRING_DECL(kCGContextResolution,					      "kCGContextResolution");
 
-CONST_STRING_DECL(kCGContextFilterInfo,					"kCGContextFilterInfo");
-CONST_STRING_DECL(kCGContextFilterOptionsData,			"kCGContextFilterOptionsData");
-CONST_STRING_DECL(kCGContextFilterOptionsURL,			"kCGContextFilterOptionsURL");
-CONST_STRING_DECL(kCGContextFilterInfo,					"kCGContextFilterOptionsName");
-CONST_STRING_DECL(kCGContextFilterOptionsData,			"kCGCFilterPrintingDomain");
-CONST_STRING_DECL(kCGContextFilterOptionsURL,			"kCGCFilterApplicationDomain");
+CONST_STRING_DECL(kCGContextFilterInfo,					      "kCGContextFilterInfo");
+CONST_STRING_DECL(kCGContextFilterOptionsData,			  "kCGContextFilterOptionsData");
+CONST_STRING_DECL(kCGContextFilterOptionsURL,			    "kCGContextFilterOptionsURL");
+CONST_STRING_DECL(kCGContextFilterInfo,					      "kCGContextFilterOptionsName");
+CONST_STRING_DECL(kCGContextFilterOptionsData,			  "kCGCFilterPrintingDomain");
+CONST_STRING_DECL(kCGContextFilterOptionsURL,			    "kCGCFilterApplicationDomain");
 CONST_STRING_DECL(kCGTransparencyLayerContentBounds,	"kCGTransparencyLayerContentBounds");
 
-CONST_STRING_DECL(kCGContextErase,						"kCGContextErase");
-CONST_STRING_DECL(kCGContextClear,						"kCGContextClear");
-CONST_STRING_DECL(kCGContextWait,						"kCGContextWait");
-CONST_STRING_DECL(kCGContextSynchronize,				"kCGContextSynchronize");
-CONST_STRING_DECL(kCGContextFlush,						"kCGContextFlush");
+CONST_STRING_DECL(kCGContextErase,						        "kCGContextErase");
+CONST_STRING_DECL(kCGContextClear,						        "kCGContextClear");
+CONST_STRING_DECL(kCGContextWait,						          "kCGContextWait");
+CONST_STRING_DECL(kCGContextSynchronize,				      "kCGContextSynchronize");
+CONST_STRING_DECL(kCGContextFlush,						        "kCGContextFlush");
 #endif
 
 
