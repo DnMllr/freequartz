@@ -66,9 +66,9 @@
 #else
 #if defined(__WIN32__)
 #	if defined(CG_EXPORT_DYNAMIC)
-#		define CG_EXTERN DLLEXPORT extern
+#		define CG_EXTERN extern DLLEXPORT 
 #	else
-#		define CG_EXTERN DLLIMPORT extern
+#		define CG_EXTERN extern DLLIMPORT 
 #	endif
 #else
 	#define CG_EXTERN extern

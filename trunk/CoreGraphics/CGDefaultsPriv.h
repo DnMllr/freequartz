@@ -16,27 +16,26 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-#ifndef CGBASEPRIV_H_
-#define CGBASEPRIV_H_
+#ifndef CGDEFAULTSPRIV_H_
+#define CGDEFAULTSPRIV_H_
 
-#define HAVE_COREFOUNDATION 1
-
-#if HAVE_COREFOUNDATION
-#include <CoreFoundation/CoreFoundation.h>
-#include "CFInternal.h"
-#else
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#endif /* HAVE_COREFOUNDATION */
+CF_EXTERN_C_BEGIN
 
 
+CG_EXTERN const CFStringRef Yes;
+CG_EXTERN const CFStringRef No;
+CG_EXTERN const CFStringRef True;
+CG_EXTERN const CFStringRef False;
+CG_EXTERN const CFStringRef CGAllowDebuggingDefaults;
 
 
-#include "CGTypesPriv.h"
-#include "CGErrorPriv.h"
+void loadAllowDebuggingDefaults(void);
+
+Boolean getBool(CFPropertyListRef preference, Boolean* boolean);
 
 
-#define CHK( x ) do{ if( ( x ) == 0) { goto Cleanup; }} while( FALSE );
 
-#endif /* CGBASEPRIV_H_ */
+
+CF_EXTERN_C_END
+
+#endif /* CGDEFAULTSPRIV_H_ */

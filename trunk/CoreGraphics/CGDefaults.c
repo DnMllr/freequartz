@@ -16,11 +16,13 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-#include "CGBasePriv.h"
 #include <pthread.h>
 
-static pthread_once_t allow_debug_once = PTHREAD_ONCE_INIT;
-static Boolean allowDebuggingDefaults = FALSE;
+#include "CGBasePriv.h"
+#include "CGDefaultsPriv.h"
+
+static pthread_once_t	allow_debug_once = PTHREAD_ONCE_INIT;
+static Boolean			allowDebuggingDefaults = FALSE;
 
 CONST_STRING_DECL(Yes,							"Yes");
 CONST_STRING_DECL(No,							"No");
@@ -33,21 +35,19 @@ typedef CFTypeRef (*copyDefVal) (const char* propName);
 void
 loadAllowDebuggingDefaults(void)
 {
-#if 0
 	CFPropertyListRef debugPref;
 
-	debugPref = CFPreferencesCopyValue(Cgallowdebuggi, 
+	debugPref = CFPreferencesCopyValue(CGAllowDebuggingDefaults, 
 		kCFPreferencesAnyApplication, 
 		kCFPreferencesCurrentUser,
 		kCFPreferencesAnyHost);
 
-	if (getBool(debugPrefs, &allowDebuggingDefaults) == FALSE) {
+	if (getBool(debugPref, &allowDebuggingDefaults) == FALSE) {
 		allowDebuggingDefaults = FALSE;
 	}
 
 	if (debugPref)
 		CFRelease((CFTypeRef)debugPref);
-#endif
 }
 
 
@@ -63,12 +63,12 @@ Boolean
 getBool(CFPropertyListRef preference, Boolean* boolean)
 {
 	Boolean ret;
-#if 0
+
 	if (!preference)
 		return FALSE;
 
 	if (CFGetTypeID(preference) == CFBooleanGetTypeID()) {
-		ret = *boolean = CFBooleanGetValue((CFBooleanRef) preference));
+		ret = *boolean = CFBooleanGetValue((CFBooleanRef) preference);
 	}
 	else if (CFGetTypeID(preference) == CFStringGetTypeID()) {
 		if (!CFStringCompare((CFStringRef)preference, Yes, kCFCompareCaseInsensitive)) {
@@ -84,7 +84,7 @@ getBool(CFPropertyListRef preference, Boolean* boolean)
 			ret = *boolean = FALSE;
 		}
 	}
-#endif
+
 	return ret;
 }
 
