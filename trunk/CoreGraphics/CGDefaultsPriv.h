@@ -28,8 +28,9 @@ CG_EXTERN const CFStringRef True;
 CG_EXTERN const CFStringRef False;
 CG_EXTERN const CFStringRef CGAllowDebuggingDefaults;
 
-
+CFStringRef CGCFStringCreate(const char* cStr);
 void loadAllowDebuggingDefaults(void);
+CFTypeRef copyDefaultValue(const char* propName);
 
 Boolean getBool(CFPropertyListRef preference, Boolean* boolean);
 
