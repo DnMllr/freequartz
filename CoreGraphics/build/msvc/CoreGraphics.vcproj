@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../CoreFoundationLite/include"
+				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../CoreFoundationLite;../../../CoreFoundationLite/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -333,6 +333,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\CGDefaults.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\CGDisplayList.c"
 				>
 				<FileConfiguration
@@ -455,6 +459,10 @@
 			</File>
 			<File
 				RelativePath="..\..\CGLayerPriv.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\CGLibrary.c"
 				>
 			</File>
 			<File

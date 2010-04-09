@@ -16,21 +16,24 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-#ifndef CGBASEPRIV_H_
-#define CGBASEPRIV_H_
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <CoreFoundation/CoreFoundation.h>
-//#define CF_BUILDING_CF 1
-//#include "CFInternal.h"
-
-#include "CGTypesPriv.h"
-#include "CGErrorPriv.h"
+#include "CGBasePriv.h"
+#include <pthread.h>
 
 
-#define CHK( x ) do{ if( ( x ) == 0) { goto Cleanup; }} while( FALSE );
+static pthread_once_t libraryload_once = PTHREAD_ONCE_INIT;
 
-#endif /* CGBASEPRIV_H_ */
+
+
+void
+initialize_dylib_paths(void)
+{
+	//CGDefaultsGetBoolean("CGAllowDylibSearchPath",
+}
+
+
+void* 
+CGLibraryLoadFunction(const char* moduleName, const char* symName)
+{
+	pthread_once(&libraryload_once, initialize_dylib_paths);
+
+}

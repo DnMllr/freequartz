@@ -104,6 +104,7 @@ bool CGPathEqualToPath(CGPathRef path1, CGPathRef path2)
 		return TRUE;
 	// TODO
 
+	return FALSE;
 }
 
 CGPathElementsRef add_chunk(CGMutablePathRef path )
