@@ -40,6 +40,9 @@ CGCFStringCreate(const char* cStr)
 	return CFStringCreateWithCString(NULL, cStr, kCFStringEncodingASCII);
 }
 
+
+
+
 void
 loadAllowDebuggingDefaults(void)
 {
@@ -102,6 +105,9 @@ copyDefaultValue(const char* propName)
 	return pref;
 }
 
+//////////////////////////////////////////////////////////////////////////
+//Boolean 
+//////////////////////////////////////////////////////////////////////////
 Boolean
 getBool(CFTypeRef preference, Boolean* boolean)
 {
@@ -156,11 +162,50 @@ CGDefaultsGetBoolean(const char* propName, Boolean* boolean)
 	return getBooleanProperty(propName, copyDefaultValue, boolean);
 }
 
+//////////////////////////////////////////////////////////////////////////
+//Integer 
+//////////////////////////////////////////////////////////////////////////
+Boolean
+getIntegerProperty(const char* propName, copyDefVal fnCopyVal, int* number)
+{
+
+	return FALSE;
+}
 
 Boolean
-CGDefaultsGetInteger(const char* propName/*, ... */)
+CGDefaultsGetInteger(const char* propName, int* number)
 {
-	return FALSE;
+	return getIntegerProperty(propName, copyDefaultValue, number);
+}
+
+//////////////////////////////////////////////////////////////////////////
+//Strings 
+//////////////////////////////////////////////////////////////////////////
+
+
+Boolean 
+copyStringProperty(const char* cStr, copyDefVal fnCopyVal, CFStringRef* strDst)
+{
+	Boolean bRet;
+	CFTypeRef cftype;
+	
+	cftype = fnCopyVal(cStr);
+	if (cftype && (CFGetTypeID(cftype) == CFStringGetTypeID())) {
+		if (strDst)
+			*strDst = (CFStringRef)cftype;
+		bRet = TRUE;
+	}
+	else {
+		bRet = FALSE;
+	}
+
+	return bRet;
+}
+
+Boolean 
+CGDefaultsCopyString(const char* cStr, CFStringRef* strDst)
+{
+	return copyStringProperty(cStr, copyDefaultValue, strDst);
 }
 
 

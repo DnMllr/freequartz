@@ -32,6 +32,8 @@ CG_EXTERN const CFStringRef CGAllowDebuggingDefaults;
 
 CFStringRef CGCFStringCreate(const char* cStr);
 
+
+
 void loadAllowDebuggingDefaults(void);
 
 CFTypeRef copyDefaultValue(const char* propName);
@@ -40,8 +42,9 @@ Boolean CGDefaultsGetBoolean(const char* propName, Boolean* boolean);
 
 Boolean getBool(CFTypeRef preference, Boolean* boolean);
 
+Boolean copyStringProperty(const char* cStr, copyDefVal fnCopyVal, CFStringRef* strDst);
 
-
+Boolean CGDefaultsCopyString(const char* cStr, CFStringRef* strDst);
 
 CF_EXTERN_C_END
 
