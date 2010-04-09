@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../CoreFoundationLite;../../../CoreFoundationLite/include"
+				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../;../../../CoreFoundation;../../../CoreFoundation/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -115,7 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../CoreFoundationLite/include"
+				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../;../../../CoreFoundation;../../../CoreFoundation/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

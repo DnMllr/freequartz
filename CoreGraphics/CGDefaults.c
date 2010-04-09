@@ -22,13 +22,11 @@
 static pthread_once_t allow_debug_once = PTHREAD_ONCE_INIT;
 static Boolean allowDebuggingDefaults = FALSE;
 
-#if 0
 CONST_STRING_DECL(Yes,							"Yes");
 CONST_STRING_DECL(No,							"No");
 CONST_STRING_DECL(True,							"True");
 CONST_STRING_DECL(False,						"False");
 CONST_STRING_DECL(CGAllowDebuggingDefaults,		"CGAllowDebuggingDefaults");
-#endif
 
 typedef CFTypeRef (*copyDefVal) (const char* propName);
 
@@ -66,9 +64,6 @@ getBool(CFPropertyListRef preference, Boolean* boolean)
 {
 	Boolean ret;
 #if 0
-	CFTypeID cftype;
-	CFTypeID cfbooltype;
-
 	if (!preference)
 		return FALSE;
 
