@@ -81,7 +81,7 @@ CGImageRef CGImageEPSRepRetain(CGImageRef image)
 
 Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo)
 {
-	CGColorSpaceDevice spaceType;
+	CGColorSpaceType spaceType;
 
 	if (!space) { return FALSE; }
 

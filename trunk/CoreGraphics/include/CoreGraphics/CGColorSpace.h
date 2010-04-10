@@ -56,7 +56,7 @@ enum CGColorRenderingIntent {
 typedef enum CGColorRenderingIntent CGColorRenderingIntent;
 
 
-
+CG_EXTERN void create_name_to_index_map();
 
 CG_EXTERN CGColorSpaceRef CGColorSpaceCreateDeviceGray(void);
 

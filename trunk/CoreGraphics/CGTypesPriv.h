@@ -19,10 +19,14 @@
 #ifndef CGTYPES_H_
 #define CGTYPES_H_
 
-#include <CoreFoundation/CFRuntime.h>
 #include "CGMacros.h"
 
 CF_EXTERN_C_BEGIN
+
+//CG_EXTERN const CFStringRef kCGCTypeCopyDescFormat;
+
+CFStringRef copy_description(CFTypeRef cf, CFDictionaryRef formatOptions);
+CFStringRef copy_debug_description(CFTypeRef cf);
 
 CFTypeID CGTypeRegisterWithCallbacks(CFTypeID* typeID, CFRuntimeClass* rtclass);
 CFTypeRef CGTypeCreateInstance(CFTypeID id, CFIndex size);

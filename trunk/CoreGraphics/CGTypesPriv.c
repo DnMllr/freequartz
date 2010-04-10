@@ -16,20 +16,74 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
+#include "CGBasePriv.h"
 #include "CGTypesPriv.h"
+#include <pthread.h>
 
 
-CFTypeID CGTypeRegisterWithCallbacks(CFTypeID* typeID, CFRuntimeClass* rtclass)
+static pthread_mutex_t type_register_lock	= PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t nextID_lock			= PTHREAD_MUTEX_INITIALIZER;
+
+//CONST_STRING_DECL(kCGCTypeCopyDescFormat,	"<%s %p>");
+
+
+
+CFStringRef copy_description(CFTypeRef cf, CFDictionaryRef formatOptions)
 {
-	CFTypeID id;
+	CFStringRef ret;
+	const CFRuntimeClass* cfclass;
+
+	if (!cf)
+		return NULL;
+
+	cfclass = _CFRuntimeGetClassWithTypeID(CFGetTypeID(cf));
+	if (cfclass) {
+
+		/*ret = CFStringCreateWithFormat(CFGetAllocator(cf),
+			formatOptions,
+			kCGCTypeCopyDescFormat,
+			cfclass->className,
+			cf);*/
+	}
+	else
+		ret = NULL;
+
+	return ret;
+}
+
+CFStringRef copy_debug_description(CFTypeRef cf)
+{
+	return copy_description(cf, NULL);
+}
+
+
+CFTypeID CGTypeRegisterWithCallbacks(CFTypeID* typeID, CFRuntimeClass* rtc)
+{
+	CFRuntimeClass* l_rtc;
 
 	if (*typeID != _kCFRuntimeNotATypeID) { return *typeID; }
 
-	
-	id = _CFRuntimeRegisterClass(rtclass);
-	*typeID = id;
+	pthread_mutex_lock(&type_register_lock);
 
-	return id;
+	l_rtc = (CFRuntimeClass*) malloc(sizeof(CFRuntimeClass));
+	l_rtc->version = 0;
+	l_rtc->className = rtc->className;
+	l_rtc->init = rtc->init;
+	l_rtc->copy = rtc->copy;
+	l_rtc->finalize = rtc->finalize;
+	l_rtc->equal = rtc->equal;
+	l_rtc->hash = rtc->hash;
+	l_rtc->copyFormattingDesc = (!rtc->copyFormattingDesc) ? copy_description : rtc->copyFormattingDesc;
+	l_rtc->copyDebugDesc = (!rtc->copyDebugDesc) ? copy_debug_description : rtc->copyDebugDesc;
+	l_rtc->reclaim = rtc->reclaim;
+	if (rtc->reclaim)
+		l_rtc->version = 4;
+
+	*typeID = _CFRuntimeRegisterClass(l_rtc);
+
+	pthread_mutex_unlock(&type_register_lock);
+
+	return *typeID;
 }
 
 
@@ -38,13 +92,12 @@ CFTypeRef CGTypeCreateInstance(CFTypeID id, CFIndex size)
 	return CGTypeCreateInstanceWithAllocator(0, id, size);
 }
 
-//pthread_mutex_t _mutex;
 
 CFTypeID CGTypeGetNextIdentifier(CFTypeID id)
 {
-	//pthread_mutex_lock(&_mutex);
+	pthread_mutex_lock(&nextID_lock);
 	id++;
-	//pthread_mutex_unlock(&_mutex);
+	pthread_mutex_unlock(&nextID_lock);
 
 	return id;
 }

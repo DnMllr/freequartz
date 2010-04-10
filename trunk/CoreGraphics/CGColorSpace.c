@@ -17,9 +17,33 @@
 **
 ****************************************************************************/
 #include <CoreGraphics/CGColorSpace.h>
+#include <pthread.h>
 
 #include "CGBasePriv.h"
 #include "CGColorSpacePriv.h"
+
+static pthread_once_t			space_create_once = PTHREAD_ONCE_INIT;
+static CFMutableDictionaryRef	name_to_index_map = NULL;
+
+
+
+/* CGColorSpace constants */
+CONST_STRING_DECL(kCGColorSpaceDisplayGray,				"kCGColorSpaceDisplayGray");
+CONST_STRING_DECL(kCGColorSpaceDisplayRGB,				"kCGColorSpaceDisplayRGB");
+CONST_STRING_DECL(kCGColorSpaceDeviceGray,				"kCGColorSpaceDeviceGray");
+CONST_STRING_DECL(kCGColorSpaceDeviceRGB,				"kCGColorSpaceDeviceRGB");
+CONST_STRING_DECL(kCGColorSpaceDeviceCMYK,				"kCGColorSpaceDeviceCMYK");
+CONST_STRING_DECL(kCGColorSpaceSystemDefaultGray,		"kCGColorSpaceSystemDefaultGray");
+CONST_STRING_DECL(kCGColorSpaceSystemDefaultRGB,		"kCGColorSpaceSystemDefaultRGB");
+CONST_STRING_DECL(kCGColorSpaceSystemDefaultCMYK,		"kCGColorSpaceSystemDefaultCMYK");
+CONST_STRING_DECL(kCGColorSpaceUncalibratedGray,		"kCGColorSpaceUncalibratedGray");
+CONST_STRING_DECL(kCGColorSpaceUncalibratedRGB,			"kCGColorSpaceUncalibratedRGB");
+CONST_STRING_DECL(kCGColorSpaceUncalibratedCMYK,		"kCGColorSpaceUncalibratedCMYK");
+CONST_STRING_DECL(kCGColorSpaceGenericHDR,				"kCGColorSpaceGenericHDR");
+CONST_STRING_DECL(kCGColorSpaceGenericRGBHDR,			"kCGColorSpaceGenericRGBHDR");
+CONST_STRING_DECL(kCGColorSpaceUndo601,					"kCGColorSpaceUndo601");
+CONST_STRING_DECL(kCGColorSpaceColoredPattern,			"kCGColorSpaceColoredPattern");
+
 
 
 /* CoreFoundation runtime class for CGPath.  */
@@ -46,13 +70,34 @@ void CGColorSpaceDestroy(CFTypeRef ctf)
 
 }
 
+void create_name_to_index_map(void)
+{
+	
+}
+
+CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
+{
+	CFIndex ret;
+
+	if (name_to_index_map) {
+		pthread_once(&space_create_once, create_name_to_index_map);
+	}
+	if (name)
+		ret = (CFIndex)CFDictionaryGetValue(name_to_index_map, (const void*)name);
+	else
+		ret = 0;
+
+	return ret;
+}
+
+
 
 bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
 {
 	if (cs1 == cs2)
 		return TRUE;
 
-	if (cs1->spaceDevice == cs2->spaceDevice) {
+	if (cs1->spaceType == cs2->spaceType) {
 
 	}
 
@@ -60,12 +105,12 @@ bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
 	return FALSE;
 }
 
-CGColorSpaceDevice CGColorSpaceGetType(CGColorSpaceRef space)
+CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space)
 {
 	if (!space)
-		return kCGColorSpaceDeviceUnknown;
+		return kCGColorSpaceTypeDeviceUnknown;
 
-	return space->spaceDevice;
+	return space->spaceType;
 }
 
 CGFloat* CGColorSpaceGetDefaultColorComponents(CGColorSpaceRef space)
@@ -82,7 +127,7 @@ CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space)
 		return NULL;
 	
 	components = CGColorSpaceGetDefaultColorComponents(space);
-	if (!components || CGColorSpaceGetType(space) == kCGColorSpaceDeviceUnknown)
+	if (!components || CGColorSpaceGetType(space) == kCGColorSpaceTypeDeviceUnknown)
 		return space->defaultColor; 
 
 	color = CGColorCreate(space, components);
@@ -109,10 +154,7 @@ CGColorSpaceRef CGColorSpaceCreateWithName(CFStringRef name)
 	return CGColorSpaceCreateWithIndex(index);
 }
 
-CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
-{
-	return 0;
-}
+
 
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index)
 {

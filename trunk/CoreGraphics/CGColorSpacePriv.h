@@ -26,38 +26,62 @@
 
 CF_EXTERN_C_BEGIN
 
-enum CGColorSpaceDevice {
+/* constants */
+enum CGColorSpaceType {
 
-	kCGColorSpaceDeviceUnknown = -1,
-	kCGColorSpaceDeviceMonochrome,
-	kCGColorSpaceDeviceRGB,
-	kCGColorSpaceDeviceCMYK,
-	kCGColorSpaceDeviceMonochrome2, //????
-	kCGColorSpaceDeviceRGB2,//????
-	kCGColorSpaceDevicePattern,
+	kCGColorSpaceTypeDeviceUnknown = 0,
+	kCGColorSpaceTypeDisplayGray,
+	kCGColorSpaceTypeDisplayRGB,
+	kCGColorSpaceTypeDeviceGray,
+	kCGColorSpaceTypeDeviceRGB,
+	kCGColorSpaceTypeDeviceCMYK,
+	kCGColorSpaceTypeSystemDefaultGray,
+	kCGColorSpaceTypeSystemDefaultRGB,
+	kCGColorSpaceTypeSystemDefaultCMYK,
+
+	kCGColorSpaceTypePattern = 14
+
 };
-typedef enum CGColorSpaceDevice CGColorSpaceDevice;
+typedef enum CGColorSpaceType CGColorSpaceType;
 
 
 typedef struct CGColorSpace {
 	CFRuntimeBase obj;				//0x00
 
-	CGColorSpaceDevice spaceDevice;	//0x0C
+	CGColorSpaceType spaceType;		//0x0C
 	CGColorSpaceModel spaceModel;	//0x10
 	size_t numberOfComponents;		//0x18
 	CGColorRef defaultColor;		//0x1C
 
 } CGColorSpace, *CGColorSpaceRef;
 
-void CGColorSpaceDestroy(CFTypeRef ctf);
 
+/* private colorspace constants */
+CG_EXTERN const CFStringRef kCGColorSpaceDisplayGray;
+CG_EXTERN const CFStringRef kCGColorSpaceDisplayRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceDeviceGray;
+CG_EXTERN const CFStringRef kCGColorSpaceDeviceRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceDeviceCMYK;
+CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultGray;
+CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultCMYK;
+CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedGray;
+CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedCMYK;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericHDR;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericRGBHDR;
+CG_EXTERN const CFStringRef kCGColorSpaceUndo601;
+CG_EXTERN const CFStringRef kCGColorSpaceColoredPattern;
+
+
+
+/* functions */
+void create_name_to_index_map(void);
+void CGColorSpaceDestroy(CFTypeRef ctf);
 bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
-CGColorSpaceDevice CGColorSpaceGetType(CGColorSpaceRef space);
 CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space);
 CGColorSpaceRef CGColorSpaceCreateDeviceRGB(void);
-
-CGColorSpaceDevice CGColorSpaceGetType(CGColorSpaceRef space);
-
+CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
 CGColorSpaceRef CGColorSpaceRetain(CGColorSpaceRef space);
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
