@@ -24,6 +24,13 @@ CF_EXTERN_C_BEGIN
 
 typedef CFTypeRef (*copyDefVal) (const char* propName);
 
+// NEED TO FIX THAT AND STOP DECLARE CF_BUILDING_CF=1
+//_declspec(dllimport) const CFStringRef kCFPreferencesAnyApplication;
+//_declspec(dllimport) const CFStringRef kCFPreferencesCurrentUser;
+//_declspec(dllimport) const CFStringRef kCFPreferencesAnyHost;
+//_declspec(dllimport) const CFStringRef kCFPreferencesCurrentApplication;
+//_declspec(dllimport) const CFStringRef kCFTypeDictionaryKeyCallBacks;
+
 CG_EXTERN const CFStringRef Yes;
 CG_EXTERN const CFStringRef No;
 CG_EXTERN const CFStringRef True;
