@@ -36,7 +36,7 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 						  CFDictionaryRef theDict)
 {
 	CGBitmapContextInfoRef bitmapContextInfo;
-	CGColorSpaceDevice csType;
+	CGColorSpaceType csType;
 	bool isValid; 
 	size_t numberOfComponents;
 
@@ -60,25 +60,25 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 	csType = CGColorSpaceGetType(bitmapContextInfo->colorspace);
 	switch(csType)
 	{
-	case kCGColorSpaceDeviceUnknown: 
+	case kCGColorSpaceTypeDeviceUnknown: 
 
 		break;
 	
-	case kCGColorSpaceDeviceMonochrome:
-	case kCGColorSpaceDeviceMonochrome2:
+	case kCGColorSpaceTypeDisplayGray:
+	case kCGColorSpaceTypeDeviceGray:
 		isValid = validate_gray_bitmap_info(bitmapContextInfo);
 		break;
 
-	case kCGColorSpaceDeviceRGB:
-	case kCGColorSpaceDeviceRGB2:
+	case kCGColorSpaceTypeDisplayRGB:
+	case kCGColorSpaceTypeDeviceRGB:
 		isValid = validate_rgb_bitmap_info(bitmapContextInfo);
 		break;
 	
-	case kCGColorSpaceDeviceCMYK:
+	case kCGColorSpaceTypeDeviceCMYK:
 		isValid = validate_cmyk_bitmap_info(bitmapContextInfo);
 		break;
 
-	case kCGColorSpaceDevicePattern:
+	case kCGColorSpaceTypePattern:
 		numberOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
 		if (numberOfComponents == 3)
 			isValid = validate_rgb_bitmap_info(bitmapContextInfo);
