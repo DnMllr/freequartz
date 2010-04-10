@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreGraphics", "CoreGraphics.vcproj", "{82C92E1C-B6B8-4C76-AB62-C4BB02C11652}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372} = {EC99198F-4CDD-4D85-AE6F-F837FF6CC372}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CFLite", "..\..\..\CoreFoundation\windows\CFLiteLib.vcproj", "{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{82C92E1C-B6B8-4C76-AB62-C4BB02C11652}.Debug|Win32.Build.0 = Debug|Win32
 		{82C92E1C-B6B8-4C76-AB62-C4BB02C11652}.Release|Win32.ActiveCfg = Release|Win32
 		{82C92E1C-B6B8-4C76-AB62-C4BB02C11652}.Release|Win32.Build.0 = Release|Win32
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}.Debug|Win32.Build.0 = Debug|Win32
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}.Release|Win32.ActiveCfg = Release|Win32
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

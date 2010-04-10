@@ -165,6 +165,7 @@ CF_EXTERN_C_BEGIN
     #undef CF_EXPORT
     #if defined(CF_BUILDING_CF)
         #define CF_EXPORT __declspec(dllexport) extern
+        //#pragma message("!!!!!!!!!! CF_EXPORT !!!!!!!!!!!!")
     #else
         #define CF_EXPORT __declspec(dllimport) extern
     #endif

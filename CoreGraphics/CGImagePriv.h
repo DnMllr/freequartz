@@ -32,6 +32,25 @@ enum {
     kCGImageMask		= 0x10,
 };
 
+/* forward declarations */
+typedef struct CGImage CGImage, *CGImageRef;
+typedef struct CGImageJPEGRep CGImageJPEGRep, *CGImageJPEGRepRef;
+typedef struct CGImageEPSRep CGImageEPSRep, *CGImageEPSRepRef;
+
+struct CGImageJPEGRep {
+
+	signed long refcount;			//0x00
+	CGDataProviderRef provider;		//0x04
+};
+
+struct CGImageEPSRep {
+
+	signed long refcount;			//0x00
+	CGDataProviderRef provider;		//0x04
+	CGImageRef image;				//0x08
+};
+
+
 struct CGImage {
 
 	CFRuntimeBase obj;				//0x00
@@ -50,18 +69,28 @@ struct CGImage {
 	CGFloat* components;			//0x38
 	CGImageRef refs;				//0x3C
 	CGFloat* components2;			//0x40
-	CGImageRef imageJPEGRep;		//0x44
-	CGImageRef imageEPSRep;			//0x48
+	CGImageJPEGRepRef imageJPEGRep;	//0x44
+	CGImageEPSRepRef imageEPSRep;	//0x48
 	CGPathRef path;					//0x4C
 
 };
-typedef struct CGImage CGImage, *CGImageRef;
+
+
+
+
 
 
 void	CGImageDestroy(CFTypeRef ctf);
 Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo);
-CGImageRef CGImageJPEGRepRetain(CGImageRef image);
-CGImageRef CGImageEPSRepRetain(CGImageRef image);
+
+CGImageRef CGImageCreateCopyWithJPEGSource(CGImageRef image, CGDataProviderRef provider);
+
+CGImageJPEGRepRef CGImageJPEGRepRetain(CGImageJPEGRepRef imageJPEG);
+void CGImageJPEGRepRelease(CGImageJPEGRepRef imageJPEG);
+CGImageJPEGRepRef CGImageJPEGRepCreate(CGDataProviderRef provider);
+
+CGImageEPSRepRef CGImageEPSRepRetain(CGImageEPSRepRef imageEPS);
+void CGImageEPSRepRelease(CGImageEPSRepRef imageEPS);
 
 CF_EXTERN_C_END
 
