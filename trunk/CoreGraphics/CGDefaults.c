@@ -111,26 +111,31 @@ copyDefaultValue(const char* propName)
 Boolean
 getBool(CFTypeRef preference, Boolean* boolean)
 {
-	Boolean ret;
+	Boolean ret = FALSE;
 
 	if (!preference)
 		return FALSE;
 
 	if (CFGetTypeID(preference) == CFBooleanGetTypeID()) {
-		ret = *boolean = CFBooleanGetValue((CFBooleanRef) preference);
+		boolean = CFBooleanGetValue((CFBooleanRef) preference);
+		ret = TRUE;
 	}
 	else if (CFGetTypeID(preference) == CFStringGetTypeID()) {
 		if (!CFStringCompare((CFStringRef)preference, Yes, kCFCompareCaseInsensitive)) {
-			*boolean = ret = TRUE;
+			ret = TRUE;
+			*boolean =  = TRUE;
 		}
 		else if (!CFStringCompare((CFStringRef)preference, No, kCFCompareCaseInsensitive)) {
-			ret = *boolean = FALSE;
+			ret = TRUE;
+			*boolean = FALSE;
 		}
 		else if (!CFStringCompare((CFStringRef)preference, True, kCFCompareCaseInsensitive)) {
-			ret = *boolean = TRUE;
+			ret = TRUE;
+			*boolean = TRUE;
 		}
 		else if (!CFStringCompare((CFStringRef)preference, False, kCFCompareCaseInsensitive)) {
-			ret = *boolean = FALSE;
+			ret = TRUE;
+			*boolean = FALSE;
 		}
 	}
 
