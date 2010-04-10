@@ -19,6 +19,7 @@
 #include "CGBasePriv.h"
 #include "CGDefaultsPriv.h"
 #include <pthread.h>
+#include <dlfcn.h>
 
 static CFArrayRef dylib_paths = NULL;
 static CFMutableDictionaryRef handles = NULL;
@@ -35,8 +36,10 @@ CONST_STRING_DECL(separator,				":");
 #endif
 
 //TODO put inside CGLibraryPriv.h
-void*
-load_function(CFArrayRef paths, const char* fullLibName, const char* symName);
+void initialize_dylib_paths(void);
+void* open_handle_to_dylib_path(const char* libname);
+void* load_function(CFArrayRef paths, const char* fullLibName, const char* symName);
+void* CGLibraryLoadFunction(const char* libName, const char* symName);
 
 void
 initialize_dylib_paths(void)
@@ -44,32 +47,20 @@ initialize_dylib_paths(void)
 	Boolean bValue;
 	CFStringRef strValue;
 
-	if (!CGDefaultsGetBoolean("CGAllowDylibSearchPath", &bValue) || !bValue)
-		return;
-
-	if (!CGDefaultsCopyString("CGS_LIBRARY_PATH", &strValue) || !strValue)
-		return;
-	
-	dylib_paths = CFStringCreateArrayBySeparatingStrings(NULL, NULL/* FIXME*/, separator);
-
-	// FIXME
-	//CFRelease();
-
+	if (CGDefaultsGetBoolean("CGAllowDylibSearchPath", &bValue) && bValue)
+	{
+		if (CGDefaultsCopyString("CGS_LIBRARY_PATH", &strValue) && strValue)
+		{
+			dylib_paths = CFStringCreateArrayBySeparatingStrings(NULL, strValue, separator);
+			CFRelease((CFTypeRef)strValue);
+		}
+	}
 }
 
-
-void* 
-CGLibraryLoadFunction(const char* libName, const char* symName)
+void*
+open_handle_to_dylib_path(const char* libname)
 {
-	char buffer[MAX_PATH+1];
-
-	pthread_once(&libraryload_once, initialize_dylib_paths);
-	if (!strcmp(libName, "CSync"))
-		return NULL;
-
-	snprintf(buffer, MAX_PATH, DYLIB_FORMAT, libName);
-
-	return load_function(dylib_paths, buffer, symName);
+	return dlopen(libname, RTLD_LOCAL|RTLD_LAZY);
 }
 
 void*
@@ -93,3 +84,18 @@ load_function(CFArrayRef paths, const char* fullLibName, const char* symName)
 
 	return NULL;
 }
+
+void* 
+CGLibraryLoadFunction(const char* libName, const char* symName)
+{
+	char buffer[MAX_PATH+1];
+
+	pthread_once(&libraryload_once, initialize_dylib_paths);
+	if (!strcmp(libName, "CSync"))
+		return NULL;
+
+	snprintf(buffer, MAX_PATH, DYLIB_FORMAT, libName);
+
+	return load_function(dylib_paths, buffer, symName);
+}
+
