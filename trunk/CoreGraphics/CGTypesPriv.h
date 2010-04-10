@@ -23,7 +23,11 @@
 
 CF_EXTERN_C_BEGIN
 
+// include issues because in this file CG_EXTERN and DLLEXPORT are not properly
+// defined that's why I am explicitely putting __declspec.
+// TODO : need to find why !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //CG_EXTERN const CFStringRef kCGCTypeCopyDescFormat;
+__declspec(dllexport) const CFStringRef kCGCTypeCopyDescFormat;
 
 CFStringRef copy_description(CFTypeRef cf, CFDictionaryRef formatOptions);
 CFStringRef copy_debug_description(CFTypeRef cf);

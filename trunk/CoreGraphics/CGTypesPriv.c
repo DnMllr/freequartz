@@ -16,15 +16,16 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
+#include <pthread.h>
 #include "CGBasePriv.h"
 #include "CGTypesPriv.h"
-#include <pthread.h>
+
 
 
 static pthread_mutex_t type_register_lock	= PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t nextID_lock			= PTHREAD_MUTEX_INITIALIZER;
 
-//CONST_STRING_DECL(kCGCTypeCopyDescFormat,	"<%s %p>");
+CONST_STRING_DECL(kCGCTypeCopyDescFormat,	"<%s %p>");
 
 
 
@@ -39,11 +40,11 @@ CFStringRef copy_description(CFTypeRef cf, CFDictionaryRef formatOptions)
 	cfclass = _CFRuntimeGetClassWithTypeID(CFGetTypeID(cf));
 	if (cfclass) {
 
-		/*ret = CFStringCreateWithFormat(CFGetAllocator(cf),
+		ret = CFStringCreateWithFormat(CFGetAllocator(cf),
 			formatOptions,
 			kCGCTypeCopyDescFormat,
 			cfclass->className,
-			cf);*/
+			cf);
 	}
 	else
 		ret = NULL;

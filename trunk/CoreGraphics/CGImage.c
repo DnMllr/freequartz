@@ -59,22 +59,68 @@ void CGImageDestroy(CFTypeRef ctf)
 	free(image->components2);
 }
 
-CGImageRef CGImageJPEGRepRetain(CGImageRef image)
+CGImageRef CGImageRetain(CGImageRef image)
 {
-	// SEEMS CGImageJPEGRepRetain are not really CGImageRef because
-	// it uses refcount ...
-	if (!image) { return NULL; }
-	//image->refcount++;
-	return image;
+	if (!image) { return 0; }
+	return ((CGImageRef)CFRetain((CFTypeRef) image));
 }
 
-CGImageRef CGImageEPSRepRetain(CGImageRef image)
+void CGImageRelease(CGImageRef image)
 {
-	// SEEMS CGImageEPSRepRetain are not really CGImageRef because
-	// it uses refcount ...
-	if (!image) { return NULL; }
-	//image->refcount++;
-	return image;
+	if (!image) { return; }
+	CFRelease((CFTypeRef)image);
+}
+
+void CGImageJPEGRepRelease(CGImageJPEGRepRef imageJPEG)
+{
+	if (!imageJPEG) { return; }
+	
+	imageJPEG->refcount--;
+	if (imageJPEG->refcount == 0) {
+	
+		CGDataProviderRelease(imageJPEG->provider);
+		free((void*)imageJPEG);
+	}
+}
+
+
+CGImageJPEGRepRef CGImageJPEGRepRetain(CGImageJPEGRepRef imageJPEG)
+{
+	if (!imageJPEG) { return NULL; }
+	imageJPEG->refcount++;
+	return imageJPEG;
+}
+
+
+CGImageJPEGRepRef CGImageJPEGRepCreate(CGDataProviderRef provider)
+{
+	CGImageJPEGRepRef imageJPEG;
+
+	imageJPEG = (CGImageJPEGRepRef)calloc(1, sizeof(CGImageJPEGRep));
+	if (imageJPEG)
+		imageJPEG->provider = CGDataProviderRetain(provider);
+
+	return imageJPEG;
+}
+
+void CGImageEPSRepRelease(CGImageEPSRepRef imageEPS)
+{
+	if (!imageEPS) { return; }
+	
+	imageEPS->refcount--;
+	if (imageEPS->refcount == 0) {
+	
+		CGDataProviderRelease(imageEPS->provider);
+		CGImageRelease(imageEPS->image);
+		free((void*)imageEPS);
+	}
+}
+
+CGImageEPSRepRef CGImageEPSRepRetain(CGImageEPSRepRef imageEPS)
+{
+	if (!imageEPS) { return NULL; }
+	imageEPS->refcount++;
+	return imageEPS;
 }
 
 
@@ -169,6 +215,25 @@ CGImageRef CGImageCreate(size_t width, size_t height,
 	return image;
 }
 
+
+CGImageRef CGImageCreateCopyWithJPEGSource(CGImageRef image, CGDataProviderRef provider)
+{
+	CGImageRef imageCopy;
+
+	if (!image || !provider)
+		return NULL;
+
+	imageCopy = CGImageCreateCopy(image);
+	if (imageCopy) {
+
+		if (imageCopy->imageJPEGRep) 
+			CGImageJPEGRepRelease(imageCopy->imageJPEGRep);
+		
+		imageCopy->imageJPEGRep = CGImageJPEGRepCreate(provider);	
+	}
+
+	return imageCopy;
+}
 
 CGImageRef CGImageMaskCreate(size_t width, size_t height,
 							 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
@@ -348,17 +413,7 @@ CGImageRef CGImageCreateCopyWithColorSpace(CGImageRef image,CGColorSpaceRef spac
 	return imageRef;
 }
 
-CGImageRef CGImageRetain(CGImageRef image)
-{
-	if (!image) { return 0; }
-	return ((CGImageRef)CFRetain((CFTypeRef) image));
-}
 
-void CGImageRelease(CGImageRef image)
-{
-	if (!image) { return; }
-	CFRelease((CFTypeRef)image);
-}
 
 bool CGImageIsMask(CGImageRef image)
 {
