@@ -56,8 +56,10 @@
 #if defined(__WIN32__)
 #	if defined(CG_EXPORT_DYNAMIC)
 #		define CG_EXTERN extern "C" DLLEXPORT
+#       pragma message("######### CG_EXTERN=extern \"C\" DLLEXPORT #########")
 #	else
 #		define CG_EXTERN extern "C" DLLIMPORT 
+#       pragma message("######### CG_EXTERN=extern \"C\" DLLIMPORT #########")
 #	endif
 #else
 #	define CG_EXTERN extern "C"
@@ -66,9 +68,11 @@
 #else
 #if defined(__WIN32__)
 #	if defined(CG_EXPORT_DYNAMIC)
-#		define CG_EXTERN extern DLLEXPORT 
+#		define CG_EXTERN extern DLLEXPORT
+#       pragma message("######### CG_EXTERN=extern DLLEXPORT #########")
 #	else
 #		define CG_EXTERN extern DLLIMPORT 
+#       pragma message("######### CG_EXTERN=extern DLLIMPORT ######### ")
 #	endif
 #else
 	#define CG_EXTERN extern

@@ -448,6 +448,10 @@ void strokeStateRelease(CGStateStrokeRef stateStroke)
 	}
 }
 
+void CGGStateSetCompositeOperation(CGGStateRef gstate, CGCompositeMode compositeMode)
+{
+
+}
 
 CGColorRef CGGStateGetFillColor(CGGStateRef state)
 {
