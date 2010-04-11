@@ -117,13 +117,13 @@ getBool(CFTypeRef preference, Boolean* boolean)
 		return FALSE;
 
 	if (CFGetTypeID(preference) == CFBooleanGetTypeID()) {
-		boolean = CFBooleanGetValue((CFBooleanRef) preference);
 		ret = TRUE;
+		*boolean = CFBooleanGetValue((CFBooleanRef) preference);
 	}
 	else if (CFGetTypeID(preference) == CFStringGetTypeID()) {
 		if (!CFStringCompare((CFStringRef)preference, Yes, kCFCompareCaseInsensitive)) {
 			ret = TRUE;
-			*boolean =  = TRUE;
+			*boolean = TRUE;
 		}
 		else if (!CFStringCompare((CFStringRef)preference, No, kCFCompareCaseInsensitive)) {
 			ret = TRUE;
