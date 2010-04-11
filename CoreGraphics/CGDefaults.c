@@ -25,12 +25,12 @@ static pthread_once_t	allow_debug_once = PTHREAD_ONCE_INIT;
 static Boolean			allowDebuggingDefaults = FALSE;
 
 
-CONST_STRING_DECL(Com_apple_core,				"Com_apple_core");
-CONST_STRING_DECL(Yes,							"Yes");
-CONST_STRING_DECL(No,							"No");
-CONST_STRING_DECL(True,							"True");
-CONST_STRING_DECL(False,						"False");
-CONST_STRING_DECL(CGAllowDebuggingDefaults,		"CGAllowDebuggingDefaults");
+CG_CONST_STRING_DECL(Com_apple_core,				"Com_apple_core");
+CG_CONST_STRING_DECL(Yes,							"Yes");
+CG_CONST_STRING_DECL(No,							"No");
+CG_CONST_STRING_DECL(True,							"True");
+CG_CONST_STRING_DECL(False,							"False");
+CG_CONST_STRING_DECL(CGAllowDebuggingDefaults,		"CGAllowDebuggingDefaults");
 
 
 

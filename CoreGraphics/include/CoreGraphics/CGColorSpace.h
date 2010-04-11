@@ -25,13 +25,13 @@ typedef struct CGColorSpace *CGColorSpaceRef;
 #include <CoreGraphics/CGDataProvider.h>
 
 /* constants. */
-CG_EXTERN CFStringRef kCGColorSpaceGenericGray;
-CG_EXTERN CFStringRef kCGColorSpaceGenericRGB;
-CG_EXTERN CFStringRef kCGColorSpaceGenericCMYK;
-CG_EXTERN CFStringRef kCGColorSpaceGenericRGBLinear;
-CG_EXTERN CFStringRef kCGColorSpaceAdobeRGB1998;
-CG_EXTERN CFStringRef kCGColorSpaceSRGB;
-CG_EXTERN CFStringRef kCGColorSpaceGenericGrayGamma2_2;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericGray;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericCMYK;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericRGBLinear;
+CG_EXTERN const CFStringRef kCGColorSpaceAdobeRGB1998;
+CG_EXTERN const CFStringRef kCGColorSpaceSRGB;
+CG_EXTERN const CFStringRef kCGColorSpaceGenericGrayGamma2_2;
 
 enum CGColorSpaceModel {
     kCGColorSpaceModelUnknown = -1,

@@ -17,8 +17,47 @@
 **
 ****************************************************************************/
 #include <CoreGraphics/CGBitmapContext.h>
+#include <pthread.h>
 #include "CGBitmapContextPriv.h"
 #include "CGDataProviderPriv.h"
+#include "CGLibraryPriv.h"
+
+static pthread_once_t	bitmap_delegate_once = PTHREAD_ONCE_INIT;
+static _CGBitmapContextDelegateCreate CGBitmapContextDelegateCreate = NULL;
+
+
+void 
+loadBitmapContextDelegateCreator(void)
+{
+#if 0
+	CGContextDelegateRef bitmapContextDelegate;
+
+	bitmapContextDelegate = CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
+	if (bitmapContextDelegate) {
+		CGBitmapContextDelegateCreate = bitmapContextDelegate;
+	}
+	else {
+		CGPostError("Failed to load bitmap context.");
+	}
+#endif
+}
+
+CGContextDelegateRef 
+__CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+								CFDictionaryRef theDict)
+{
+	CGContextDelegateRef ctxDelegate;
+
+	if (CGBitmapContextDelegateCreate == NULL)
+		pthread_once(&bitmap_delegate_once, loadBitmapContextDelegateCreator);
+	
+	if (CGBitmapContextDelegateCreate)
+		ctxDelegate = CGBitmapContextDelegateCreate(bitmapContextInfo, theDict);
+	else
+		ctxDelegate = NULL;
+	
+	return ctxDelegate;
+}
 
 
 CGBitmapContextInfoRef
@@ -41,7 +80,7 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 	size_t numberOfComponents;
 
 
-	bitmapContextInfo = calloc(1, sizeof(CGBitmapContextInfo));
+	bitmapContextInfo = (CGBitmapContextInfoRef)calloc(1, sizeof(CGBitmapContextInfo));
 	if (!bitmapContextInfo) { goto Error; }
 
 	bitmapContextInfo->refcount = 1;

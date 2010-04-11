@@ -4,44 +4,49 @@
 #include "CGBasePriv.h"
 #include "CGContextPriv.h"
 
+typedef CGContextDelegateRef (*_CGBitmapContextDelegateCreate)(
+	CGBitmapContextInfoRef bitmapContextInfo, 
+	CFDictionaryRef theDict);
+
+CG_EXTERN void loadBitmapContextDelegateCreator(void);
+
+CG_EXTERN CGContextDelegateRef __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+															   CFDictionaryRef theDict);
+
 CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerComponent,
-														   size_t bytesPerRow,
-														   CGColorSpaceRef colorspace, 
-														   CGBitmapInfo bitmapInfo, 
-														   CGFloat hRes,
-														   Boolean a,
-														   Boolean b,
-														   Boolean c,
-														   Boolean d,
-														   Boolean e,
-														   CGFloat vRes,
-														   CFDictionaryRef theDict);
+												 size_t bytesPerRow,
+												 CGColorSpaceRef colorspace, 
+												 CGBitmapInfo bitmapInfo, 
+												 CGFloat hRes,
+												 Boolean a,
+												 Boolean b,
+												 Boolean c,
+												 Boolean d,
+												 Boolean e,
+												 CGFloat vRes,
+												 CFDictionaryRef theDict);
 
 CG_EXTERN CGContextRef CGBitmapContextCreateWithDictionary(void *data, 
-														   size_t width, size_t height, 
-														   size_t bitsPerComponent, 
-														   size_t bytesPerRow,
-														   CGColorSpaceRef colorspace, 
-														   CGBitmapInfo bitmapInfo,
-														   CGFloat hRes, 
-														   CGFloat vRes, 
-														   CFDictionaryRef theDict);
+												 size_t width, size_t height, 
+												 size_t bitsPerComponent, 
+												 size_t bytesPerRow,
+												 CGColorSpaceRef colorspace, 
+												 CGBitmapInfo bitmapInfo,
+												 CGFloat hRes, 
+												 CGFloat vRes, 
+												 CFDictionaryRef theDict);
 
 
 
-CG_EXTERN void * 
-CGBitmapAllocateData(size_t len);
+CG_EXTERN void * CGBitmapAllocateData(size_t len);
 
-CG_EXTERN void
-CGBitmapFreeData(void *data);
+CG_EXTERN void CGBitmapFreeData(void *data);
 
-CG_EXTERN size_t
-CGBitmapGetAlignedBytesPerRow(size_t len);
+CG_EXTERN size_t CGBitmapGetAlignedBytesPerRow(size_t len);
 
 
-CG_EXTERN CGContextRef
-createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, 
-					CFDictionaryRef theDict, const char* name);
+CG_EXTERN CGContextRef createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, 
+										   CFDictionaryRef theDict, const char* name);
 
 void finalize_bitmap_context(CGContextRef context);
 

@@ -25,7 +25,7 @@
 static pthread_mutex_t type_register_lock	= PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t nextID_lock			= PTHREAD_MUTEX_INITIALIZER;
 
-CONST_STRING_DECL(kCGCTypeCopyDescFormat,	"<%s %p>");
+CG_CONST_STRING_DECL(kCGCTypeCopyDescFormat,	"<%s %p>");
 
 
 

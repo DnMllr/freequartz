@@ -242,3 +242,8 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 
 	return provider;
 }
+
+CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
+{
+	return NULL;
+}

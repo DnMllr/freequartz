@@ -68,27 +68,27 @@ static CFRuntimeClass CGContextClass =
 CFTypeID __kCGContextID = _kCFRuntimeNotATypeID;
 
 
-CONST_STRING_DECL(kCGContextDisplayList,				"kCGContextDisplayList");
-CONST_STRING_DECL(kCGContextLog,						"kCGContextLog");
-CONST_STRING_DECL(kCGContextBackgroundColor,			"kCGContextBackgroundColor");
-CONST_STRING_DECL(kCGContextBoundingBox,				"kCGContextBoundingBox");
-CONST_STRING_DECL(kCGContextColorSpace,					"kCGContextColorSpace");
-CONST_STRING_DECL(kCGContextGroup,						"kCGContextGroup");
-CONST_STRING_DECL(kCGContextResolution,					"kCGContextResolution");
+CG_CONST_STRING_DECL(kCGContextDisplayList,					"kCGContextDisplayList");
+CG_CONST_STRING_DECL(kCGContextLog,							"kCGContextLog");
+CG_CONST_STRING_DECL(kCGContextBackgroundColor,				"kCGContextBackgroundColor");
+CG_CONST_STRING_DECL(kCGContextBoundingBox,					"kCGContextBoundingBox");
+CG_CONST_STRING_DECL(kCGContextColorSpace,					"kCGContextColorSpace");
+CG_CONST_STRING_DECL(kCGContextGroup,						"kCGContextGroup");
+CG_CONST_STRING_DECL(kCGContextResolution,					"kCGContextResolution");
 
-CONST_STRING_DECL(kCGContextFilterInfo,					"kCGContextFilterInfo");
-CONST_STRING_DECL(kCGContextFilterOptionsData,			"kCGContextFilterOptionsData");
-CONST_STRING_DECL(kCGContextFilterOptionsURL,			"kCGContextFilterOptionsURL");
-CONST_STRING_DECL(kCGContextFilterOptionsName,			"kCGContextFilterOptionsName");
-CONST_STRING_DECL(kCGCFilterPrintingDomain,				"kCGCFilterPrintingDomain");
-CONST_STRING_DECL(kCGCFilterApplicationDomain,			"kCGCFilterApplicationDomain");
-CONST_STRING_DECL(kCGTransparencyLayerContentBounds,	"kCGTransparencyLayerContentBounds");
+CG_CONST_STRING_DECL(kCGContextFilterInfo,					"kCGContextFilterInfo");
+CG_CONST_STRING_DECL(kCGContextFilterOptionsData,			"kCGContextFilterOptionsData");
+CG_CONST_STRING_DECL(kCGContextFilterOptionsURL,			"kCGContextFilterOptionsURL");
+CG_CONST_STRING_DECL(kCGContextFilterOptionsName,			"kCGContextFilterOptionsName");
+CG_CONST_STRING_DECL(kCGCFilterPrintingDomain,				"kCGCFilterPrintingDomain");
+CG_CONST_STRING_DECL(kCGCFilterApplicationDomain,			"kCGCFilterApplicationDomain");
+CG_CONST_STRING_DECL(kCGTransparencyLayerContentBounds,		"kCGTransparencyLayerContentBounds");
 
-CONST_STRING_DECL(kCGContextErase,						"kCGContextErase");
-CONST_STRING_DECL(kCGContextClear,						"kCGContextClear");
-CONST_STRING_DECL(kCGContextWait,						"kCGContextWait");
-CONST_STRING_DECL(kCGContextSynchronize,				"kCGContextSynchronize");
-CONST_STRING_DECL(kCGContextFlush,						"kCGContextFlush");
+CG_CONST_STRING_DECL(kCGContextErase,						"kCGContextErase");
+CG_CONST_STRING_DECL(kCGContextClear,						"kCGContextClear");
+CG_CONST_STRING_DECL(kCGContextWait,						"kCGContextWait");
+CG_CONST_STRING_DECL(kCGContextSynchronize,					"kCGContextSynchronize");
+CG_CONST_STRING_DECL(kCGContextFlush,						"kCGContextFlush");
 
 
 

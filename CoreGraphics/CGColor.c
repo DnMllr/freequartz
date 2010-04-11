@@ -86,14 +86,13 @@ CGColorRef CGColorCreate(CGColorSpaceRef space, const CGFloat components[])
 CGColorRef CGColorCreateGenericGray(CGFloat gray, CGFloat alpha)
 {
 	CGFloat components[2];
-	CFStringRef name;
 	CGColorSpaceRef space;
 	CGColorRef color;
 
 	components[0] = gray;
 	components[1] = alpha;
 
-	space = CGColorSpaceCreateWithName(name);
+	space = CGColorSpaceCreateWithName(kCGColorSpaceGenericGray);
 	color = CGColorCreate(space, components);
 	CGColorSpaceRelease(space);
 

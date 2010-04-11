@@ -27,19 +27,13 @@ static pthread_once_t  libraryload_once		= PTHREAD_ONCE_INIT;
 static pthread_mutex_t functionload_mutex	= PTHREAD_MUTEX_INITIALIZER;
 
 
-CONST_STRING_DECL(separator,				":");
+CG_CONST_STRING_DECL(separator,				":");
 
 #ifdef __WIN32__
 #define DYLIB_FORMAT "lib%s.dll"
 #else
 #define DYLIB_FORMAT "lib%s.A.dylib"
 #endif
-
-//TODO put inside CGLibraryPriv.h
-void initialize_dylib_paths(void);
-void* open_handle_to_dylib_path(const char* libname);
-void* load_function(CFArrayRef paths, const char* fullLibName, const char* symName);
-void* CGLibraryLoadFunction(const char* libName, const char* symName);
 
 void
 initialize_dylib_paths(void)

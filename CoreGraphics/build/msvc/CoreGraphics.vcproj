@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../;../../../CoreFoundation;../../../CoreFoundation/include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;CF_BUILDING_CF=1"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;CGBUILDINGFOUNDATION=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -118,7 +118,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="../../../posix4win/msvc/include;../../include;../../../;../../../CoreFoundation;../../../CoreFoundation/include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;CF_BUILDING_CF=1"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COREGRAPHICS_EXPORTS;CG_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -184,7 +184,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -200,7 +208,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -216,7 +232,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -232,7 +256,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -248,7 +280,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -260,7 +300,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -280,7 +328,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -292,7 +348,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -312,7 +376,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -328,7 +400,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -339,6 +419,22 @@
 			<File
 				RelativePath="..\..\CGDefaults.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\CGDefaultsPriv.h"
@@ -352,7 +448,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -368,7 +472,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -384,7 +496,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -400,7 +520,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -416,7 +544,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -429,7 +565,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						GeneratePreprocessedFile="0"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -445,7 +589,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -461,7 +613,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -471,6 +631,26 @@
 			</File>
 			<File
 				RelativePath="..\..\CGLibrary.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\CGLibraryPriv.h"
 				>
 			</File>
 			<File
@@ -485,7 +665,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -501,7 +689,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -517,7 +713,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -533,7 +737,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -549,7 +761,15 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
@@ -566,7 +786,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						GeneratePreprocessedFile="0"
-						CompileAs="1"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
 					/>
 				</FileConfiguration>
 			</File>
