@@ -19,11 +19,69 @@
 #include "libRIP.h"
 
 
-//0x17 encodings
-static const char* ripl_encoding[] = {
+//NULL
+//8
+//kCGImageAlphaOnly
+//Alpha_8
+//AAAAAAAA
+//8 bits per pixel alpha only destination. Color data is thrown away. Useful for generating alpha channels and masks
+//
+//Gray
+//8
+//kCGImageAlphaNone
+//Gray_8
+//WWWWWWWW
+//8 bits per pixel greyscale channel.
+//
+//RGB
+//5
+//kCGImageAlphaNoneSkipFirst
+//RGB555
+//-RRRRRGGGGGBBBBBB
+//16 bits per pixel, 5 bit per RGB component
+//
+//RGB
+//8
+//kCGImageAlphaNoneSkipFirst
+//XRGB_32
+//--------RRRRRRRRGGGGGGGGBBBBBBBB
+//32 bits per pixel RGB format where first byte is ignored
+//
+//RGB
+//8
+//kCGImageAlphaNoneSkipLast
+//RGBX_32
+//RRRRRRRRGGGGGGGGBBBBBBBB--------
+//32 bits per pixel RGB format where last byte is skipped
+//
+//RGB
+//8
+//kCGImageAlphaPremultipliedFirst
+//ARGB_32
+//AAAAAAAARRRRRRRRRGGGGGGGGBBBBBBBB
+//32 bits per pixel ARGB format with premultiplied alpha
+//
+//RGB
+//8
+//kCGImageAlphaPremultipliedLast
+//RGBA_32
+//RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+//32 bits per pixel RGBA format with premultiplied alpha
+//
+//CMYK
+//8
+//kCGImageAlphaNone
+//CMYK_32
+//CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK
+//32 bits per pixel CMYK format without alpha
 
-	"AAAAAAAA",
-	"WWWWWWWW",
+
+//http://developer.apple.com/mac/library/qa/qa2001/qa1037.html
+//0x17(23) encodings
+static const char* _ripl_encoding[] = {
+
+	"AAAAAAAA",								
+	"WWWWWWWW",								
 	"PPPPPPPP",
 	"-RRRRRGGGGGBBBBB",
 	"-rrrrrgggggbbbbb",
@@ -47,6 +105,13 @@ static const char* ripl_encoding[] = {
 	"ccccccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
 	NULL
 };
+
+
+
+int RIPLayerDepthForFormat(int index)
+{
+
+}
 
 uint32_t 
 ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)

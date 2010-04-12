@@ -54,6 +54,7 @@ typedef struct RIP {
 
 } *RIPRef;
 
+RIP_EXTERN int RIPLayerDepthForFormat(int index);
 
 RIP_EXTERN CGContextDelegateRef __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 															   CFDictionaryRef theDict);
