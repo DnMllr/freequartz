@@ -20,6 +20,19 @@
 #include "CGBltPriv.h"
 
 
+// Not sure yet how to decode this
+//blt_depth[] = {
+//	{ 2, 8, 16, 0		},		//A8_depth
+//	{ 2, 8, 17, 4		},		//W8_depth
+//	{ 8, 8, 0x33, 0x88	},		//RGBA32_depth
+//	{ 8, 8, 0x33, 0x98	},		//rgba32_depth
+//	{ 8, 8, 0x33, 0x48	},		//ARGB32_depth
+//	{ 8, 8, 0x33, 0x48	},		//argb32_depth
+//	{ 4, 5, 0x33, 0x44	},		//RGB555_depth
+//	{ 4, 5, 0x33, 0x54	},		//rgb555_depth
+//	{ 0, 0, 0x00, 0x00  }
+//};
+
 
 void* 
 CGBlt_depth(const char *format)

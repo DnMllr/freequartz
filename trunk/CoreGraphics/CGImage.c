@@ -193,7 +193,7 @@ CGImageRef CGImageCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 	
-	image->nextID = 42/*CGTypeGetNextIdentifier()*/;
+	image->nextID = 0x42/*CGTypeGetNextIdentifier()*/;
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;
@@ -259,7 +259,7 @@ CGImageRef CGImageMaskCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 
-	image->nextID = 42/*CGTypeGetNextIdentifier()*/;
+	image->nextID = 0x42/*CGTypeGetNextIdentifier()*/;
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;

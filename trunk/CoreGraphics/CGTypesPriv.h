@@ -36,6 +36,7 @@ CFTypeID CGTypeRegisterWithCallbacks(CFTypeID* typeID, CFRuntimeClass* rtclass);
 CFTypeRef CGTypeCreateInstance(CFTypeID id, CFIndex size);
 CFTypeRef CGTypeCreateInstanceWithAllocator(CFAllocatorRef allocator, CFTypeID id, CFIndex size);
 CFTypeID CGTypeGetNextIdentifier(CFTypeID id);
+CFTypeRef CGTypeCreateSingleton(CFTypeID typeID, void *memory, CFIndex size);
 
 CF_EXTERN_C_END
 

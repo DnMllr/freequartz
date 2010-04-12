@@ -29,14 +29,20 @@ CF_EXTERN_C_BEGIN
 
 typedef struct CGColorTransform {
 	CFRuntimeBase obj;
+	
+	int identifier;					//0x08	
 
 } CGColorTransform, *CGColorTransformRef;
 
 CG_EXTERN void colortransformFinalize(CFTypeRef ctf);
+
 CG_EXTERN CGColorTransformRef CGColorTransformRetain(CGColorTransformRef colorTransform);
+
 CG_EXTERN void CGColorTransformRelease(CGColorTransformRef colorTransform);
+
 CG_EXTERN CFTypeID CGColorTransformGetTypeID(void);
 
+CG_EXTERN int CGColorTransformGetIdentifier(CGColorTransformRef colorTransform);
 
 CF_EXTERN_C_END
 

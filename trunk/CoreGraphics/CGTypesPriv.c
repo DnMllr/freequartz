@@ -123,3 +123,20 @@ CFTypeRef CGTypeCreateInstanceWithAllocator(CFAllocatorRef allocator, CFTypeID i
 Cleanup:
 	return NULL;
 }
+
+CFTypeRef CGTypeCreateSingleton(CFTypeID typeID, void *memory, CFIndex size)
+{
+	if (memory == NULL) {
+		memory = malloc(size + sizeof(CFRuntimeBase));
+		if (!memory) {
+			CGPostError("%s: failed to create instance of type %jd", 
+				CGTypeCreateSingleton, typeID);
+			return NULL;
+		}
+	}
+
+	memset(memory, 0, size + sizeof(CFRuntimeBase));
+	_CFRuntimeInitStaticInstance(memory, typeID);
+
+	return memory;
+}

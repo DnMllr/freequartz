@@ -110,7 +110,7 @@ static const char* _ripl_encoding[] = {
 
 int RIPLayerDepthForFormat(int index)
 {
-
+	return 0;
 }
 
 uint32_t 
@@ -132,6 +132,20 @@ ripc_Initialize(RIPRef rip)
 	return NULL;
 }
 
+
+#if 0
+CGRect
+ripc_GetBounds(CGContextDelegateRef ctxDelegate)
+{
+	CGContextDelegateInfoRef delegateInfo;
+
+	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
+	if (delegateInfo->ctxDelegate->getBounds == NULL) {
+		return CGRectNull;
+	}
+}
+#endif
+
 CGContextDelegateRef 
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 								CFDictionaryRef theDict)
@@ -150,7 +164,7 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 		return NULL;
 	}
 
-	ripc_Initialize();
+	//ripc_Initialize();
 
 
 	return ctxDelegate;

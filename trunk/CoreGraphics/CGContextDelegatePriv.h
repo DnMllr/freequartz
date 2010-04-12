@@ -29,10 +29,8 @@
 
 CF_EXTERN_C_BEGIN
 
+// Forward declaration
 typedef struct CGContextDelegate *CGContextDelegateRef;
-
-
-
 
 
 enum CGContextDelegateType {
@@ -76,10 +74,16 @@ typedef struct CGCallback {
 extern CGCallback _kCGCallbacks[];
 
 
+struct CGContextDelegateInfo {
+	CGContextDelegateRef ctxDelegate;
+};
+typedef struct CGContextDelegateInfo CGContextDelegateInfo, *CGContextDelegateInfoRef;
+
 //sizeof(struct CGContext) = 0x60;
 struct CGContextDelegate {
 	CFRuntimeBase obj;				//0x00
 	
+									//0x08
 	void* finalize;					//0x0C
 	void* getColorTransform;		//0x10
 	void* getBounds;				//0x14
@@ -100,7 +104,7 @@ struct CGContextDelegate {
 	void* endLayer;					//0x50
 	void* getLayer;					//0x54
 	void* drawLayer;				//0x58
-	void* info;						//0x5C
+	CGContextDelegateInfoRef info;	//0x5C
 };
 typedef struct CGContextDelegate CGContextDelegate, *CGContextDelegateRef;
 
@@ -108,6 +112,7 @@ typedef struct CGContextDelegate CGContextDelegate, *CGContextDelegateRef;
 
 
 
+//CG_EXTERN CGContextDelegateGetNext();
 
 CG_EXTERN CGContextDelegateRef CGContextDelegateCreate(void* info);
 CG_EXTERN void delegate_finalize(CFTypeRef c);
@@ -119,6 +124,8 @@ CG_EXTERN void CGContextDelegateSetCallbacks(CGContextDelegateRef ctxDelegate, c
 CG_EXTERN void CGContextDelegateSetCallback(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, void* callback);
 //CG_EXTERN void CGContextDelegateSetCallbacks(CGContextDelegateRef ctxDelegate, const CGCallback* dlArray, int count);
 
+
+CG_EXTERN CGContextDelegateInfoRef CGContextDelegateGetInfo(CGContextDelegateRef ctxDelegate);
 
 CG_EXTERN void CGContextDelegateOperation(void* delegate1, void* delegate2, CFStringRef op);
 CG_EXTERN CGError CGContextDelegateDrawPath(CGContextDelegateRef ctxDelegate, 
