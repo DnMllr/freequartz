@@ -114,7 +114,7 @@ void dlr_Finalize(CGContextDelegateRef ctxDelegate)
 
 CGRect dlr_GetBounds(CGContextDelegateRef ctxDelegate)
 {
-	return CGRectZero;
+	return CGRectNull;
 }
 
 void dlr_DrawLines(CGContextDelegateRef ctxDelegate)

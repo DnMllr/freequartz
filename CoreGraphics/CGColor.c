@@ -76,7 +76,7 @@ CGColorRef CGColorCreate(CGColorSpaceRef space, const CGFloat components[])
 	color = (CGColorRef) CGTypeCreateInstance( CGColorGetTypeID(), size );
 	if (!color) { return 0; }
 
-	//color->nextID = CGTypeGetNextIdentifier(__kCGColorSpaceID);
+	color->nextID = CGTypeGetNextIdentifier(__kCGColorSpaceID);
 	CGColorSpaceRetain(space);
 	memcpy(color->components, components, numberOfComponents);
 

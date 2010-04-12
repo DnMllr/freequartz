@@ -59,3 +59,9 @@ void CGColorTransformRelease(CGColorTransformRef colorTransform)
 	if (!colorTransform) { return; }
 	CFRelease((CFTypeRef) colorTransform);
 }
+
+int CGColorTransformGetIdentifier(CGColorTransformRef colorTransform)
+{
+	if (!colorTransform) { return 0; }
+	return colorTransform->identifier;
+}

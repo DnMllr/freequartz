@@ -54,7 +54,7 @@ CGContextDelegateRef CGContextDelegateCreate(void* info)
 	size = sizeof(CGContextDelegate) - sizeof(CFRuntimeBase);
 	ctxDelegate = (CGContextDelegateRef) CGTypeCreateInstance( CGContextDelegateGetTypeID(), size );
 	if (!ctxDelegate) { return 0; }
-	ctxDelegate->info = info;
+	ctxDelegate->info = (CGContextDelegateInfoRef)info;
 
 	return ctxDelegate;
 }
@@ -77,6 +77,13 @@ void CGContextDelegateRelease(CGContextDelegateRef ctxDelegate)
 {
 	if (!ctxDelegate) { return; }
 	CFRelease((CFTypeRef)ctxDelegate);
+}
+
+
+CGContextDelegateInfoRef CGContextDelegateGetInfo(CGContextDelegateRef ctxDelegate)
+{
+	if (!ctxDelegate) { return NULL; }
+	return ctxDelegate->info;
 }
 
 

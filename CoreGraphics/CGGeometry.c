@@ -17,14 +17,15 @@
 **
 ****************************************************************************/
 #include <CoreGraphics/CGGeometry.h>
-
+#include <float.h>
 #include "CGBasePriv.h"
 #include "CGPathPriv.h"
 
 
-const CGPoint	CGPointZero = {0,0};
-const CGRect	CGRectZero = {0,0,0,0};
-const CGRect	CGRectInfinite = {-1.7014e38, -1.7014e38, 3.4028e38, 3.4028e38}; // TODO CHECK VALUES
+const CGPoint	CGPointZero		= {0, 0};
+const CGRect	CGRectZero		= {0, 0, 0, 0};
+const CGRect	CGRectNull		= {FLT_MAX, FLT_MAX, 0, 0};
+const CGRect	CGRectInfinite	= {-FLT_MIN, -FLT_MIN, FLT_MAX, FLT_MAX};
 
 CGFloat CGRectGetHeight(CGRect rect)
 {
