@@ -135,6 +135,7 @@ typedef struct CGBitmapContextInfo {
 
 } CGBitmapContextInfo, *CGBitmapContextInfoRef;
 
+static const char* CGCONTEXT_MAGIC = "CTXT";
 //sizeof(struct CGContext) = 0x5C;
 typedef struct CGContext {
 
