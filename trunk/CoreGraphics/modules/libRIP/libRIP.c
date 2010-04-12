@@ -19,6 +19,35 @@
 #include "libRIP.h"
 
 
+//0x17 encodings
+static const char* ripl_encoding[] = {
+
+	"AAAAAAAA",
+	"WWWWWWWW",
+	"PPPPPPPP",
+	"-RRRRRGGGGGBBBBB",
+	"-rrrrrgggggbbbbb",
+	"--------RRRRRRRRGGGGGGGGBBBBBBBB",
+	"--------rrrrrrrrggggggggbbbbbbbb",
+	"RRRRRRRRGGGGGGGGBBBBBBBB--------",
+	"rrrrrrrrggggggggbbbbbbbb--------",
+	"CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK",
+	"ccccccccmmmmmmmmyyyyyyyykkkkkkkk",
+	"WWWWWWWWWWWWWWWW",
+	"wwwwwwwwwwwwwwww",
+	"RRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBB----------------",
+	"rrrrrrrrrrrrrrrrggggggggggggggggbbbbbbbbbbbbbbbb----------------",
+	"CCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKK",
+	"ccccccccccccccccmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkk",
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+	"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+	"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB--------------------------------",
+	"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb--------------------------------",
+	"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+	"ccccccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+	NULL
+};
+
 uint32_t 
 ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 {
