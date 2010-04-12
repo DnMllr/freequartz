@@ -12,8 +12,6 @@ typedef CGContextDelegateRef  (*_CGBitmapContextDelegateCreate)(
 
 CG_EXTERN void loadBitmapContextDelegateCreator(void);
 
-CG_EXTERN CGContextDelegateRef __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-															   CFDictionaryRef theDict);
 
 CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerComponent,
 												 size_t bytesPerRow,

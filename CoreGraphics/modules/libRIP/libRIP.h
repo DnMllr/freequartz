@@ -24,6 +24,44 @@
 
 
 
+#ifdef __cplusplus
 
+#if defined(__WIN32__)
+#	if defined(RIP_EXPORT_DYNAMIC)
+#		define RIP_EXTERN extern "C" DLLEXPORT
+#	else
+#		define RIP_EXTERN extern "C" DLLIMPORT 
+#	endif
+#else
+#	define RIP_EXTERN extern "C"
+#endif
+
+#else
+#if defined(__WIN32__)
+#	if defined(RIP_EXPORT_DYNAMIC)
+#		define RIP_EXTERN extern DLLEXPORT
+#	else
+#		define RIP_EXTERN extern DLLIMPORT 
+#	endif
+#else
+	#define RIP_EXTERN extern
+#endif
+#endif /* __cplusplus */
+
+typedef struct RIP {
+
+	CGContextDelegateRef ctxDelegate;
+
+} *RIPRef;
+
+
+RIP_EXTERN CGContextDelegateRef __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+															   CFDictionaryRef theDict);
+
+RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo);
+
+RIP_EXTERN RIPRef ripc_Initialize(RIPRef rip);
+
+//RIP_EXTERN Boolean RIPLayerInitialize();
 
 #endif /* LIBRIP_H_ */

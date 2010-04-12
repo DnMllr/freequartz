@@ -109,7 +109,7 @@ typedef struct CGContextDelegate CGContextDelegate, *CGContextDelegateRef;
 
 
 
-CG_EXTERN CGContextDelegateRef CGContextDelegateCreate();
+CG_EXTERN CGContextDelegateRef CGContextDelegateCreate(void* info);
 CG_EXTERN void delegate_finalize(CFTypeRef c);
 CG_EXTERN CGContextDelegateRef CGContextDelegateRetain(CGContextDelegateRef ctxDelegate);
 CG_EXTERN void CGContextDelegateRelease(CGContextDelegateRef ctxDelegate);

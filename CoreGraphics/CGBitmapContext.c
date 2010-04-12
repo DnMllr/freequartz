@@ -42,7 +42,7 @@ loadBitmapContextDelegateCreator(void)
 	}
 }
 
-CGContextDelegateRef 
+static CGContextDelegateRef 
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 								CFDictionaryRef theDict)
 {
