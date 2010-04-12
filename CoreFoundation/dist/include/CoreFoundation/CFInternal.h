@@ -39,7 +39,7 @@
         NOT TO BE USED OUTSIDE CF!
 */
 
-#if !CF_BUILDING_CF
+#if !CF_BUILDING_CF && !CGBUILDINGFOUNDATION
     #error The header file CFInternal.h is for the exclusive use of CoreFoundation. No other project should include it.
 #endif
 
@@ -382,7 +382,7 @@ struct CF_CONST_STRING {
     uint32_t _length;
 };
 
-extern int __CFConstantStringClassReference[];
+CF_EXPORT int __CFConstantStringClassReference[];
 
 /* CFNetwork also has a copy of the CONST_STRING_DECL macro (for use on platforms without constant string support in cc); please warn cfnetwork-core@group.apple.com of any necessary changes to this macro. -- REW, 1/28/2002 */
 #if DEPLOYMENT_TARGET_WINDOWS
