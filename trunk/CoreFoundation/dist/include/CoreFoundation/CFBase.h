@@ -177,6 +177,7 @@ CF_EXTERN_C_BEGIN
 #elif defined(macintosh)
     #if defined(__MWERKS__)
         #define CF_EXPORT __declspec(export) extern
+		#define CF_IMPORT 
     #endif
 #endif
 

@@ -34,7 +34,7 @@
 	Copyright (c) 1998-2007, Apple Inc. All rights reserved.
 */
 
-#if !CF_BUILDING_CF && !NSBUILDINGFOUNDATION
+#if !CF_BUILDING_CF && !CGBUILDINGFOUNDATION && !NSBUILDINGFOUNDATION
     #error The header file ForFoundationOnly.h is for the exclusive use of the
     #error CoreFoundation and Foundation projects.  No other project should include it.
 #endif
