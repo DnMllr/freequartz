@@ -29,17 +29,17 @@ static _CGBitmapContextDelegateCreate CGBitmapContextDelegateCreate = NULL;
 void 
 loadBitmapContextDelegateCreator(void)
 {
-#if 0
-	CGContextDelegateRef bitmapContextDelegate;
+	_CGBitmapContextDelegateCreate bitmapContextDelegate;
 
-	bitmapContextDelegate = CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
-	if (bitmapContextDelegate) {
+	CGBitmapContextDelegateCreate = 
+		(_CGBitmapContextDelegateCreate)CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
+	
+	if (CGBitmapContextDelegateCreate) {
 		CGBitmapContextDelegateCreate = bitmapContextDelegate;
 	}
 	else {
 		CGPostError("Failed to load bitmap context.");
 	}
-#endif
 }
 
 CGContextDelegateRef 

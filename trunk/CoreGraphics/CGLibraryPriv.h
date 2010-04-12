@@ -21,7 +21,6 @@
 
 
 
-
 CG_EXTERN void initialize_dylib_paths(void);
 
 CG_EXTERN void* open_handle_to_dylib_path(const char* libname);
@@ -29,7 +28,6 @@ CG_EXTERN void* open_handle_to_dylib_path(const char* libname);
 CG_EXTERN void* load_function(CFArrayRef paths, const char* fullLibName, const char* symName);
 
 CG_EXTERN void* CGLibraryLoadFunction(const char* libName, const char* symName);
-
 
 
 

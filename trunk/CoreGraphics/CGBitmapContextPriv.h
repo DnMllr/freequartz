@@ -4,7 +4,9 @@
 #include "CGBasePriv.h"
 #include "CGContextPriv.h"
 
-typedef CGContextDelegateRef (*_CGBitmapContextDelegateCreate)(
+CG_EXTERN_C_BEGIN
+
+typedef CGContextDelegateRef  (*_CGBitmapContextDelegateCreate)(
 	CGBitmapContextInfoRef bitmapContextInfo, 
 	CFDictionaryRef theDict);
 
@@ -61,7 +63,7 @@ bool validate_gray_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
 bool validate_cmyk_bitmap_info(CGBitmapContextInfoRef bitmapContextInfo);
 
 
-
+CG_EXTERN_C_END
 
 #endif /* CGBITMAPCONTEXTPRIV_H_ */
 
