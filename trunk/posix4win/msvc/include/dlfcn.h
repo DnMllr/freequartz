@@ -20,6 +20,18 @@
 #ifndef DLFCN_H
 #define DLFCN_H
 
+#if !defined(__BEGIN_DECLS)
+#ifdef  __cplusplus
+# define __BEGIN_DECLS  extern "C" {
+# define __END_DECLS    }
+#else
+# define __BEGIN_DECLS
+# define __END_DECLS
+#endif
+#endif
+
+__BEGIN_DECLS
+
 /* POSIX says these are implementation-defined.
  * To simplify use with Windows API, we treat them the same way.
  */
@@ -41,5 +53,7 @@ void *dlopen ( const char *file, int mode );
 int   dlclose( void *handle );
 void *dlsym  ( void *handle, const char *name );
 char *dlerror( void );
+
+__END_DECLS
 
 #endif /* DLFCN_H */
