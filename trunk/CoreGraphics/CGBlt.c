@@ -16,21 +16,17 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-#ifndef CGERRORPRIV_H_
-#define CGERRORPRIV_H_
-
-#include <CoreFoundation/CFBase.h>
-#include <CoreGraphics/CGPath.h>
-
-//#include "CoreFoundation/CFBasePriv.h"
-#include "CGMacros.h"
-
-CF_EXTERN_C_BEGIN
-
-CG_EXTERN void CGPostError(const char *format, ...);
-
-CF_EXTERN_C_END
-
-#endif /* CGERRORPRIV_H_ */
+#include "CGBasePriv.h"
+#include "CGBltPriv.h"
 
 
+
+void* 
+CGBlt_depth(const char *format)
+{
+	if (!format || !strlen(format))
+		return NULL;
+
+
+	return NULL;
+}

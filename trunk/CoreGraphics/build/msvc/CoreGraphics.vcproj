@@ -225,6 +225,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\CGBlt.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\CGBltPriv.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\CGColor.c"
 				>
 				<FileConfiguration
@@ -800,6 +808,14 @@
 			</File>
 			<File
 				RelativePath="..\..\CGTypesPriv.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\CGZone.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\CGZonePriv.h"
 				>
 			</File>
 		</Filter>

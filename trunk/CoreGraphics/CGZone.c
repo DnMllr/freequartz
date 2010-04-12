@@ -16,21 +16,25 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-#ifndef CGERRORPRIV_H_
-#define CGERRORPRIV_H_
+#include <pthread.h>
 
-#include <CoreFoundation/CFBase.h>
-#include <CoreGraphics/CGPath.h>
+#include "CGBasePriv.h"
+#include "CGZonePriv.h"
 
-//#include "CoreFoundation/CFBasePriv.h"
-#include "CGMacros.h"
+static pthread_once_t	gzone_create_once = PTHREAD_ONCE_INIT;
+static void* gZone = NULL;
 
-CF_EXTERN_C_BEGIN
+void 
+zone_create(void)
+{
+  return;
+}
 
-CG_EXTERN void CGPostError(const char *format, ...);
-
-CF_EXTERN_C_END
-
-#endif /* CGERRORPRIV_H_ */
-
-
+void* 
+CGSZoneCreate()
+{
+  if ( !gZone )
+	  pthread_once(&gzone_create_once, zone_create);
+  
+  return gZone;
+}
