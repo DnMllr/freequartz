@@ -76,14 +76,16 @@ CG_EXTERN const CFStringRef kCGColorSpaceColoredPattern;
 
 
 /* functions */
-void create_name_to_index_map(void);
 void CGColorSpaceDestroy(CFTypeRef ctf);
+
 bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
+
 CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space);
-CGColorSpaceRef CGColorSpaceCreateDeviceRGB(void);
+
 CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
-CGColorSpaceRef CGColorSpaceRetain(CGColorSpaceRef space);
+
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
+
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
 
 
