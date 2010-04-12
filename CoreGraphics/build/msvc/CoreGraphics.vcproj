@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="pthreadVC2.lib"
+				AdditionalDependencies="pthreadVC2.lib libdl.dll.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\posix4win\msvc\lib"
 				GenerateDebugInformation="true"
@@ -136,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="pthreadVC2.lib"
+				AdditionalDependencies="pthreadVC2.lib libdl.dll.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\posix4win\msvc\lib"
 				GenerateDebugInformation="true"
