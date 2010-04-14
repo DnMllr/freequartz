@@ -102,12 +102,11 @@ typedef enum {
 } KBrushStyle;
 
 typedef enum {
-	kCGContextTypeGeneric = 0,
-	kCGContextTypePDF = 1,
-	kCGContextTypeBitmap = 4,
-	kCGContextTypeDisplayList = 6
+	kCGContextTypeGeneric		= 0,
+	kCGContextTypePDF			= 1,
+	kCGContextTypeBitmap		= 4,
+	kCGContextTypeDisplayList	= 6
 	
-
 } CGContextType;
 
 
