@@ -80,29 +80,29 @@
 //0x17(23) encodings
 static const char* _ripl_encoding[] = {
 
-	"AAAAAAAA",								
-	"WWWWWWWW",								
+	"AAAAAAAA",	//kCGImageAlphaOnly Alpha_8							
+	"WWWWWWWW",	//kCGImageAlphaNone Gray_8							
 	"PPPPPPPP",
-	"-RRRRRGGGGGBBBBB",
-	"-rrrrrgggggbbbbb",
-	"--------RRRRRRRRGGGGGGGGBBBBBBBB",
-	"--------rrrrrrrrggggggggbbbbbbbb",
-	"RRRRRRRRGGGGGGGGBBBBBBBB--------",
-	"rrrrrrrrggggggggbbbbbbbb--------",
-	"CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK",
-	"ccccccccmmmmmmmmyyyyyyyykkkkkkkk",
-	"WWWWWWWWWWWWWWWW",
-	"wwwwwwwwwwwwwwww",
-	"RRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBB----------------",
-	"rrrrrrrrrrrrrrrrggggggggggggggggbbbbbbbbbbbbbbbb----------------",
-	"CCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKK",
-	"ccccccccccccccccmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkk",
-	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-	"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-	"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB--------------------------------",
-	"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb--------------------------------",
-	"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
-	"ccccccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+	"-RRRRRGGGGGBBBBB", //kCGImageAlphaNoneSkipFirst RGB555
+	"-rrrrrgggggbbbbb", //kCGImageAlphaNoneSkipFirst RGB555
+	"--------RRRRRRRRGGGGGGGGBBBBBBBB", //kCGImageAlphaNoneSkipFirst XRGB_32
+	"--------rrrrrrrrggggggggbbbbbbbb", //kCGImageAlphaNoneSkipFirst XRGB_32
+	"RRRRRRRRGGGGGGGGBBBBBBBB--------", //kCGImageAlphaNoneSkipLast RGBX_32
+	"rrrrrrrrggggggggbbbbbbbb--------", //kCGImageAlphaNoneSkipLast RGBX_32 
+	"CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK", //kCGImageAlphaNone CMYK_32
+	"ccccccccmmmmmmmmyyyyyyyykkkkkkkk", //kCGImageAlphaNone CMYK_32
+	"WWWWWWWWWWWWWWWW", //kCGImageAlphaNone Alpha_16
+	"wwwwwwwwwwwwwwww", //kCGImageAlphaNone Alpha_16
+	"RRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBB----------------", //kCGImageAlphaNoneSkipLast RGBX_64
+	"rrrrrrrrrrrrrrrrggggggggggggggggbbbbbbbbbbbbbbbb----------------", //kCGImageAlphaNoneSkipLast RGBX_64
+	"CCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKK", //kCGImageAlphaNone CMYK_64
+	"ccccccccccccccccmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkk", //kCGImageAlphaNone CMYK_64
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", //kCGImageAlphaNone Gray_32
+	"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", //kCGImageAlphaNone Gray_32
+	"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB--------------------------------", //kCGImageAlphaNoneSkipLast RGBX_128
+	"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb--------------------------------", //kCGImageAlphaNoneSkipLast RGBX_128
+	"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", //kCGImageAlphaNone CMYK_128
+	"ccccccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyykkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", //kCGImageAlphaNone CMYK_128
 	NULL
 };
 
