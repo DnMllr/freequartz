@@ -116,6 +116,12 @@ int RIPLayerDepthForFormat(int index)
 uint32_t 
 ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 {
+	size_t numOfComponents;
+
+	numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
+
+	//if (bitmapContextInfo->bitmapInfo & kCGBitmapByteOrderMask)
+
 	return ((uint32_t)-1);
 }
 

@@ -80,7 +80,7 @@ CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
 {
 	CFIndex ret;
 
-	if (name_to_index_map) {
+	if (name_to_index_map == NULL) {
 		pthread_once(&space_create_once, create_name_to_index_map);
 	}
 	if (name)
