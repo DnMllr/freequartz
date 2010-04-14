@@ -76,6 +76,10 @@ CG_EXTERN CGImageRef CGImageCreateWithJPEGDataProvider(CGDataProviderRef
     source, const CGFloat decode[], bool shouldInterpolate,
     CGColorRenderingIntent intent);
 
+CG_EXTERN CGImageRef CGImageCreateWithJPEGDataProvider2(CGDataProviderRef
+    source, CGColorSpaceRef space, const CGFloat decode[], bool shouldInterpolate,
+    CGColorRenderingIntent intent);
+
 CG_EXTERN CGImageRef CGImageCreateWithPNGDataProvider(CGDataProviderRef source,
     const CGFloat decode[], bool shouldInterpolate,
     CGColorRenderingIntent intent);

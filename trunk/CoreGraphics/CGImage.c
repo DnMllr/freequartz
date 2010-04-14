@@ -346,12 +346,21 @@ CGImageRef CGImageCreateCopy(CGImageRef image)
 	return imageCopy;
 }
 
+CGImageRef CGImageCreateWithJPEGDataProvider2(CGDataProviderRef source, 
+											  CGColorSpaceRef space,
+											  const CGFloat decode[], 
+											  bool shouldInterpolate,
+											  CGColorRenderingIntent intent)
+{
+	return NULL;
+}
+
 CGImageRef CGImageCreateWithJPEGDataProvider(CGDataProviderRef source, 
 											 const CGFloat decode[], 
 											 bool shouldInterpolate,
 											 CGColorRenderingIntent intent)
 {
-	return NULL;
+	return CGImageCreateWithJPEGDataProvider2(source, NULL, decode, shouldInterpolate, intent);
 }
 
 CGImageRef CGImageCreateWithPNGDataProvider(CGDataProviderRef source,
