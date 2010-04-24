@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Smartmobili (contact@smartmobili.com)
 **	
-** This file is part of the CoreGraphics module of the freequartz Toolkit.
+** This file is part of the ImageIO module of the freequartz Toolkit.
 **
 **
 ** GNU Lesser General Public License Usage	
@@ -39,7 +39,6 @@ typedef enum CGImageSourceStatus CGImageSourceStatus;
 //CFStringRef kCGImageSourceCreateThumbnailWithTransform
 
 
-
 CFDictionaryRef CGImageSourceCopyProperties (
    CGImageSourceRef isrc,
    CFDictionaryRef options
@@ -70,5 +69,53 @@ CGImageRef CGImageSourceCreateThumbnailAtIndex (
    CGImageSourceRef isrc,
    size_t index,
    CFDictionaryRef options
+);
+
+CGImageSourceRef CGImageSourceCreateWithData (
+   CFDataRef data,
+   CFDictionaryRef options
+);
+
+CGImageSourceRef CGImageSourceCreateWithDataProvider (
+   CGDataProviderRef provider,
+   CFDictionaryRef options
+);
+
+CGImageSourceRef CGImageSourceCreateWithURL (
+   CFURLRef url,
+   CFDictionaryRef options
+);
+
+size_t CGImageSourceGetCount (
+   CGImageSourceRef isrc
+);
+
+CGImageSourceStatus CGImageSourceGetStatus (
+   CGImageSourceRef isrc
+);
+
+CGImageSourceStatus CGImageSourceGetStatusAtIndex (
+   CGImageSourceRef isrc,
+   size_t index
+);
+
+CFStringRef CGImageSourceGetType (
+   CGImageSourceRef isrc
+);
+
+CFTypeID CGImageSourceGetTypeID (
+   void
+);
+
+void CGImageSourceUpdateData (
+   CGImageSourceRef isrc,
+   CFDataRef data,
+   bool final
+);
+
+void CGImageSourceUpdateDataProvider (
+   CGImageSourceRef isrc,
+   CGDataProviderRef provider,
+   bool final
 );
 
