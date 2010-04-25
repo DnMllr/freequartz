@@ -199,8 +199,11 @@ CGBitmapAllocateData(size_t len)
 {
 	void* data;
 
+	
+
 #if HAVE_MMAP
 
+	//void *  mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t offset);
 	//data = mmap(0, len, 3, 0x1002, 0, 0);
 
 #else
@@ -222,24 +225,25 @@ CGBitmapContextCreate(void *data, size_t width,
 	
 
 	size_t numberOfComponents; 
-	size_t bpc;
+	size_t bitsPerAlpha;
 
 	numberOfComponents = CGColorSpaceGetNumberOfComponents(colorspace);
 	if ( (bitmapInfo & kCGBitmapAlphaInfoMask) )
 		numberOfComponents += (bitmapInfo & kCGBitmapAlphaInfoMask) != 7;
-	bpc = 16;
+	bitsPerAlpha = 16;
 	if ( bitsPerComponent != 5 )
 	{
-		bpc = bitsPerComponent;
+		bitsPerAlpha= bitsPerComponent;
 		if ( numberOfComponents )
-			bpc = numberOfComponents * bitsPerComponent;
+			bitsPerAlpha = numberOfComponents * bitsPerComponent;
 	}
 
 	return (CGContextRef)CGBitmapContextCreateWithDictionary(
 		data,
 		width,
 		height,
-		bpc,
+		bitsPerComponent,
+		bitsPerAlpha,
 		bytesPerRow,
 		colorspace,
 		bitmapInfo,
@@ -248,10 +252,11 @@ CGBitmapContextCreate(void *data, size_t width,
 		0);
 }
 
+
 CGContextRef
 CGBitmapContextCreateWithDictionary(void *data, size_t width,
 									size_t height, size_t bitsPerComponent,
-									size_t bytesPerRow,
+									size_t bitsPerAlpha, size_t bytesPerRow,
 									CGColorSpaceRef colorspace, 
 									CGBitmapInfo bitmapInfo, 
 									CGFloat hRes, CGFloat vRes, 
@@ -261,8 +266,8 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 	CGContextRef context;
 	CGBitmapContextInfoRef bitmapCtxInfo;
 
-	bitmapCtxInfo = CGBitmapContextInfoCreate( bitsPerComponent, 
-		bytesPerRow, colorspace, bitmapInfo, hRes,0,0, 0,0,0, vRes, theDict);
+	bitmapCtxInfo = CGBitmapContextInfoCreate( bitsPerComponent, bitsPerAlpha, 
+		bytesPerRow, colorspace, bitmapInfo, 0,0,0,0,0, hRes, vRes);
 	if (bitmapCtxInfo)
 	{
 		context = createBitmapContext(bitmapCtxInfo, theDict, "CGBitmapContextCreateWithDictionary");
