@@ -18,6 +18,8 @@
 ****************************************************************************/
 #include "CGBasePriv.h"
 #include "CGDefaultsPriv.h"
+#include "CGLibraryPriv.h"
+
 #include <pthread.h>
 #include <dlfcn.h>
 
