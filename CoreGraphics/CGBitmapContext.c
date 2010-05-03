@@ -32,7 +32,7 @@ loadBitmapContextDelegateCreator(void)
 	_CGBitmapContextDelegateCreate bitmapContextDelegate;
 
 	CGBitmapContextDelegateCreate = 
-		(_CGBitmapContextDelegateCreate)CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
+		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
 	
 	if (CGBitmapContextDelegateCreate) {
 		CGBitmapContextDelegateCreate = bitmapContextDelegate;
@@ -59,20 +59,19 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 	return ctxDelegate;
 }
 
-
 CGBitmapContextInfoRef
 CGBitmapContextInfoCreate(size_t bitsPerComponent,
+						  size_t bitsPerAlpha,
 						  size_t bytesPerRow,
 						  CGColorSpaceRef colorspace, 
 						  CGBitmapInfo bitmapInfo, 
-						  CGFloat hRes,
 						  Boolean a,
 						  Boolean b,
 						  Boolean c,
 						  Boolean d,
 						  Boolean e,
-						  CGFloat vRes,
-						  CFDictionaryRef theDict)
+						  CGFloat hRes,
+						  CGFloat vRes)
 {
 	CGBitmapContextInfoRef bitmapContextInfo;
 	CGColorSpaceType csType;
@@ -226,6 +225,7 @@ CGBitmapContextCreate(void *data, size_t width,
 
 	size_t numberOfComponents; 
 	size_t bitsPerAlpha;
+	CFDictionaryRef dict = NULL;
 
 	numberOfComponents = CGColorSpaceGetNumberOfComponents(colorspace);
 	if ( (bitmapInfo & kCGBitmapAlphaInfoMask) )
@@ -249,7 +249,7 @@ CGBitmapContextCreate(void *data, size_t width,
 		bitmapInfo,
 		72.0,
 		72.0,
-		0);
+		dict);
 }
 
 
@@ -310,11 +310,13 @@ createBitmapContext(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef th
 		goto Error;
 	}
 
-	filterInfo = (void*)CFDictionaryGetValue(theDict, kCGContextFilterInfo);
-	if (!filterInfo)
-		goto Error;
+	if (theDict != NULL) {
 
-	context = CGContextAddFilter(context, filterInfo, 0);
+		filterInfo = (void*)CFDictionaryGetValue(theDict, kCGContextFilterInfo);
+		if (filterInfo){
+			context = CGContextAddFilter(context, filterInfo, 0);
+		}
+	}
 
 	return context;
 Error:
