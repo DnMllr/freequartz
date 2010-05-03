@@ -81,12 +81,12 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 
 	bitmapContextInfo = (CGBitmapContextInfoRef)calloc(1, sizeof(CGBitmapContextInfo));
 	if (!bitmapContextInfo) { goto Error; }
-
-	bitmapContextInfo->refcount = 1;
 	
-	if ((bitmapInfo & kCGBitmapAlphaInfoMask) != 7)
+	bitmapContextInfo->refcount = 1;
+	if ((bitmapInfo & kCGBitmapAlphaInfoMask) == 7)
 		bitmapContextInfo->colorspace = CGColorSpaceRetain(colorspace);
-
+	else
+		bitmapContextInfo->colorspace = NULL;
 	bitmapContextInfo->bitmapInfo = bitmapInfo;
 	bitmapContextInfo->unknown_34 = FALSE;
 	

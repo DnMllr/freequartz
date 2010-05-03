@@ -112,24 +112,24 @@ typedef enum {
 
 typedef struct CGBitmapContextInfo {
 	
-	signed long refcount;						//0x00
-	size_t	width;								//0x04
-	size_t	height;								//0x08
-	void* dataWithAlpha;						//0x0C 
-	CGFloat alpha;								//0x10 
-	CGColorSpaceRef colorspace;					//0x14
-	CGBitmapInfo bitmapInfo;					//0x18
-	CGFloat horzRes;							//0x1C 
-	CGFloat vertRes;							//0x20 
-	void* data;									//0x24
-	size_t bitsPerPixel;						//0x28
-	size_t bitsPerComponent;					//0x2C
-	size_t bytesPerRow;							//0x30
-	bool unknown_34;							//0x34 ??
+	signed long refcount;						//0x00 - +0
+	size_t	width;								//0x04 - +1
+	size_t	height;								//0x08 - +2
+	void* dataWithAlpha;						//0x0C - +3
+	CGFloat alpha;								//0x10 - +4
+	CGColorSpaceRef colorspace;					//0x14 - +5
+	CGBitmapInfo bitmapInfo;					//0x18 - +6
+	CGFloat horzRes;							//0x1C - +7
+	CGFloat vertRes;							//0x20 - +8
+	void* data;									//0x24 - +9
+	size_t bitsPerPixel;						//0x28 - +10
+	size_t bitsPerComponent;					//0x2C - +11
+	size_t bytesPerRow;							//0x30 - +12
+	bool unknown_34;							//0x34 a
 	void* unknown_38;							//0x38 ??
-	bool unknown_3C;							//0x3C ??
-	bool unknown_40;							//0x40 ??
-	bool unknown_44;							//0x44 ??
+	bool unknown_3C;							//0x3C d
+	bool unknown_40;							//0x40 c
+	bool unknown_44;							//0x44 e
 	bool unknown_48;							//0x48 ??
 
 } CGBitmapContextInfo, *CGBitmapContextInfoRef;
