@@ -60,42 +60,36 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 }
 
 CGBitmapContextInfoRef
-CGBitmapContextInfoCreate(size_t bitsPerComponent,
-						  size_t bitsPerAlpha,
-						  size_t bytesPerRow,
-						  CGColorSpaceRef colorspace, 
-						  CGBitmapInfo bitmapInfo, 
-						  Boolean a,
-						  Boolean b,
-						  Boolean c,
-						  Boolean d,
-						  Boolean e,
-						  CGFloat hRes,
-						  CGFloat vRes)
+CGBitmapContextInfoCreate(void *data, size_t width, size_t height, size_t bitsPerComponent, 
+						  size_t bitsPerPixel, size_t bytesPerRow,
+						  CGColorSpaceRef colorspace, CGBitmapInfo bitmapInfo, 
+						  void* alphaData, Boolean b, Boolean c, Boolean d,Boolean e,
+						  CGFloat hRes, CGFloat vRes)
 {
-	CGBitmapContextInfoRef bitmapContextInfo;
+	CGBitmapContextInfoRef bitmapCtxInfo;
 	CGColorSpaceType csType;
 	bool isValid; 
 	size_t numberOfComponents;
 
-
-	bitmapContextInfo = (CGBitmapContextInfoRef)calloc(1, sizeof(CGBitmapContextInfo));
-	if (!bitmapContextInfo) { goto Error; }
+	bitmapCtxInfo = (CGBitmapContextInfoRef)calloc(1, sizeof(CGBitmapContextInfo));
+	if (!bitmapCtxInfo) { 
+		goto Error; 
+	}
 	
-	bitmapContextInfo->refcount = 1;
-	if ((bitmapInfo & kCGBitmapAlphaInfoMask) == 7)
-		bitmapContextInfo->colorspace = CGColorSpaceRetain(colorspace);
-	else
-		bitmapContextInfo->colorspace = NULL;
-	bitmapContextInfo->bitmapInfo = bitmapInfo;
-	bitmapContextInfo->unknown_34 = FALSE;
-	
-	//bitmapContextInfo->bytesPerRow = CGBitmapGetAlignedBytesPerRow();
-	
+	bitmapCtxInfo->refcount = 1;
 
+	if ((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaOnly) {
+		bitmapCtxInfo->colorspace = CGColorSpaceRetain(colorspace);
+	}
+	else {
+		bitmapCtxInfo->colorspace = NULL;
+	}
+	bitmapCtxInfo->bitmapInfo = bitmapInfo;
+	bitmapCtxInfo->dataNeedDealloc = FALSE;
+	bitmapCtxInfo->data = NULL;
+	bitmapCtxInfo->bytesPerRow = CGBitmapGetAlignedBytesPerRow((width * bitsPerPixel + 7) / 8);
 
-
-	csType = CGColorSpaceGetType(bitmapContextInfo->colorspace);
+	csType = CGColorSpaceGetType(bitmapCtxInfo->colorspace);
 	switch(csType)
 	{
 	case kCGColorSpaceTypeDeviceUnknown: 
@@ -104,33 +98,40 @@ CGBitmapContextInfoCreate(size_t bitsPerComponent,
 	
 	case kCGColorSpaceTypeDisplayGray:
 	case kCGColorSpaceTypeDeviceGray:
-		isValid = validate_gray_bitmap_info(bitmapContextInfo);
+		isValid = validate_gray_bitmap_info(bitmapCtxInfo);
 		break;
 
 	case kCGColorSpaceTypeDisplayRGB:
 	case kCGColorSpaceTypeDeviceRGB:
-		isValid = validate_rgb_bitmap_info(bitmapContextInfo);
+		isValid = validate_rgb_bitmap_info(bitmapCtxInfo);
 		break;
 	
 	case kCGColorSpaceTypeDeviceCMYK:
-		isValid = validate_cmyk_bitmap_info(bitmapContextInfo);
+		isValid = validate_cmyk_bitmap_info(bitmapCtxInfo);
 		break;
 
 	case kCGColorSpaceTypePattern:
-		numberOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
+		numberOfComponents = CGColorSpaceGetNumberOfComponents(bitmapCtxInfo->colorspace);
 		if (numberOfComponents == 3)
-			isValid = validate_rgb_bitmap_info(bitmapContextInfo);
+			isValid = validate_rgb_bitmap_info(bitmapCtxInfo);
 		else if (numberOfComponents == 4)
-			isValid = validate_cmyk_bitmap_info(bitmapContextInfo);
+			isValid = validate_cmyk_bitmap_info(bitmapCtxInfo);
 		else if (numberOfComponents == 1)
-			isValid = validate_gray_bitmap_info(bitmapContextInfo);
+			isValid = validate_gray_bitmap_info(bitmapCtxInfo);
 		break;
 	};
 
+	bitmapCtxInfo->data = CGBitmapAllocateData(bitmapCtxInfo->bytesPerRow * height);
+	if (!bitmapCtxInfo->data) {
+		CGPostError("%s: unable to allocate %zu bytes for bitmap data",
+			"CGBitmapContextInfoCreate", bitmapCtxInfo->bytesPerRow * height);
+		goto Error;
+	}
+	bitmapCtxInfo->dataNeedDealloc = TRUE;
 
-	return bitmapContextInfo;
+	return bitmapCtxInfo;
 Error:
-	release_bitmap_info(bitmapContextInfo);
+	release_bitmap_info(bitmapCtxInfo);
 	return NULL;
 }
 
@@ -172,13 +173,12 @@ release_bitmap_info(CGBitmapContextInfoRef bitmapInfo)
 	if (bitmapInfo->refcount == 0)
 	{
 		CGColorSpaceRelease(bitmapInfo->colorspace);
-		if (bitmapInfo->unknown_34 == TRUE) {
+		
+		if (bitmapInfo->dataNeedDealloc == TRUE)
 			CGBitmapFreeData(bitmapInfo->data);
-		}
-		else { 
-			if (bitmapInfo->unknown_48 == TRUE)
-				CGBitmapFreeData(bitmapInfo->unknown_38);
-		}
+		
+		if (bitmapInfo->hasAlphaData == TRUE)
+			CGBitmapFreeData(bitmapInfo->alphaData);
 
 		free(bitmapInfo);
 	}
@@ -224,18 +224,22 @@ CGBitmapContextCreate(void *data, size_t width,
 	
 
 	size_t numberOfComponents; 
-	size_t bitsPerAlpha;
+	size_t bitsPerPixel;
 	CFDictionaryRef dict = NULL;
 
+	bitsPerPixel = 16;
+
+	// Here for once we want to know numberOfComponents + alpha if there s one
 	numberOfComponents = CGColorSpaceGetNumberOfComponents(colorspace);
-	if ( (bitmapInfo & kCGBitmapAlphaInfoMask) )
-		numberOfComponents += (bitmapInfo & kCGBitmapAlphaInfoMask) != 7;
-	bitsPerAlpha = 16;
+	if (((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaNone) &&
+		((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaNone) )
+		numberOfComponents += 1;
+
 	if ( bitsPerComponent != 5 )
 	{
-		bitsPerAlpha= bitsPerComponent;
+		bitsPerPixel= bitsPerComponent;
 		if ( numberOfComponents )
-			bitsPerAlpha = numberOfComponents * bitsPerComponent;
+			bitsPerPixel = numberOfComponents * bitsPerComponent;
 	}
 
 	return (CGContextRef)CGBitmapContextCreateWithDictionary(
@@ -243,7 +247,7 @@ CGBitmapContextCreate(void *data, size_t width,
 		width,
 		height,
 		bitsPerComponent,
-		bitsPerAlpha,
+		bitsPerPixel,
 		bytesPerRow,
 		colorspace,
 		bitmapInfo,
@@ -266,8 +270,8 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 	CGContextRef context;
 	CGBitmapContextInfoRef bitmapCtxInfo;
 
-	bitmapCtxInfo = CGBitmapContextInfoCreate( bitsPerComponent, bitsPerAlpha, 
-		bytesPerRow, colorspace, bitmapInfo, 0,0,0,0,0, hRes, vRes);
+	bitmapCtxInfo = CGBitmapContextInfoCreate( data, width, height, bitsPerComponent, 
+		bitsPerAlpha, bytesPerRow, colorspace, bitmapInfo, 0,0,0,0,0, hRes, vRes);
 	if (bitmapCtxInfo)
 	{
 		context = createBitmapContext(bitmapCtxInfo, theDict, "CGBitmapContextCreateWithDictionary");
@@ -323,12 +327,35 @@ Error:
 	return NULL;
 }
 
+size_t CGBitmapGetFastestAlignment()
+{
+	return 128;
+}
 
+size_t CGBitmapGetAlignedRowBytes(size_t bytesPerRow)
+{
+	return CGBitmapGetAlignedBytesPerRow(bytesPerRow);
+}
+
+size_t CGBitmapGetAlignedBytesPerRow(size_t bytesPerRow)
+{
+	return ((bytesPerRow+31)&~0x1f);
+}
 
 void *CGBitmapContextGetData(CGContextRef c)
 {
-	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
-	return c->bitmapContextInfo->data;
+	void* data;
+
+	if (!c || c->contextType != kCGContextTypeBitmap) { 
+		CGPostError("%s: invalid context", "CGBitmapContextGetData");	
+		return NULL; 
+	}
+	
+	data = c->bitmapContextInfo->data;
+	if (data == NULL)
+		data = c->bitmapContextInfo->data;
+
+	return data;
 }
 
 size_t CGBitmapContextGetWidth(CGContextRef c)
@@ -370,6 +397,25 @@ CGColorSpaceRef CGBitmapContextGetColorSpace(CGContextRef c)
 	if (!c || c->contextType != kCGContextTypeBitmap) { return 0; }
 	return c->bitmapContextInfo->colorspace;
 }
+
+
+void* CGBitmapContextGetAlphaData(CGContextRef c)
+{
+	void* alphaData;
+
+	if (!c || c->contextType != kCGContextTypeBitmap) { 
+		CGPostError("%s: invalid context", "CGBitmapContextGetAlphaData");	
+		return NULL; 
+	}
+
+	if (c->bitmapContextInfo->hasAlphaData == FALSE)
+		alphaData = c->bitmapContextInfo->alphaData;
+	else
+		alphaData = NULL;
+
+	return alphaData;
+}
+
 
 CGImageAlphaInfo CGBitmapContextGetAlphaInfo(CGContextRef c)
 {

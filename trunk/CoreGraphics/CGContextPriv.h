@@ -125,12 +125,12 @@ typedef struct CGBitmapContextInfo {
 	size_t bitsPerPixel;						//0x28 - +10
 	size_t bitsPerComponent;					//0x2C - +11
 	size_t bytesPerRow;							//0x30 - +12
-	bool unknown_34;							//0x34 a
-	void* unknown_38;							//0x38 ??
+	bool dataNeedDealloc;						//0x34 
+	void* alphaData;							//0x38 
 	bool unknown_3C;							//0x3C d
 	bool unknown_40;							//0x40 c
 	bool unknown_44;							//0x44 e
-	bool unknown_48;							//0x48 ??
+	bool hasAlphaData;							//0x48 
 
 } CGBitmapContextInfo, *CGBitmapContextInfoRef;
 
@@ -138,7 +138,7 @@ static const char* CGCONTEXT_MAGIC = "CTXT";
 //sizeof(struct CGContext) = 0x5C;
 typedef struct CGContext {
 
-	CFRuntimeBase obj;								//0x00
+	CFRuntimeBase base;								//0x00
 
 	size_t magic;									//0x08
 	CGContextType contextType;						//0x0C

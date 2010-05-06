@@ -18,6 +18,30 @@
 ****************************************************************************/
 #include "libRIP.h"
 
+/*
+http://.../DOCUMENTATION/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_context/dq_context.html
+
+-----------------------------------------------------------------------------------------------
+CS    |  Pixel format and bitmap information constant                            | Availability
+-----------------------------------------------------------------------------------------------
+Gray	8 bpp,	 8 bpc,  kCGImageAlphaNone											10.0
+Null	8 bpp,	 8 bpc,  kCGImageAlphaOnly											10.3
+RGB		16 bpp,	 5 bpc,  kCGImageAlphaNoneSkipFirst									10.0
+RGB		32 bpp,  8 bpc,  kCGImageAlphaNoneSkipFirst									10.0
+RGB		32 bpp,  8 bpc,  kCGImageAlphaNoneSkipLast									10.0
+RGB		32 bpp,  8 bpc,  kCGImageAlphaPremultipliedFirst							10.0
+RGB		32 bpp,  8 bpc,  kCGImageAlphaPremultipliedLast								10.0
+CMYK	32 bpp,  8 bpc,  kCGImageAlphaNone											10.3
+Gray	32 bpp,  32 bpc, kCGImageAlphaNone|kCGBitmapFloatComponents					10.4
+RGB		128 bpp, 32 bpc, kCGImageAlphaNoneSkipLast |kCGBitmapFloatComponents		10.4
+RGB		128 bpp, 32 bpc, kCGImageAlphaPremultipliedLast |kCGBitmapFloatComponents	10.4
+CMYK	128 bpp, 32 bpc, kCGImageAlphaNone |kCGBitmapFloatComponents				10.4
+Gray	16 bpp,  16 bpc, kCGImageAlphaNone											10.5
+RGB		64 bpp,  16 bpc, kCGImageAlphaPremultipliedLast								10.5
+RGB		64 bpp,  16 bpc, kCGImageAlphaNoneSkipLast									10.5
+CMYK	64 bpp,  16 bpc, kCGImageAlphaNone											10.5
+*/
+
 
 //NULL
 //8
@@ -76,23 +100,28 @@
 //32 bits per pixel CMYK format without alpha
 
 
-//http://developer.apple.com/mac/library/qa/qa2001/qa1037.html
+
+
+/*
+http://developer.apple.com/mac/library/qa/qa2001/qa1037.html
 //0x17(23) encodings
+TODO : CHECK comment below with help of tab above
+*/
 static const char* _ripl_encoding[] = {
 
-	"AAAAAAAA",	//kCGImageAlphaOnly Alpha_8							
-	"WWWWWWWW",	//kCGImageAlphaNone Gray_8							
+	"AAAAAAAA",							//kCGImageAlphaOnly Alpha_8							
+	"WWWWWWWW",							//kCGImageAlphaNone Gray_8							
 	"PPPPPPPP",
-	"-RRRRRGGGGGBBBBB", //kCGImageAlphaNoneSkipFirst RGB555
-	"-rrrrrgggggbbbbb", //kCGImageAlphaNoneSkipFirst RGB555
+	"-RRRRRGGGGGBBBBB",					//kCGImageAlphaNoneSkipFirst RGB555
+	"-rrrrrgggggbbbbb",					//kCGImageAlphaNoneSkipFirst RGB555
 	"--------RRRRRRRRGGGGGGGGBBBBBBBB", //kCGImageAlphaNoneSkipFirst XRGB_32
 	"--------rrrrrrrrggggggggbbbbbbbb", //kCGImageAlphaNoneSkipFirst XRGB_32
 	"RRRRRRRRGGGGGGGGBBBBBBBB--------", //kCGImageAlphaNoneSkipLast RGBX_32
 	"rrrrrrrrggggggggbbbbbbbb--------", //kCGImageAlphaNoneSkipLast RGBX_32 
 	"CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK", //kCGImageAlphaNone CMYK_32
 	"ccccccccmmmmmmmmyyyyyyyykkkkkkkk", //kCGImageAlphaNone CMYK_32
-	"WWWWWWWWWWWWWWWW", //kCGImageAlphaNone Alpha_16
-	"wwwwwwwwwwwwwwww", //kCGImageAlphaNone Alpha_16
+	"WWWWWWWWWWWWWWWW",					//kCGImageAlphaNone Alpha_16
+	"wwwwwwwwwwwwwwww",					//kCGImageAlphaNone Alpha_16
 	"RRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGBBBBBBBBBBBBBBBB----------------", //kCGImageAlphaNoneSkipLast RGBX_64
 	"rrrrrrrrrrrrrrrrggggggggggggggggbbbbbbbbbbbbbbbb----------------", //kCGImageAlphaNoneSkipLast RGBX_64
 	"CCCCCCCCCCCCCCCCMMMMMMMMMMMMMMMMYYYYYYYYYYYYYYYYKKKKKKKKKKKKKKKK", //kCGImageAlphaNone CMYK_64
