@@ -1078,7 +1078,8 @@ CGBitmapContextCreateImage(CGContextRef c);
 typedef struct CGBitmapContextInfo *CGBitmapContextInfoRef;
 
 CG_EXTERN CGBitmapContextInfoRef
-CGBitmapContextInfoCreate(size_t bitsPerComponent,size_t bitsPerAlpha,
+CGBitmapContextInfoCreate(void *data, size_t width, size_t height,
+              size_t bitsPerComponent, size_t bitsPerAlpha,
 						  size_t bytesPerRow, CGColorSpaceRef colorspace, 
               CGBitmapInfo bitmapInfo, Boolean a, Boolean b, Boolean c,
 						  Boolean d,Boolean e, CGFloat hRes, CGFloat vRes);

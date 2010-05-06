@@ -31,12 +31,13 @@ typedef CGContextDelegateRef  (*_CGBitmapContextDelegateCreate)(
 CG_EXTERN void loadBitmapContextDelegateCreator(void);
 
 
-CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerComponent,
-														   size_t bitsPerAlpha,
+CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(void *data, size_t width, size_t height,
+														   size_t bitsPerComponent,
+														   size_t bitsPerPixel,
 														   size_t bytesPerRow,
 														   CGColorSpaceRef colorspace, 
 														   CGBitmapInfo bitmapInfo, 
-														   Boolean a,
+														   void* alphaData,
 														   Boolean b,
 														   Boolean c,
 														   Boolean d,
@@ -47,7 +48,7 @@ CG_EXTERN CGBitmapContextInfoRef CGBitmapContextInfoCreate(size_t bitsPerCompone
 CG_EXTERN CGContextRef CGBitmapContextCreateWithDictionary(void *data, 
 												 size_t width, size_t height,
 												 size_t bitsPerComponent,
-												 size_t bitsPerAlpha,
+												 size_t bitsPerPixel,
 												 size_t bytesPerRow,
 												 CGColorSpaceRef colorspace, 
 												 CGBitmapInfo bitmapInfo,
