@@ -227,10 +227,10 @@ CGBitmapContextCreate(void *data, size_t width,
 
 	bitsPerPixel = 16;
 
-	// Here for once we want to know numberOfComponents + alpha if there s one
+	// Here for once we want to know numberOfComponents + alpha if there is one
 	numberOfComponents = CGColorSpaceGetNumberOfComponents(colorspace);
 	if (((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaNone) &&
-		((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaNone) )
+		((bitmapInfo & kCGBitmapAlphaInfoMask) != kCGImageAlphaOnly) )
 		numberOfComponents += 1;
 
 	if ( bitsPerComponent != 5 )
