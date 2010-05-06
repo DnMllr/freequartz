@@ -198,18 +198,16 @@ CGBitmapAllocateData(size_t len)
 {
 	void* data;
 
+#if defined(DEPLOYMENT_TARGET_WINDOWS)
+
+#elif
+	//#define VM_MAKE_TAG(tag) ((tag) << 24)
+	//0x34000000 = VM_MAKE_TAG(VM_MEMORY_CGIMAGE)
+	//void *  mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t offset);
+	//data = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, 0, 0);
+#endif
 	
 
-#if HAVE_MMAP
-
-	//void *  mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t offset);
-	//data = mmap(0, len, 3, 0x1002, 0, 0);
-
-#else
-
-	data = NULL;
-
-#endif
 	return data;
 }
 
