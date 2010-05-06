@@ -122,7 +122,7 @@ CGBitmapContextInfoCreate(void *data, size_t width, size_t height, size_t bitsPe
 	};
 
 	bitmapCtxInfo->data = CGBitmapAllocateData(bitmapCtxInfo->bytesPerRow * height);
-	if (!bitmapCtxInfo->data) {
+	if (bitmapCtxInfo->data == NULL) {
 		CGPostError("%s: unable to allocate %zu bytes for bitmap data",
 			"CGBitmapContextInfoCreate", bitmapCtxInfo->bytesPerRow * height);
 		goto Error;
