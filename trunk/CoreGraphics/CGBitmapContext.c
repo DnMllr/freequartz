@@ -85,7 +85,7 @@ CGBitmapContextInfoCreate(void *data, size_t width, size_t height, size_t bitsPe
 		bitmapCtxInfo->colorspace = NULL;
 	}
 	bitmapCtxInfo->bitmapInfo = bitmapInfo;
-	bitmapCtxInfo->dataNeedDealloc = FALSE;
+	bitmapCtxInfo->dataAllocated = FALSE;
 	bitmapCtxInfo->data = NULL;
 	bitmapCtxInfo->bytesPerRow = CGBitmapGetAlignedBytesPerRow((width * bitsPerPixel + 7) / 8);
 
@@ -127,7 +127,7 @@ CGBitmapContextInfoCreate(void *data, size_t width, size_t height, size_t bitsPe
 			"CGBitmapContextInfoCreate", bitmapCtxInfo->bytesPerRow * height);
 		goto Error;
 	}
-	bitmapCtxInfo->dataNeedDealloc = TRUE;
+	bitmapCtxInfo->dataAllocated = TRUE;
 
 	return bitmapCtxInfo;
 Error:
@@ -174,10 +174,10 @@ release_bitmap_info(CGBitmapContextInfoRef bitmapInfo)
 	{
 		CGColorSpaceRelease(bitmapInfo->colorspace);
 		
-		if (bitmapInfo->dataNeedDealloc == TRUE)
+		if (bitmapInfo->dataAllocated == TRUE)
 			CGBitmapFreeData(bitmapInfo->data);
 		
-		if (bitmapInfo->hasAlphaData == TRUE)
+		if (bitmapInfo->alphaAllocated == TRUE)
 			CGBitmapFreeData(bitmapInfo->alphaData);
 
 		free(bitmapInfo);
@@ -200,7 +200,7 @@ CGBitmapAllocateData(size_t len)
 
 #if defined(DEPLOYMENT_TARGET_WINDOWS)
 
-#elif
+#elif defined
 	//#define VM_MAKE_TAG(tag) ((tag) << 24)
 	//0x34000000 = VM_MAKE_TAG(VM_MEMORY_CGIMAGE)
 	//void *  mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t offset);
@@ -258,7 +258,7 @@ CGBitmapContextCreate(void *data, size_t width,
 CGContextRef
 CGBitmapContextCreateWithDictionary(void *data, size_t width,
 									size_t height, size_t bitsPerComponent,
-									size_t bitsPerAlpha, size_t bytesPerRow,
+									size_t bitsPerPixel, size_t bytesPerRow,
 									CGColorSpaceRef colorspace, 
 									CGBitmapInfo bitmapInfo, 
 									CGFloat hRes, CGFloat vRes, 
@@ -269,7 +269,7 @@ CGBitmapContextCreateWithDictionary(void *data, size_t width,
 	CGBitmapContextInfoRef bitmapCtxInfo;
 
 	bitmapCtxInfo = CGBitmapContextInfoCreate( data, width, height, bitsPerComponent, 
-		bitsPerAlpha, bytesPerRow, colorspace, bitmapInfo, 0,0,0,0,0, hRes, vRes);
+		bitsPerPixel, bytesPerRow, colorspace, bitmapInfo, 0,0,0,0,0, hRes, vRes);
 	if (bitmapCtxInfo)
 	{
 		context = createBitmapContext(bitmapCtxInfo, theDict, "CGBitmapContextCreateWithDictionary");
@@ -349,9 +349,10 @@ void *CGBitmapContextGetData(CGContextRef c)
 		return NULL; 
 	}
 	
-	data = c->bitmapContextInfo->data;
-	if (data == NULL)
+	if (c->bitmapContextInfo->dataAllocated == FALSE)
 		data = c->bitmapContextInfo->data;
+	else
+		data = NULL;
 
 	return data;
 }
@@ -406,7 +407,7 @@ void* CGBitmapContextGetAlphaData(CGContextRef c)
 		return NULL; 
 	}
 
-	if (c->bitmapContextInfo->hasAlphaData == FALSE)
+	if (c->bitmapContextInfo->alphaAllocated == FALSE)
 		alphaData = c->bitmapContextInfo->alphaData;
 	else
 		alphaData = NULL;

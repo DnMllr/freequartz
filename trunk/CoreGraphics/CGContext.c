@@ -501,7 +501,10 @@ void CGContextSetRGBFillColor (CGContextRef c, CGFloat r, CGFloat g, CGFloat b, 
 		colorSpace = CGColorGetColorSpace(color);
 		if (!colorSpace) { return; }
 		
-		rgba[0] = r; rgba[1] = g; rgba[2] = b; rgba[3] = a;
+		rgba[0] = r; 
+		rgba[1] = g; 
+		rgba[2] = b; 
+		rgba[3] = a;
 		color = CGColorCreate(colorSpace, rgba);
 		CGContextSetFillColorWithColor(c, color);
 		CGColorRelease(color);
