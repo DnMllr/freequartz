@@ -25,7 +25,7 @@
 
 CGCallback _kCGCallbacks[] =
 {
-	{	kCGContextDelegateFinalize,			dlr_Finalize		},		//_kCGCallbacks[0]	//0x10 = GetColorTransform
+	{	kCGContextDelegateFinalize,			dlr_Finalize		},		//_kCGCallbacks[0]	//0x10
 	{	kCGContextDelegateGetBounds,		dlr_GetBounds		},		//_kCGCallbacks[1]	//0x14
 	{	kCGContextDelegateDrawLines,		dlr_DrawLines		},		//_kCGCallbacks[2]	//0x18
 	{	kCGContextDelegateDrawRects,		dlr_DrawRects		},		//_kCGCallbacks[3]	//0x1C

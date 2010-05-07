@@ -125,12 +125,13 @@ typedef struct CGBitmapContextInfo {
 	size_t bitsPerPixel;						//0x28 - +10
 	size_t bitsPerComponent;					//0x2C - +11
 	size_t bytesPerRow;							//0x30 - +12
-	bool dataNeedDealloc;						//0x34 
+	bool dataAllocated;							//0x34 
 	void* alphaData;							//0x38 
 	bool unknown_3C;							//0x3C d
 	bool unknown_40;							//0x40 c
 	bool unknown_44;							//0x44 e
-	bool hasAlphaData;							//0x48 
+	bool alphaAllocated;						//0x48
+	
 
 } CGBitmapContextInfo, *CGBitmapContextInfoRef;
 

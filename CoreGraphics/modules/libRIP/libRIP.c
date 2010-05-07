@@ -99,8 +99,29 @@ CMYK	64 bpp,  16 bpc, kCGImageAlphaNone											10.5
 //CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK
 //32 bits per pixel CMYK format without alpha
 
-
-
+#if 0
+CGCallback _kCGCallbacks2[] =
+{
+	{	kCGContextDelegateFinalize,				ripc_Finalize			},
+	{	kCGContextDelegateGetColorTransform,	ripc_GetColorTransform	},
+	{	kCGContextDelegateGetBounds,			ripc_GetBounds			},		
+	{	kCGContextDelegateDrawLines,			ripc_DrawLines			},		
+	{	kCGContextDelegateDrawRects,			ripc_DrawRects			},		
+	{	kCGContextDelegateDrawPath,				ripc_DrawPath			},		
+	{	kCGContextDelegateDrawImage,			ripc_DrawImage			},		
+	{	kCGContextDelegateDrawImages,			ripc_DrawImages			},
+	{	kCGContextDelegateDrawGlyphs,			ripc_DrawGlyphs			},		
+	{	kCGContextDelegateDrawShading,			ripc_DrawShading		},
+	{	kCGContextDelegateOperation,			ripc_Operation			},
+	{	kCGContextDelegateDrawWindowContents,	ripc_DrawWindowContents	},
+	{	kCGContextDelegateDirtyWindowContents,	ripc_DirtyWindowContents},		
+	{	kCGContextDelegateBeginLayer,			ripc_BeginLayer			},		
+	{	kCGContextDelegateEndLayer,				ripc_EndLayer			},		
+	{	kCGContextDelegateGetLayer,				ripc_GetLayer			},		
+	{	kCGContextDelegateDrawLayer,			ripc_DrawLayer			},		
+															
+};
+#endif
 
 /*
 http://developer.apple.com/mac/library/qa/qa2001/qa1037.html
@@ -157,11 +178,14 @@ ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 RIPRef 
 ripc_Initialize(RIPRef rip)
 {
-	//CGContextDelegateRef ctxDelegate;
+	CGContextDelegateRef ctxDelegate;
 
 	rip->ctxDelegate = CGContextDelegateCreate(NULL/*FIXME*/);
 	if (rip->ctxDelegate == NULL) {
 
+	}
+	else {
+		//CGContextDelegateSetCallbacks(ctxDelegate, 
 	}
 
 	return NULL;
