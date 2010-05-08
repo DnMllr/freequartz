@@ -169,6 +169,13 @@ CGError CGContextDelegateDrawPath(CGContextDelegateRef ctxDelegate,
 
 }
 
+
+CGError CGContextDelegateDrawImage(CGContextDelegateRef ctxDelegate)
+{
+	return kCGErrorNotImplemented;
+}
+
+
 void 
 CGContextDelegateOperation(void* delegate1, void* delegate2, CFStringRef op)
 {

@@ -402,15 +402,6 @@ void CGContextSetUndercolorRemoval(CGContextRef c, CGFunctionRef underColorRemov
 	CGGStateSetUndercolorRemoval(c->state, underColorRemoval);
 }
 
-
-void CGContextCreatePaths(CGContextRef c)
-{
-	
-
-}
-
-
-
 void CGContextFlush(CGContextRef c)
 {
 	if (!c) { return; }
