@@ -433,6 +433,22 @@ void CGContextBeginPath(CGContextRef c)
 
 }
 
+void CGContextAddPath(CGContextRef c, CGPathRef path)
+{
+	CGAffineTransform ctm;
+
+	if (!c || c->magic != 0x43545854){
+		CGPostError("%s: invalid context", "CGContextAddPath");
+		return;
+	}
+
+	if (c->path == NULL) {
+		c->path = CGPathCreateMutable();
+	}
+	ctm = CGGStateGetCTM(c->state);
+	CGPathAddPath( c->path, &ctm, path);
+}
+
 void CGContextMoveToPoint(CGContextRef c, CGFloat x, CGFloat y)
 {
 	CGAffineTransform ctm;
@@ -684,5 +700,63 @@ void doClip(CGContextRef c, CGPathDrawingMode mode)
 
 }
 
+void CGContextEOClip(CGContextRef c)
+{
+	doClip(c, kCGPathEOFill);
+}
 
+void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
+{
+	CGImageRef imgTmp; 
+	CGPathRef clipPath;
+
+	if (!c || c->magic != 0x43545854){
+		CGPostError("%s: invalid context", "CGContextDrawImage");
+		return;
+	}
+
+	if ( image )
+	{
+		clipPath = (const struct CGPath *)CGImageGetClipPath(image);
+		if ( clipPath )
+		{
+			CGContextSaveGState(c);
+			CGContextSaveGState(c);
+			CGContextTranslateCTM(c, rect.origin.x, rect.origin.y);
+			CGContextScaleCTM(c, rect.size.width, rect.size.height);
+			CGContextBeginPath(c);
+			CGContextAddPath(c, clipPath);
+			CGContextRestoreGState(c);
+			CGContextEOClip(c);
+		}
+#if 0
+		if ( *((_DWORD *)c + 6) )
+		{
+			CGContextSaveGState(c);
+			imgTmp = (struct CGImage *)(*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))c + 6))(
+				c,
+				(_DWORD)rect.origin.x,
+				LODWORD(rect.origin.y),
+				LODWORD(rect.size.width),
+				LODWORD(rect.size.height),
+				image,
+				*((_DWORD *)c + 7));
+
+			if ( imgTmp )
+			{
+				CGContextDelegateDrawImage(*((_DWORD *)c + 21));
+				CGImageRelease(imgTmp);
+			}
+			CGContextRestoreGState(c);
+		}
+		else
+		{
+			CGContextDelegateDrawImage(*((_DWORD *)c + 21));
+		}
+#endif
+		if ( clipPath )
+			CGContextRestoreGState(c);
+	}
+
+}
 

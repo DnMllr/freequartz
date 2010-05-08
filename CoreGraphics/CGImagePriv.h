@@ -71,7 +71,7 @@ struct CGImage {
 	CGFloat* components2;			//0x40
 	CGImageJPEGRepRef imageJPEGRep;	//0x44
 	CGImageEPSRepRef imageEPSRep;	//0x48
-	CGPathRef path;					//0x4C
+	CGPathRef clipPath;				//0x4C
 
 };
 
@@ -91,6 +91,8 @@ CGImageJPEGRepRef CGImageJPEGRepCreate(CGDataProviderRef provider);
 
 CGImageEPSRepRef CGImageEPSRepRetain(CGImageEPSRepRef imageEPS);
 void CGImageEPSRepRelease(CGImageEPSRepRef imageEPS);
+
+CGPathRef CGImageGetClipPath(CGImageRef image);
 
 CF_EXTERN_C_END
 
