@@ -53,7 +53,7 @@ void CGImageDestroy(CFTypeRef ctf)
 	CGDataProviderRelease(image->provider);
 	CGImageJPEGRepRelease(image->imageJPEGRep);
 	CGImageEPSRepRelease(image->imageEPSRep);
-	CGPathRelease(image->path);
+	CGPathRelease(image->clipPath);
 	free(image->decode);
 	free(image->components);
 	free(image->components2);
@@ -284,7 +284,7 @@ CGImageRef CGImageCreateCopy(CGImageRef image)
 {
 	CGImageRef imageCopy;
 	size_t numComponents;
-	int i;
+	size_t i;
 
 	if (!image)
 		return NULL;
@@ -338,7 +338,7 @@ CGImageRef CGImageCreateCopy(CGImageRef image)
 		
 		imageCopy->imageJPEGRep = CGImageJPEGRepRetain(image->imageJPEGRep);
 		imageCopy->imageEPSRep  = CGImageEPSRepRetain(image->imageEPSRep);
-		imageCopy->path = CGPathRetain(image->path);
+		imageCopy->clipPath = CGPathRetain(image->clipPath);
 	}
 
 	
@@ -422,6 +422,12 @@ CGImageRef CGImageCreateCopyWithColorSpace(CGImageRef image,CGColorSpaceRef spac
 	return imageRef;
 }
 
+
+CGPathRef CGImageGetClipPath(CGImageRef image)
+{
+	if (!image) { return 0; }
+	return image->clipPath;
+}
 
 
 bool CGImageIsMask(CGImageRef image)

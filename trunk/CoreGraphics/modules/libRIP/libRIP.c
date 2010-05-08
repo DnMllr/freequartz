@@ -185,8 +185,7 @@ ripc_Initialize(RIPRef rip)
 
 	}
 	else {
-		//CGContextDelegateSetCallbacks(ctxDelegate, _kCGCallbacks2, 
-		//sizeof(_kCGCallbacks2)/sizeof(_kCGCallbacks2[0])
+		//CGContextDelegateSetCallbacks(ctxDelegate, _kCGCallbacks2, sizeof(_kCGCallbacks2)/sizeof(_kCGCallbacks2[0])
 	}
 
 	return NULL;
