@@ -145,13 +145,14 @@ typedef struct CGContext {
 	CGContextType contextType;						//0x0C
 	CGBitmapContextInfoRef bitmapContextInfo;		//0x10
 	void* finalize;									//0x14
+													//0x18 ??? create a CGImageRef
 													//0x24
 	CGGStackRef stack;								//0x2C
 	CGRenderingStateRef rendering;					//0x30
-	CGGStateRef state;								//0x34
+	CGGStateRef state;								//0x34	(x86 -> + 13)
 	CGAffineTransform ctm;							//0x38
-	CGMutablePathRef path;							//0x50
-	CGContextDelegateRef ctxDelegate;				//0x54
+	CGMutablePathRef path;							//0x50	(x86 -> + 20)
+	CGContextDelegateRef ctxDelegate;				//0x54	(x86 -> + 21)
 	Boolean isFlushed;								//0x58
 
 } CGContext, *CGContextRef;

@@ -158,21 +158,27 @@ CGError CGContextDelegateDrawPath(CGContextDelegateRef ctxDelegate,
 								  CGPathDrawingMode mode,
 								  CGMutablePathRef path)
 {
-
-	if (!ctxDelegate)
-		return kCGErrorIllegalArgument;
-
-	if (!ctxDelegate->drawPath)
+	if (ctxDelegate == NULL)
+		return kCGErrorSuccess;
+	if (ctxDelegate->drawPath == NULL)
 		return kCGErrorNotImplemented;
 
-	//return ctxDelegate->drawPath;
-
+	return ctxDelegate->drawPath(ctxDelegate, rendering, state, mode, path);
 }
 
 
-CGError CGContextDelegateDrawImage(CGContextDelegateRef ctxDelegate)
+CGError CGContextDelegateDrawImage(CGContextDelegateRef ctxDelegate, 
+								  CGRenderingStateRef rendering,
+								  CGGStateRef state,
+								  CGRect rect,
+								  CGImageRef image)
 {
-	return kCGErrorNotImplemented;
+	if (ctxDelegate == NULL)
+		return kCGErrorSuccess;
+	if (ctxDelegate->drawImage == NULL)
+		return kCGErrorNotImplemented;
+
+	return ctxDelegate->drawImage(ctxDelegate, rendering, state, rect, image);
 }
 
 

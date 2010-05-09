@@ -654,17 +654,36 @@ void CGContextFillPath(CGContextRef c)
 	CGContextDrawPath(c, kCGPathFill);
 }
 
+
+
+CGPathDrawingMode adjustModeForLineWidth(CGPathDrawingMode mode, CGFloat lineWidth)
+{
+	return kCGPathFill;
+}
+
 void CGContextDrawPath(CGContextRef c, CGPathDrawingMode mode)
 {
+	CGPathRef path;
 
-	if (!c) { return; }
-	if (!c->path || CGPathIsEmpty(c->path)) { return; }
+	if (!c || c->magic != 0x43545854) { 
+		 CGPostError("%s: invalid context", "CGContextDrawPath");
+		return; 
+	}
+	
+	if ( c->path )
+    {
+      if ( CGPathIsEmpty(c->path) == FALSE)
+      {
+        path = (CGPathRef) c->path;
+        c->path = NULL;
 
-
-	CGContextDelegateDrawPath(c->ctxDelegate, c->rendering, c->state, mode, c->path);
-
-	CGPathRelease(c->path); 
-	c->path = NULL;
+		mode = adjustModeForLineWidth(mode, CGGStateGetLineWidth(c->state));
+		if (mode != -1 )
+			CGContextDelegateDrawPath(c->ctxDelegate, c->rendering, c->state, mode, c->path);
+        
+		CGPathRelease(path);
+	  }
+    }
 }
 
 
@@ -698,7 +717,7 @@ void CGContextEOClip(CGContextRef c)
 
 void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 {
-	CGImageRef imgTmp; 
+	//CGImageRef imgTmp; 
 	CGPathRef clipPath;
 
 	if (!c || c->magic != 0x43545854){
@@ -721,7 +740,7 @@ void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 			CGContextEOClip(c);
 		}
 #if 0
-		if ( *((_DWORD *)c + 6) )
+		if ( [x86]*((_DWORD *)c + 6); [arm]c->0x18 )
 		{
 			CGContextSaveGState(c);
 			imgTmp = (struct CGImage *)(*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))c + 6))(
@@ -735,14 +754,14 @@ void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 
 			if ( imgTmp )
 			{
-				CGContextDelegateDrawImage(*((_DWORD *)c + 21));
+				CGContextDelegateDrawImage(c->ctxDelegate, c->rendering, c->state, rect, imgTmp);
 				CGImageRelease(imgTmp);
 			}
 			CGContextRestoreGState(c);
 		}
 		else
 		{
-			CGContextDelegateDrawImage(*((_DWORD *)c + 21));
+			CGContextDelegateDrawImage(c->ctxDelegate, c->rendering, c->state, rect, image);
 		}
 #endif
 		if ( clipPath )
