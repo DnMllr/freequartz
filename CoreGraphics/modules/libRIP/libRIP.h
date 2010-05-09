@@ -63,6 +63,15 @@ RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextIn
 
 RIP_EXTERN RIPRef ripc_Initialize(RIPRef rip);
 
+RIP_EXTERN CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
+								  CGRenderingStateRef rendering,
+								  CGGStateRef state,
+								  CGFloat x, 
+								  CGFloat y, 
+								  CGFloat width, 
+								  CGFloat height,
+								  CGImage image);
+
 //RIP_EXTERN Boolean RIPLayerInitialize();
 
 #endif /* LIBRIP_H_ */
