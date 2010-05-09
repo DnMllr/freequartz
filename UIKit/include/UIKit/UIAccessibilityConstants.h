@@ -1,0 +1,22 @@
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKitDefines.h>
+
+
+typedef uint64_t UIAccessibilityTraits;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitNone;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitButton;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitLink;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitSearchField;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitImage;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitSelected;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitPlaysSound;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitKeyboardKey;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitStaticText;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitSummaryElement;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitNotEnabled;
+UIKIT_EXTERN UIAccessibilityTraits UIAccessibilityTraitUpdatesFrequently;
+
+typedef uint32_t UIAccessibilityNotifications;
+UIKIT_EXTERN UIAccessibilityNotifications UIAccessibilityScreenChangedNotification;
+UIKIT_EXTERN UIAccessibilityNotifications UIAccessibilityLayoutChangedNotification;
+
