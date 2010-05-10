@@ -145,7 +145,7 @@ typedef struct CGContext {
 	CGContextType contextType;						//0x0C
 	CGBitmapContextInfoRef bitmapContextInfo;		//0x10
 	void* finalize;									//0x14
-													//0x18 ??? create a CGImageRef
+	void* reserved_18;								//0x18 ??? create a CGImageRef
 													//0x24
 	CGGStackRef stack;								//0x2C
 	CGRenderingStateRef rendering;					//0x30

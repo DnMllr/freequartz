@@ -152,6 +152,21 @@ void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateTy
 	return NULL;
 }
 
+
+CGError CGContextDelegateDrawLines(CGContextDelegateRef ctxDelegate,
+								   CGRenderingStateRef rendering,
+								   CGGStateRef state,
+								   const CGPoint points[], size_t count)
+{
+	if (ctxDelegate == NULL)
+		return kCGErrorSuccess;
+	if (ctxDelegate->drawLines == NULL)
+		return kCGErrorNotImplemented;
+
+	//return ctxDelegate->drawLines(ctxDelegate, rendering, state, points, count);
+}
+
+
 CGError CGContextDelegateDrawPath(CGContextDelegateRef ctxDelegate, 
 								  CGRenderingStateRef rendering, 
 								  CGGStateRef state,

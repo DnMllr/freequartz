@@ -658,6 +658,9 @@ void CGContextFillPath(CGContextRef c)
 
 CGPathDrawingMode adjustModeForLineWidth(CGPathDrawingMode mode, CGFloat lineWidth)
 {
+	if (lineWidth > 0)
+		return mode;
+
 	return kCGPathFill;
 }
 
@@ -717,7 +720,7 @@ void CGContextEOClip(CGContextRef c)
 
 void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 {
-	//CGImageRef imgTmp; 
+	CGImageRef imgTmp; 
 	CGPathRef clipPath;
 
 	if (!c || c->magic != 0x43545854){
@@ -739,10 +742,11 @@ void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 			CGContextRestoreGState(c);
 			CGContextEOClip(c);
 		}
-#if 0
-		if ( [x86]*((_DWORD *)c + 6); [arm]c->0x18 )
+
+		if ( c->reserved_18 /*[x86]*((_DWORD *)c + 6); [arm]c->0x18*/ )
 		{
 			CGContextSaveGState(c);
+#if 0
 			imgTmp = (struct CGImage *)(*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))c + 6))(
 				c,
 				(_DWORD)rect.origin.x,
@@ -757,13 +761,15 @@ void CGContextDrawImage(CGContextRef c, CGRect rect, CGImageRef image)
 				CGContextDelegateDrawImage(c->ctxDelegate, c->rendering, c->state, rect, imgTmp);
 				CGImageRelease(imgTmp);
 			}
+#endif
 			CGContextRestoreGState(c);
+
 		}
 		else
 		{
 			CGContextDelegateDrawImage(c->ctxDelegate, c->rendering, c->state, rect, image);
 		}
-#endif
+
 		if ( clipPath )
 			CGContextRestoreGState(c);
 	}
