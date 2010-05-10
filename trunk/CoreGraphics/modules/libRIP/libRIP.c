@@ -233,10 +233,7 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
 					   CGRenderingStateRef rendering,
 					   CGGStateRef state,
-					   CGFloat x, 
-					   CGFloat y, 
-					   CGFloat width, 
-					   CGFloat height,
+					   CGRect rect,
 					   CGImage image)
 {
 	return kCGErrorNotImplemented;

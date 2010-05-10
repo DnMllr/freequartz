@@ -123,7 +123,29 @@ CGImageEPSRepRef CGImageEPSRepRetain(CGImageEPSRepRef imageEPS)
 	return imageEPS;
 }
 
+/*CFStringRef*/int32_t CGImageGetIdentifier(CGImageRef image)
+{
+	int32_t result;
 
+	if (image)
+		result = image->ID;
+	else
+		result = 0LL;
+
+	return result;
+}
+
+int64_t CGImageGetSharedIdentifier(CGImageRef image)
+{
+	int64_t result;
+
+	if (image)
+		result = image->sharedID;
+	else
+		result = 0LL;
+
+	return result;
+}
 
 Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo)
 {
@@ -144,6 +166,8 @@ Boolean valid_image_colorspace(CGColorSpaceRef space, CGBitmapInfo bitmapInfo)
 	// ALWAYS RETURN TRUE FOR NOW
 	return TRUE;
 }
+
+
 
 CGImageRef CGImageCreate(size_t width, size_t height,
 						 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
@@ -193,7 +217,7 @@ CGImageRef CGImageCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 	
-	image->nextID = 0x42/*CGTypeGetNextIdentifier()*/;
+	image->ID = 0x42/*CGTypeGetNextIdentifier()*/;
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;
@@ -259,7 +283,7 @@ CGImageRef CGImageMaskCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 
-	image->nextID = 0x42/*CGTypeGetNextIdentifier()*/;
+	image->ID = 0x42/*CGTypeGetNextIdentifier()*/;
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;
