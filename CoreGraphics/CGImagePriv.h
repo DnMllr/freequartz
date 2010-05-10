@@ -54,7 +54,7 @@ struct CGImageEPSRep {
 struct CGImage {
 
 	CFRuntimeBase obj;				//0x00
-	CFTypeID nextID;				//0x08
+	CFTypeID ID;					//0x08
 	size_t width;					//0x0C
 	size_t height;					//0x10
 	size_t bitsPerComponent;		//0x14
@@ -72,6 +72,7 @@ struct CGImage {
 	CGImageJPEGRepRef imageJPEGRep;	//0x44
 	CGImageEPSRepRef imageEPSRep;	//0x48
 	CGPathRef clipPath;				//0x4C
+	int64_t sharedID;				//0x50
 
 };
 
@@ -93,6 +94,8 @@ CGImageEPSRepRef CGImageEPSRepRetain(CGImageEPSRepRef imageEPS);
 void CGImageEPSRepRelease(CGImageEPSRepRef imageEPS);
 
 CGPathRef CGImageGetClipPath(CGImageRef image);
+
+int64_t CGImageGetSharedIdentifier(CGImageRef image);
 
 CF_EXTERN_C_END
 

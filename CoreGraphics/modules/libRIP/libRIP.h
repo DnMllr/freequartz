@@ -66,10 +66,7 @@ RIP_EXTERN RIPRef ripc_Initialize(RIPRef rip);
 RIP_EXTERN CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
 								  CGRenderingStateRef rendering,
 								  CGGStateRef state,
-								  CGFloat x, 
-								  CGFloat y, 
-								  CGFloat width, 
-								  CGFloat height,
+								  CGRect rect,
 								  CGImage image);
 
 //RIP_EXTERN Boolean RIPLayerInitialize();
