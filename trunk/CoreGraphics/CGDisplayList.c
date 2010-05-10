@@ -117,6 +117,15 @@ CGRect dlr_GetBounds(CGContextDelegateRef ctxDelegate)
 	return CGRectNull;
 }
 
+
+void dle_ExecuteDisplayList(CGContextDelegateRef ctxDelegate, 
+							CGRenderingStateRef rendering, 
+							CGGStackRef stack)
+{
+	//CGGStackGetGState
+}
+
+
 void dlr_DrawLines(CGContextDelegateRef ctxDelegate)
 {
 }

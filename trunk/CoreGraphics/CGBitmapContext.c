@@ -240,7 +240,7 @@ CGBitmapContextCreate(void *data, size_t width,
 			bitsPerPixel = numberOfComponents * bitsPerComponent;
 	}
 
-	return (CGContextRef)CGBitmapContextCreateWithDictionary(
+	return CGBitmapContextCreateWithDictionary(
 		data,
 		width,
 		height,
