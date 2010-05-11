@@ -94,13 +94,16 @@ CFTypeRef CGTypeCreateInstance(CFTypeID id, CFIndex size)
 }
 
 
-CFTypeID CGTypeGetNextIdentifier(CFTypeID id)
+CFTypeID CGTypeGetNextIdentifier(CFTypeID* id)
 {
+	CFTypeID ret;
+
 	pthread_mutex_lock(&nextID_lock);
-	id++;
+	ret = *id + 1;
+	*id = ret;
 	pthread_mutex_unlock(&nextID_lock);
 
-	return id;
+	return ret;
 }
 
 CFTypeRef CGTypeCreateInstanceWithAllocator(CFAllocatorRef allocator, CFTypeID id, CFIndex size)

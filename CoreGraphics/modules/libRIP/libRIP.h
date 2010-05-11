@@ -63,6 +63,8 @@ RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextIn
 
 RIP_EXTERN RIPRef ripc_Initialize(RIPRef rip);
 
+RIP_EXTERN int CGBlt_depth(const char *encoding);
+
 RIP_EXTERN CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
 								  CGRenderingStateRef rendering,
 								  CGGStateRef state,

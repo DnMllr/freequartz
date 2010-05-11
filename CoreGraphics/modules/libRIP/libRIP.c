@@ -157,11 +157,47 @@ static const char* _ripl_encoding[] = {
 };
 
 
-
-int RIPLayerDepthForFormat(int index)
+int CGBlt_depth(const char *encoding)
 {
 	return 0;
 }
+
+bool RIPLayerInitialize()
+{
+	return TRUE;
+}
+
+int RIPLayerDepthForFormat(int index)
+{
+	int depth; 
+	int g_depth; 
+
+	/*depth = 0;
+	if ( index <= 23 )
+	{
+		g_depth = _ripl_globals[index]->unknow18;
+		if ( g_depth )
+		{
+			if ( g_depth != -1 )
+				depth = g_depth;
+		}
+		else
+		{
+			result = CGBlt_depth( _ripl_encoding[index] );
+			if ( depth && *(_DWORD *)(depth + 16) )
+			{
+				_ripl_globals[index]->unknow18 = result;
+			}
+			else
+			{
+				_ripl_globals[index]->unknow18 = -1;
+				depth = 0;
+			}
+		}
+	}*/
+	return depth;
+}
+
 
 uint32_t 
 ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
@@ -214,7 +250,7 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 	size_t numOfComponents;
 
 	ret = ripc_InitializeFormat(bitmapContextInfo);
-	//depth = RIPLayerDepthForFormat();
+	//depth = RIPLayerDepthForFormat(ret);
 	
 	if (ret == -1 || depth == 0) {
 		numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
