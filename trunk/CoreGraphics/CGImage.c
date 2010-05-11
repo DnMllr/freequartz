@@ -23,7 +23,7 @@
 #include "CGImagePriv.h"
 #include "CGColorSpacePriv.h"
 
-
+static CFTypeID _imageID = NULL;
 
 /* CoreFoundation runtime class for CGPath.  */
 static CFRuntimeClass CGImageClass =  {
@@ -217,7 +217,7 @@ CGImageRef CGImageCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 	
-	image->ID = 0x42/*CGTypeGetNextIdentifier()*/;
+	image->ID = CGTypeGetNextIdentifier(&_imageID);
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;
@@ -283,7 +283,7 @@ CGImageRef CGImageMaskCreate(size_t width, size_t height,
 	image = (CGImageRef)CGTypeCreateInstance(CGImageGetTypeID(), nSize);
 	if (!image) return NULL;
 
-	image->ID = 0x42/*CGTypeGetNextIdentifier()*/;
+	image->ID = CGTypeGetNextIdentifier(&_imageID);
 	image->width = width;
 	image->height = height;
 	image->bitsPerComponent = bitsPerComponent;
