@@ -406,13 +406,11 @@ void CGContextFlush(CGContextRef c)
 {
 	if (!c) { return; }
 
-	if (c->isFlushed == FALSE)
-	{
-		CGContextDelegateOperation(
-			c->ctxDelegate->drawDisplayList,
-			c->ctxDelegate->drawImages,
-			kCGContextFlush);
-	}
+	/*if (c->unknown58)
+		c->unknown58(c);*/
+
+	CGContextDelegateOperation(c->ctxDelegate, 
+		c->rendering, c->state, kCGContextFlush, NULL);
 }
 
 

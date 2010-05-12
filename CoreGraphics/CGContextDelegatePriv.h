@@ -76,6 +76,12 @@ typedef CGError (*CGCallbackDrawImage) (CGContextDelegateRef ctxDelegate,
 										CGRect rect,
 										CGImageRef image);
 
+typedef CGError (*CGCallbackOperation) (CGContextDelegateRef ctxDelegate,
+										CGRenderingStateRef rendering,
+										CGGStateRef state,
+										CFStringRef op,
+										void* tmp);
+
 
 typedef struct CGCallback {
 	CGContextDelegateType type;
@@ -109,7 +115,7 @@ struct CGContextDelegate {
 	void* drawImages;					//0x34
 	void* beginPage;					//0x38
 	void* endPage;						//0x3C
-	void* operation;					//0x40
+	CGCallbackOperation operation;		//0x40
 	void* drawWindowContents;			//0x44
 	void* dirtyWindowContents;			//0x48
 	void* beginLayer;					//0x4C
@@ -139,7 +145,12 @@ CG_EXTERN void CGContextDelegateSetCallback(CGContextDelegateRef ctxDelegate, CG
 
 CG_EXTERN CGContextDelegateInfoRef CGContextDelegateGetInfo(CGContextDelegateRef ctxDelegate);
 
-CG_EXTERN void CGContextDelegateOperation(void* delegate1, void* delegate2, CFStringRef op);
+CG_EXTERN CGError CGContextDelegateOperation(CGContextDelegateRef ctxDelegate,
+											 CGRenderingStateRef rendering,
+											 CGGStateRef state,
+											 CFStringRef op,
+											 void* tmp);
+
 CG_EXTERN CGError CGContextDelegateDrawPath(CGContextDelegateRef ctxDelegate, 
 											CGRenderingStateRef rendering, 
 											CGGStateRef state,

@@ -153,7 +153,7 @@ typedef struct CGContext {
 	CGAffineTransform ctm;							//0x38
 	CGMutablePathRef path;							//0x50	(x86 -> + 20)
 	CGContextDelegateRef ctxDelegate;				//0x54	(x86 -> + 21)
-	Boolean isFlushed;								//0x58
+	void* unknown58;								//0x58
 
 } CGContext, *CGContextRef;
 
