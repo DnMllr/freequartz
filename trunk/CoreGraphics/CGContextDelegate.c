@@ -163,7 +163,7 @@ CGError CGContextDelegateDrawLines(CGContextDelegateRef ctxDelegate,
 	if (ctxDelegate->drawLines == NULL)
 		return kCGErrorNotImplemented;
 
-	//return ctxDelegate->drawLines(ctxDelegate, rendering, state, points, count);
+	return ctxDelegate->drawLines(ctxDelegate, rendering, state, points, count);
 }
 
 
