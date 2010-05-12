@@ -186,7 +186,7 @@ int RIPLayerDepthForFormat(int index)
 			result = CGBlt_depth( _ripl_encoding[index] );
 			if ( depth && *(_DWORD *)(depth + 16) )
 			{
-				_ripl_globals[index]->unknow18 = result;
+				_ripl_globals[index]->unknow18 = depth;
 			}
 			else
 			{
@@ -228,18 +228,24 @@ ripc_Initialize(RIPRef rip)
 }
 
 
-#if 0
-CGRect
-ripc_GetBounds(CGContextDelegateRef ctxDelegate)
+CGError
+ripc_DrawWindowContents()
 {
-	CGContextDelegateInfoRef delegateInfo;
-
-	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
-	if (delegateInfo->ctxDelegate->getBounds == NULL) {
-		return CGRectNull;
-	}
+	return kCGErrorFailure;
 }
-#endif
+
+
+//CGRect
+//ripc_GetBounds(CGRect *bounds, CGContextDelegateRef ctxDelegate)
+//{
+//	CGContextDelegateInfoRef delegateInfo;
+//
+//	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
+//	if (delegateInfo->ctxDelegate->getBounds == NULL) {
+//		return CGRectNull;
+//	}
+//}
+
 
 CGContextDelegateRef 
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
@@ -273,4 +279,22 @@ CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate,
 					   CGImage image)
 {
 	return kCGErrorNotImplemented;
+}
+
+
+CGError ripc_Operation(CGContextDelegateRef ctxDelegate,
+					   CGRenderingStateRef rendering,
+					   CGGStateRef state,
+					   CFStringRef op,
+					   void* tmp)
+
+{
+	CGContextDelegateInfoRef delegateInfo;
+
+	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
+	if ( tmp != NULL)
+		return kCGErrorNotImplemented;
+
+
+	return kCGErrorNotImplemented; 
 }
