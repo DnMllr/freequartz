@@ -659,6 +659,8 @@ CGPathDrawingMode adjustModeForLineWidth(CGPathDrawingMode mode, CGFloat lineWid
 	if (lineWidth > 0)
 		return mode;
 
+	/* FIXME */
+
 	return kCGPathFill;
 }
 

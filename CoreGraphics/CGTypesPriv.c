@@ -143,3 +143,6 @@ CFTypeRef CGTypeCreateSingleton(CFTypeID typeID, void *memory, CFIndex size)
 
 	return memory;
 }
+
+
+//CFMutableDictionaryRef CGCFDictionaryCreate()

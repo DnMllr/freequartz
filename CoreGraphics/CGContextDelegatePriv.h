@@ -26,6 +26,7 @@
 #include "CGGStatePriv.h"
 #include "CGColorSpacePriv.h"
 #include "CGRenderingStatePriv.h"
+#include "CGColorTransformPriv.h"
 
 CF_EXTERN_C_BEGIN
 
@@ -99,7 +100,14 @@ extern CGCallback _kCGCallbacks[];
 
 
 struct CGContextDelegateInfo {
-	CGContextDelegateRef ctxDelegate;
+
+	CGContextDelegateRef ctxDelegate;	//0x00
+	Boolean allowDithering;				//0x35
+	Boolean allowAcceleration;			//0x37
+
+	CGColorTransformRef colorTrans;		//0x3C
+	CFTypeID colorTransformID;			//0x44
+	//colorTransformMD5					//0x48 - 0x4B
 };
 typedef struct CGContextDelegateInfo CGContextDelegateInfo, *CGContextDelegateInfoRef;
 
