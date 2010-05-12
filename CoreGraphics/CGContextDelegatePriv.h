@@ -64,6 +64,12 @@ typedef CGError (*CGCallbackDrawPath) (CGContextDelegateRef ctxDelegate,
 									   CGGStateRef state, CGPathDrawingMode mode,
 									   CGMutablePathRef path);
 
+typedef CGError (*CGCallbackDrawLines) (CGContextDelegateRef ctxDelegate, 
+										CGRenderingStateRef rendering, 
+										CGGStateRef state,
+										const CGPoint points[],
+										size_t count);
+
 typedef CGError (*CGCallbackDrawRects) (CGContextDelegateRef ctxDelegate, 
 										CGRenderingStateRef rendering, 
 										CGGStateRef state,
@@ -105,7 +111,7 @@ struct CGContextDelegate {
 	void* finalize;						//0x0C
 	void* getColorTransform;			//0x10
 	void* getBounds;					//0x14
-	void* drawLines;					//0x18
+	CGCallbackDrawLines drawLines;		//0x18
 	CGCallbackDrawRects drawRects;		//0x1C
 	CGCallbackDrawPath drawPath;		//0x20
 	CGCallbackDrawImage drawImage;		//0x24
