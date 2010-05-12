@@ -197,8 +197,17 @@ CGError CGContextDelegateDrawImage(CGContextDelegateRef ctxDelegate,
 }
 
 
-void 
-CGContextDelegateOperation(void* delegate1, void* delegate2, CFStringRef op)
+CGError 
+CGContextDelegateOperation(CGContextDelegateRef ctxDelegate,
+						   CGRenderingStateRef rendering,
+						   CGGStateRef state,
+						   CFStringRef op,
+						   void* tmp)
 {
-	return;
+	if (ctxDelegate == NULL)
+		return kCGErrorSuccess;
+	if (ctxDelegate->operation == NULL)
+		return kCGErrorNotImplemented;
+
+	return ctxDelegate->operation(ctxDelegate, rendering, state, op, tmp);
 }
