@@ -16,6 +16,7 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
+//#include <mach/mach_time.h>
 #include "libRIP.h"
 
 /*
@@ -169,8 +170,8 @@ bool RIPLayerInitialize()
 
 int RIPLayerDepthForFormat(int index)
 {
-	int depth; 
-	int g_depth; 
+	int depth = 0; 
+	int g_depth = 0;
 
 	/*depth = 0;
 	if ( index <= 23 )
@@ -234,6 +235,51 @@ ripc_DrawWindowContents()
 	return kCGErrorFailure;
 }
 
+void *
+RIPZoneDataBarrier(void *memory)
+{
+	return memory;
+}
+
+bool
+RIPZoneDataSeed()
+{
+	return 0;
+}
+
+#if 0
+uint32_t
+ripc_Timeshift(RIPGlobal + 0x1C)
+{
+	uint32_t result;
+	signed int v2; 
+	uint64_t v3; 
+	mach_timebase_info_data_t info;
+
+	if ( mach_timebase_info(&info) )
+		abort();
+
+	v3 = 10000000 * (uint64_t)info.denom / info.numer;
+	v2 = 31;
+	result = 0;
+	do
+	{
+		if ( (1 << v2) & v3 )
+		{
+			result = v2;
+			if ( 2 * (1 << v2) - v3 < (unsigned int)(v3 - (1 << v2)) )
+				result = v2 + 1;
+		}
+		--v2;
+	}
+	while ( v2 && !result );
+	if ( !result )
+		result = 1;
+	*(_DWORD *)(ctxDelegate + 28) = result;
+
+	return result;
+}
+#endif
 
 //CGRect
 //ripc_GetBounds(CGRect *bounds, CGContextDelegateRef ctxDelegate)
@@ -244,6 +290,7 @@ ripc_DrawWindowContents()
 //	if (delegateInfo->ctxDelegate->getBounds == NULL) {
 //		return CGRectNull;
 //	}
+//  return delegateInfo->ctxDelegate->getBounds(bounds);
 //}
 
 

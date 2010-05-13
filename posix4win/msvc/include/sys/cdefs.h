@@ -13,7 +13,7 @@
 
 # define __const        const
 # define __signed       signed
-# define __volatile     volatile
+//# define __volatile     volatile
 
 /* These two macros are not used in glibc anymore.  They are kept here
    only because some other projects expect the macros to be defined.  */

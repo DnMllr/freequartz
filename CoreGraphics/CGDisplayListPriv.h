@@ -58,6 +58,7 @@ CG_EXTERN CGContextDelegateRef CGDisplayListContextDelegateCreate(void* dummy);
 
 
 CG_EXTERN CGDisplayListDataRef	dlr_create(void* zobby);
+CG_EXTERN void		dlr_destroy(void* dlr);
 CG_EXTERN void		dlr_InitializeDelegateCallbacks(CGContextDelegateRef ctxDelegate);
 CG_EXTERN void		dlr_Finalize(CGContextDelegateRef ctxDelegate);
 CG_EXTERN CGRect	dlr_GetBounds(CGContextDelegateRef ctxDelegate);
