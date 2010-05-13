@@ -103,6 +103,7 @@ struct CGContextDelegateInfo {
 
 	CGContextDelegateRef ctxDelegate;	//0x00
 	Boolean allowDithering;				//0x35
+	Boolean shouldAntialias;			//0x36
 	Boolean allowAcceleration;			//0x37
 
 	CGColorTransformRef colorTrans;		//0x3C

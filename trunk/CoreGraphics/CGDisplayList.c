@@ -93,12 +93,37 @@ CGContextRef CGDisplayListContextCreate(void* dummy)
 
 CGContextDelegateRef CGDisplayListContextDelegateCreate(void* dummy)
 {
-	return NULL;
+	CGContextDelegateRef ctxDelegate;
+	void* dlr;
+
+	if (!dummy || (!(dlr = dlr_create(dummy))) ) {
+		CGPostError("Unable to create display list recorder");
+		return NULL;
+	}
+	
+	ctxDelegate = CGContextDelegateCreate(dlr);
+	if (ctxDelegate == NULL) {
+		dlr_destroy(dlr);
+		CGPostError("Unable to create display list recorder delegate");
+		return NULL;
+	}
+
+	dlr_InitializeDelegateCallbacks(ctxDelegate);
+
+	return ctxDelegate;
 }
 
 CGDisplayListDataRef dlr_create(void* zobby)
 {
 	return NULL;
+}
+
+void dlr_destroy(void* dlr)
+{
+	if (!dlr)
+		return;
+
+
 }
 
 
