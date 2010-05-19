@@ -21,10 +21,13 @@
 
 #include "CGBasePriv.h"
 #include "CGColorSpacePriv.h"
+#include "CGNotificationCenterPriv.h"
 
 static pthread_once_t			space_create_once = PTHREAD_ONCE_INIT;
 static CFMutableDictionaryRef	name_to_index_map = NULL;
 
+static pthread_once_t			csNotifCenter_create_once = PTHREAD_ONCE_INIT;
+static CGNotificationCenterRef  csNotifCenter = NULL;
 
 
 /* CGColorSpace constants */
@@ -53,7 +56,7 @@ static CFRuntimeClass CGColorSpaceClass =  {
     "CGColorSpace",				/* Name of class.  */
     0,							/* init */
     0,							/* copy  */
-    CGColorSpaceDestroy,		/* finalize  */
+    csFinalize,					/* finalize  */
 	0,							/* equal  */
 	0,							/* hash  */
 	0,							/* copyFormattingDesc */
@@ -66,10 +69,27 @@ CFTypeID CGColorSpaceGetTypeID(void)
 	return CGTypeRegisterWithCallbacks(&__kCGColorSpaceID, &CGColorSpaceClass );
 }
 
-void CGColorSpaceDestroy(CFTypeRef ctf)
+void csFinalize(CFTypeRef ctf)
 {
+	assert( (((CGColorSpaceRef)ctf)->isSingleton == FALSE) );
 
+	notifCenter = getNotificationCenter(FALSE);
 }
+
+void csNotificationCenterCreate(void)
+{
+	csNotifCenter = CGNotificationCenterCreate();
+}
+
+CGNotificationCenterRef getNotificationCenter(bool notFinalize)
+{
+	if (csNotifCenter == NULL && notFinalize == TRUE) {
+		pthread_once(&csNotifCenter_create_once, csNotificationCenterCreate);
+	}
+
+	return csNotifCenter;
+}
+
 
 void create_name_to_index_map(void)
 {

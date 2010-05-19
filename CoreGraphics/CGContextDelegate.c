@@ -59,6 +59,14 @@ CGContextDelegateRef CGContextDelegateCreate(void* info)
 	return ctxDelegate;
 }
 
+void CGContextDelegateFinalize(CGContextDelegateRef ctxDelegate)
+{
+	if (!ctxDelegate) { 
+		return; 
+	}
+
+	//CGContextDelegateRelease(ctxDelegate->delegates);
+}
 
 void delegate_finalize(CFTypeRef c)
 {
