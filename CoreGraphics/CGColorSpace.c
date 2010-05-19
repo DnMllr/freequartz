@@ -23,11 +23,11 @@
 #include "CGColorSpacePriv.h"
 #include "CGNotificationCenterPriv.h"
 
-static pthread_once_t			space_create_once = PTHREAD_ONCE_INIT;
-static CFMutableDictionaryRef	name_to_index_map = NULL;
+static pthread_once_t			__space_create_once = PTHREAD_ONCE_INIT;
+static CFMutableDictionaryRef	__name_to_index_map = NULL;
 
-static pthread_once_t			csNotifCenter_create_once = PTHREAD_ONCE_INIT;
-static CGNotificationCenterRef  csNotifCenter = NULL;
+static pthread_once_t			__csNotifCenter_create_once = PTHREAD_ONCE_INIT;
+static CGNotificationCenterRef  __csNotifCenter = NULL;
 
 
 /* CGColorSpace constants */
@@ -48,7 +48,7 @@ CG_CONST_STRING_DECL(kCGColorSpaceUndo601,					"kCGColorSpaceUndo601");
 CG_CONST_STRING_DECL(kCGColorSpaceColoredPattern,			"kCGColorSpaceColoredPattern");
 CG_CONST_STRING_DECL(kCGColorSpaceGenericGray,				"kCGColorSpaceGenericGray");
 
-
+CG_CONST_STRING_DECL(kCGColorSpaceWillDeallocate,			"kCGColorSpaceWillDeallocate");
 
 /* CoreFoundation runtime class for CGPath.  */
 static CFRuntimeClass CGColorSpaceClass =  {
@@ -71,23 +71,33 @@ CFTypeID CGColorSpaceGetTypeID(void)
 
 void csFinalize(CFTypeRef ctf)
 {
-	assert( (((CGColorSpaceRef)ctf)->isSingleton == FALSE) );
+	bool isSingleton;
+	CGNotificationCenterRef csNotifCenter;
 
-	notifCenter = getNotificationCenter(FALSE);
+	isSingleton = ((CGColorSpaceRef)ctf)->isSingleton;
+	assert( isSingleton == FALSE );
+
+	csNotifCenter = getNotificationCenter(FALSE);
+	if (csNotifCenter) {
+
+		CGNotificationCenterPostNotification(csNotifCenter, kCGColorSpaceWillDeallocate, ctf, isSingleton);
+	}
+
+	//.....
 }
 
 void csNotificationCenterCreate(void)
 {
-	csNotifCenter = CGNotificationCenterCreate();
+	__csNotifCenter = CGNotificationCenterCreate();
 }
 
 CGNotificationCenterRef getNotificationCenter(bool notFinalize)
 {
-	if (csNotifCenter == NULL && notFinalize == TRUE) {
-		pthread_once(&csNotifCenter_create_once, csNotificationCenterCreate);
+	if (__csNotifCenter == NULL && notFinalize == TRUE) {
+		pthread_once(&__csNotifCenter_create_once, csNotificationCenterCreate);
 	}
 
-	return csNotifCenter;
+	return __csNotifCenter;
 }
 
 
@@ -100,11 +110,11 @@ CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
 {
 	CFIndex ret;
 
-	if (name_to_index_map == NULL) {
-		pthread_once(&space_create_once, create_name_to_index_map);
+	if (__name_to_index_map == NULL) {
+		pthread_once(&__space_create_once, create_name_to_index_map);
 	}
 	if (name)
-		ret = (CFIndex)CFDictionaryGetValue(name_to_index_map, (const void*)name);
+		ret = (CFIndex)CFDictionaryGetValue(__name_to_index_map, (const void*)name);
 	else
 		ret = 0;
 

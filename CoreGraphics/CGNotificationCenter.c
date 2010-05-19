@@ -58,7 +58,7 @@ void center_finalize(CFTypeRef cf)
 
 void 
 CGNotificationCenterPostNotification(CGNotificationCenterRef notifCenter, CFStringRef ref, 
-													CFTypeRef cftype, void* unknown)
+													CFTypeRef cftype, bool isSingleton)
 {
 
 }
