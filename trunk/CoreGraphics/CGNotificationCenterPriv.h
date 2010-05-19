@@ -43,7 +43,7 @@ CG_EXTERN CGNotificationCenterRef CGNotificationCenterCreate();
 CG_EXTERN void CGNotificationCenterPostNotification(CGNotificationCenterRef notifCenter, 
 													CFStringRef ref, 
 													CFTypeRef cftype,
-													void* unknown);
+													bool isSingleton);
 
 void center_finalize(CFTypeRef cf);
 

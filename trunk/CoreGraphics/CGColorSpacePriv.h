@@ -77,6 +77,10 @@ CG_EXTERN const CFStringRef kCGColorSpaceGenericRGBHDR;
 CG_EXTERN const CFStringRef kCGColorSpaceUndo601;
 CG_EXTERN const CFStringRef kCGColorSpaceColoredPattern;
 
+/* Notifications */
+CG_EXTERN const CFStringRef kCGColorSpaceWillDeallocate;
+
+
 
 
 /* functions */
