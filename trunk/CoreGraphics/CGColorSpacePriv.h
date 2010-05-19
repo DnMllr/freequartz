@@ -26,6 +26,9 @@
 
 CF_EXTERN_C_BEGIN
 
+
+typedef struct CGNotificationCenter *CGNotificationCenterRef;
+
 /* constants */
 enum CGColorSpaceType {
 
@@ -48,6 +51,7 @@ typedef enum CGColorSpaceType CGColorSpaceType;
 typedef struct CGColorSpace {
 	CFRuntimeBase obj;				//0x00
 
+	bool isSingleton;				//0x08
 	CGColorSpaceType spaceType;		//0x0C
 	CGColorSpaceModel spaceModel;	//0x10
 	size_t numberOfComponents;		//0x18
@@ -76,7 +80,11 @@ CG_EXTERN const CFStringRef kCGColorSpaceColoredPattern;
 
 
 /* functions */
-void CGColorSpaceDestroy(CFTypeRef ctf);
+void csFinalize(CFTypeRef ctf);
+
+void csNotificationCenterCreate(void);
+
+CGNotificationCenterRef getNotificationCenter(bool notFinalize);
 
 bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
 

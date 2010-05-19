@@ -17,3 +17,30 @@
 **
 ****************************************************************************/
 
+#include "libCGR.h"
+
+#if 0
+CGCallback _CGRCallbacks[] =
+{
+	{	kCGContextDelegateFinalize,				cgrc_Finalize			},
+	{	kCGContextDelegateGetColorTransform,	cgrc_GetColorTransform	},
+	{	kCGContextDelegateGetBounds,			cgrc_GetBounds			},		
+	{	kCGContextDelegateDrawLines,			cgrc_DrawLines			},		
+	{	kCGContextDelegateDrawRects,			cgrc_DrawRects			},		
+	{	kCGContextDelegateDrawPath,				cgrc_DrawPath			},		
+	{	kCGContextDelegateDrawImage,			cgrc_DrawImage			},		
+	{	kCGContextDelegateDrawImages,			cgrc_DrawImages			},
+	{	kCGContextDelegateDrawGlyphs,			cgrc_DrawGlyphs			},		
+	{	kCGContextDelegateDrawShading,			cgrc_DrawShading		},
+	{	kCGContextDelegateOperation,			cgrc_Operation			},
+	{	kCGContextDelegateDrawWindowContents,	cgrc_DrawWindowContents	},
+	{	kCGContextDelegateDirtyWindowContents,	cgrc_DirtyWindowContents},		
+	{	kCGContextDelegateBeginLayer,			cgrc_BeginLayer			},		
+	{	kCGContextDelegateEndLayer,				cgrc_EndLayer			},		
+	{	kCGContextDelegateGetLayer,				cgrc_GetLayer			},		
+	{	kCGContextDelegateDrawLayer,			cgrc_DrawLayer			},																	
+};
+#endif
+
+
+

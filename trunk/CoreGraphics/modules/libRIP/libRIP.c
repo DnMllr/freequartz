@@ -101,7 +101,7 @@ CMYK	64 bpp,  16 bpc, kCGImageAlphaNone											10.5
 //32 bits per pixel CMYK format without alpha
 
 #if 0
-CGCallback _kCGCallbacks2[] =
+CGCallback _RIPCallbacks[] =
 {
 	{	kCGContextDelegateFinalize,				ripc_Finalize			},
 	{	kCGContextDelegateGetColorTransform,	ripc_GetColorTransform	},
@@ -299,20 +299,35 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 								CFDictionaryRef theDict)
 {
 	CGContextDelegateRef ctxDelegate;
-	uint32_t ret, depth;
+	uint32_t format, depth;
 	size_t numOfComponents;
+	RIPRef ripc;
 
-	ret = ripc_InitializeFormat(bitmapContextInfo);
-	//depth = RIPLayerDepthForFormat(ret);
+	format = ripc_InitializeFormat(bitmapContextInfo);
+	depth = RIPLayerDepthForFormat(format);
 	
-	if (ret == -1 || depth == 0) {
+	if (format == -1 || depth == 0) {
 		numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
 		CGPostError("Unsupported pixel description - %lu components, %lu bits-per-com",
 			numOfComponents, bitmapContextInfo->bitsPerComponent);
 		return NULL;
 	}
 
-	//ripc_Initialize();
+#if 0
+	ripc = ripc_Initialize();
+	if (ripc == NULL) {
+		CGPostError("Failed to create bitmap context delegate");
+		return NULL;
+	}
+
+	if (bitmapContextInfo->data == NULL) {
+		
+		//RIPLayer(ripc);
+	}
+	else {
+
+	}
+#endif
 
 
 	return ctxDelegate;
