@@ -26,6 +26,8 @@
 
 CF_EXTERN_C_BEGIN
 
+typedef struct CGColorSpace *CGColorSpaceRef;
+typedef struct CGCMSUtilsPlatformSet *CGCMSUtilsPlatformSetRef;
 
 typedef struct CGNotificationCenter *CGNotificationCenterRef;
 
@@ -47,16 +49,20 @@ enum CGColorSpaceType {
 };
 typedef enum CGColorSpaceType CGColorSpaceType;
 
-
+//sizeof(struct CGColorSpace) = 0x64;
 typedef struct CGColorSpace {
-	CFRuntimeBase obj;				//0x00
+	CFRuntimeBase obj;						//0x00
 
-	bool isSingleton;				//0x08
-	CGColorSpaceType spaceType;		//0x0C
-	CGColorSpaceModel spaceModel;	//0x10
-	size_t numberOfComponents;		//0x18
-	CGColorRef defaultColor;		//0x1C
-
+	bool isSingleton;						//0x08
+	CGColorSpaceType spaceType;				//0x0C
+	CGColorSpaceModel spaceModel;			//0x10
+	size_t numberOfComponents;				//0x18
+	CGColorRef defaultColor;				//0x1C
+	CGDataProviderRef provider;				//0x3C
+	CGCMSUtilsPlatformSetRef cmsPlatform40;	//0x40
+	CGCMSUtilsPlatformSetRef cmsPlatform44;	//0x44
+	CGColorSpaceRef *cs5C;					//0x5C
+								
 } CGColorSpace, *CGColorSpaceRef;
 
 

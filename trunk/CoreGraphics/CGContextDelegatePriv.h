@@ -60,9 +60,15 @@ enum CGContextDelegateType {
 typedef enum CGContextDelegateType CGContextDelegateType;
 
 // Callbacks
+
+typedef CGColorTransformRef (*CGCallbackGetColorTransform) (CGContextDelegateRef ctxDelegate, 
+															CGRenderingStateRef rendering, 
+															CGGStateRef state);
+
 typedef CGError (*CGCallbackDrawPath) (CGContextDelegateRef ctxDelegate, 
 									   CGRenderingStateRef rendering, 
-									   CGGStateRef state, CGPathDrawingMode mode,
+									   CGGStateRef state, 
+									   CGPathDrawingMode mode,
 									   CGMutablePathRef path);
 
 typedef CGError (*CGCallbackDrawLines) (CGContextDelegateRef ctxDelegate, 
@@ -83,14 +89,25 @@ typedef CGError (*CGCallbackDrawImage) (CGContextDelegateRef ctxDelegate,
 										CGRect rect,
 										CGImageRef image);
 
+typedef CGError (*CGCallbackDrawGlyphs) (CGContextDelegateRef ctxDelegate,
+										 CGRenderingStateRef rendering,
+										 CGGStateRef state,
+										 CGAffineTransform ctm);
+
 typedef CGError (*CGCallbackOperation) (CGContextDelegateRef ctxDelegate,
 										CGRenderingStateRef rendering,
 										CGGStateRef state,
 										CFStringRef op,
 										void* tmp);
 
+typedef CGError (*CGCallbackDrawShading) (CGContextDelegateRef ctxDelegate, 
+										  CGRenderingStateRef rendering,
+										  CGGStateRef state,
+										  CGShadingRef shading);
+
 
 typedef struct CGCallback {
+
 	CGContextDelegateType type;
 	//void (*CGCallbackFunc) (CGRenderingStateRef rendering, CGGStateRef state);
 	void* delegateAddr;
@@ -114,30 +131,31 @@ typedef struct CGContextDelegateInfo CGContextDelegateInfo, *CGContextDelegateIn
 
 //sizeof(struct CGContext) = 0x60;
 struct CGContextDelegate {
-	CFRuntimeBase obj;					//0x00
-	
-										//0x08
-	void* finalize;						//0x0C
-	void* getColorTransform;			//0x10
-	void* getBounds;					//0x14
-	CGCallbackDrawLines drawLines;		//0x18
-	CGCallbackDrawRects drawRects;		//0x1C
-	CGCallbackDrawPath drawPath;		//0x20
-	CGCallbackDrawImage drawImage;		//0x24
-	void* drawGlyphs;					//0x28
-	void* drawShading;					//0x2C
-	void* drawDisplayList;				//0x30
-	void* drawImages;					//0x34
-	void* beginPage;					//0x38
-	void* endPage;						//0x3C
-	CGCallbackOperation operation;		//0x40
-	void* drawWindowContents;			//0x44
-	void* dirtyWindowContents;			//0x48
-	void* beginLayer;					//0x4C
-	void* endLayer;						//0x50
-	void* getLayer;						//0x54
-	void* drawLayer;					//0x58
-	CGContextDelegateInfoRef info;		//0x5C
+
+	CFRuntimeBase obj;								//0x00
+
+	CGColorTransformRef	colorTransform;				//0x08
+	void* finalize;									//0x0C
+	CGCallbackGetColorTransform getColorTransform;	//0x10
+	void* getBounds;								//0x14
+	CGCallbackDrawLines drawLines;					//0x18
+	CGCallbackDrawRects drawRects;					//0x1C
+	CGCallbackDrawPath drawPath;					//0x20
+	CGCallbackDrawImage drawImage;					//0x24
+	CGCallbackDrawGlyphs drawGlyphs;				//0x28
+	CGCallbackDrawShading drawShading;				//0x2C
+	void* drawDisplayList;							//0x30
+	void* drawImages;								//0x34
+	void* beginPage;								//0x38
+	void* endPage;									//0x3C
+	CGCallbackOperation operation;					//0x40
+	void* drawWindowContents;						//0x44
+	void* dirtyWindowContents;						//0x48
+	void* beginLayer;								//0x4C
+	void* endLayer;									//0x50
+	void* getLayer;									//0x54
+	void* drawLayer;								//0x58
+	CGContextDelegateInfoRef info;					//0x5C
 };
 typedef struct CGContextDelegate CGContextDelegate, *CGContextDelegateRef;
 
@@ -179,12 +197,16 @@ CG_EXTERN CGError CGContextDelegateDrawRects(CGContextDelegateRef ctxDelegate,
 											 const CGRect rects[],
 											 size_t count);
 
-
 CG_EXTERN CGError CGContextDelegateDrawImage(CGContextDelegateRef ctxDelegate, 
 											 CGRenderingStateRef rendering,
 											 CGGStateRef state,
 											 CGRect rect,
 											 CGImageRef image);
+
+CG_EXTERN CGError CGContextDelegateDrawShading(CGContextDelegateRef ctxDelegate, 
+											   CGRenderingStateRef rendering,
+											   CGGStateRef state,
+											   CGShadingRef shading);
 
 
 void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type);

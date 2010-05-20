@@ -30,7 +30,7 @@ static pthread_once_t			__csNotifCenter_create_once = PTHREAD_ONCE_INIT;
 static CGNotificationCenterRef  __csNotifCenter = NULL;
 
 
-/* CGColorSpace constants */
+/* color space constants */
 CG_CONST_STRING_DECL(kCGColorSpaceDisplayGray,				"kCGColorSpaceDisplayGray");
 CG_CONST_STRING_DECL(kCGColorSpaceDisplayRGB,				"kCGColorSpaceDisplayRGB");
 CG_CONST_STRING_DECL(kCGColorSpaceDeviceGray,				"kCGColorSpaceDeviceGray");
@@ -48,7 +48,11 @@ CG_CONST_STRING_DECL(kCGColorSpaceUndo601,					"kCGColorSpaceUndo601");
 CG_CONST_STRING_DECL(kCGColorSpaceColoredPattern,			"kCGColorSpaceColoredPattern");
 CG_CONST_STRING_DECL(kCGColorSpaceGenericGray,				"kCGColorSpaceGenericGray");
 
+/* color space notifications */
 CG_CONST_STRING_DECL(kCGColorSpaceWillDeallocate,			"kCGColorSpaceWillDeallocate");
+
+
+
 
 /* CoreFoundation runtime class for CGPath.  */
 static CFRuntimeClass CGColorSpaceClass =  {
@@ -71,10 +75,12 @@ CFTypeID CGColorSpaceGetTypeID(void)
 
 void csFinalize(CFTypeRef ctf)
 {
+	CGColorSpaceRef cs;
 	bool isSingleton;
 	CGNotificationCenterRef csNotifCenter;
 
-	isSingleton = ((CGColorSpaceRef)ctf)->isSingleton;
+	cs = (CGColorSpaceRef)ctf;
+	isSingleton = cs->isSingleton;
 	assert( isSingleton == FALSE );
 
 	csNotifCenter = getNotificationCenter(FALSE);
@@ -82,7 +88,6 @@ void csFinalize(CFTypeRef ctf)
 
 		CGNotificationCenterPostNotification(csNotifCenter, kCGColorSpaceWillDeallocate, ctf, isSingleton);
 	}
-
 	//.....
 }
 
