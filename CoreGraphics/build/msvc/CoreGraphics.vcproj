@@ -227,6 +227,14 @@
 			<File
 				RelativePath="..\..\CGBlt.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\CGBltPriv.h"
@@ -813,6 +821,14 @@
 			<File
 				RelativePath="..\..\CGZone.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\CGZonePriv.h"
