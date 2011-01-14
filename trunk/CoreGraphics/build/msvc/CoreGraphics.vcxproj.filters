@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\CoreGraphics">
+      <UniqueIdentifier>{e0b796a5-725d-4a4d-bcd1-b125fe1111e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CGAffineTransform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGBitmapContext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGBlt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGColor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGColorSpace.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGColorTransform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGColorTransformBase.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGContext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGContextDelegate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGDash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGDataProvider.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGDefaults.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGDisplayList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGError.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGFont.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGFunction.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGGeometry.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGGState.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGImage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGLayer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGLibrary.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGNotificationCenter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGPath.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGRenderingState.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGSoftMask.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGStyle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGTypesPriv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CGZone.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CGBasePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGBitmapContextPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGBltPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGColorPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGColorSpacePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGColorTransformBasePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGColorTransformPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGContextDelegatePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGContextPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGDashPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGDataProviderPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGDefaultsPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGDisplayListPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGErrorPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGFontPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGFunctionPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGGStatePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGImagePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGLayerPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGLibraryPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGMacros.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGNotificationCenterPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGPathPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGRenderingStatePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGSoftMaskPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGStylePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGTypesPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGZonePriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGAffineTransform.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGBase.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGBitmapContext.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGColor.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGColorSpace.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGContext.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGDataConsumer.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGDataProvider.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGError.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGFont.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGFunction.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGGeometry.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGGradient.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGImage.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGLayer.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPath.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPattern.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFArray.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFContentStream.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFContext.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFDictionary.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFDocument.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFObject.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFOperatorTable.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFPage.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFScanner.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFStream.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGPDFString.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGShading.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CoreGraphics.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
