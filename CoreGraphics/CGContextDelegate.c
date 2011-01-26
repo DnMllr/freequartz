@@ -114,22 +114,15 @@ void CGContextDelegateSetCallback(CGContextDelegateRef ctxDelegate, CGContextDel
 	if (!ctxDelegate)
 		return;
 	
-	addr = get_callback_address(ctxDelegate, type);
+	addr = get_callback_address(ctxDelegate, type, "CGContextDelegateSetCallback");
 	if (addr) {
 		//*addr = callback;
 	}
 }
 
 
-void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type)
+void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName)
 {
-	if (type > kCGContextDelegateDrawLayer) {
-		CGPostError("%s: Unsupported delegate callback: %d.", "CGContextDelegateSetCallback", (int)type);
-		return NULL;
-	}
-
-
-
 	switch(type) {
 
 		case kCGContextDelegateFinalize:			{ return ctxDelegate->finalize;  }
@@ -153,7 +146,8 @@ void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateTy
 		case kCGContextDelegateGetLayer:			{ return ctxDelegate->getLayer; }
 		case kCGContextDelegateDrawLayer:			{ return ctxDelegate->drawLayer; }
 		default:    {
-				CGPostError("%s: Unsupported delegate callback: %d.", "CGContextDelegateSetCallback");
+				CGPostError("%s: Unsupported delegate callback: %d.", callerName, (int)type);
+				abort();
 			}
 	};
 
