@@ -209,7 +209,7 @@ CG_EXTERN CGError CGContextDelegateDrawShading(CGContextDelegateRef ctxDelegate,
 											   CGShadingRef shading);
 
 
-void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type);
+void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName);
 
 CF_EXTERN_C_END
 
