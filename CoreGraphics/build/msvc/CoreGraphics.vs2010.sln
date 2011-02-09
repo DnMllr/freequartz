@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRIP", "..\..\modules\lib
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCGR", "..\..\modules\libCGR\build\msvc\libCGR.vcxproj", "{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libOGLES", "..\..\modules\libOGLES\build\msvc\libOGLES.vcxproj", "{DA9DC590-10DC-4604-974B-8E45A6D21C7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}.Debug|Win32.Build.0 = Debug|Win32
 		{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}.Release|Win32.ActiveCfg = Release|Win32
 		{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}.Release|Win32.Build.0 = Release|Win32
+		{DA9DC590-10DC-4604-974B-8E45A6D21C7F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DA9DC590-10DC-4604-974B-8E45A6D21C7F}.Debug|Win32.Build.0 = Debug|Win32
+		{DA9DC590-10DC-4604-974B-8E45A6D21C7F}.Release|Win32.ActiveCfg = Release|Win32
+		{DA9DC590-10DC-4604-974B-8E45A6D21C7F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,7 +32,7 @@ loadBitmapContextDelegateCreator(void)
 	_CGBitmapContextDelegateCreate bitmapContextDelegate;
 
 	CGBitmapContextDelegateCreate = 
-		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("RIP", "__CGBitmapContextDelegateCreate");
+		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("OGLES", "__CGBitmapContextDelegateCreate");
 	
 	if (CGBitmapContextDelegateCreate) {
 		CGBitmapContextDelegateCreate = bitmapContextDelegate;
