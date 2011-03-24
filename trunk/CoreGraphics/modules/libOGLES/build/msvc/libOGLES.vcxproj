@@ -14,7 +14,7 @@
     <ProjectGuid>{DA9DC590-10DC-4604-974B-8E45A6D21C7F}</ProjectGuid>
     <RootNamespace>libOGLES</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>libRIP_OGLES</ProjectName>
+    <ProjectName>libRIPOgles</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

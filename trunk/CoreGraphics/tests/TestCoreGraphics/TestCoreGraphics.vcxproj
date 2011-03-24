@@ -104,7 +104,6 @@
   <ItemGroup>
     <None Include="small.ico" />
     <None Include="TestCoreGraphics.ico" />
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestCoreGraphics.rc" />
