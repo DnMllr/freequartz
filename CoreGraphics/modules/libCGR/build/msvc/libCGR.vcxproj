@@ -14,7 +14,7 @@
     <ProjectGuid>{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}</ProjectGuid>
     <RootNamespace>libCGR</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>libRIPCairo</ProjectName>
+    <ProjectName>libRIP_Cairo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
