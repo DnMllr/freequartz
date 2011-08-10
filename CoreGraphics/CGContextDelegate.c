@@ -25,6 +25,9 @@
 
 
 
+//static CGCallback rendering_callbacks[] = 
+
+
 static CFRuntimeClass CGContextDelegateClass = 
   {
     0,							// version

@@ -109,7 +109,6 @@ typedef CGError (*CGCallbackDrawShading) (CGContextDelegateRef ctxDelegate,
 typedef struct CGCallback {
 
 	CGContextDelegateType type;
-	//void (*CGCallbackFunc) (CGRenderingStateRef rendering, CGGStateRef state);
 	void* delegateAddr;
 } CGCallback, *CGCallbackRef;
 
