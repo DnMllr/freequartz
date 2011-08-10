@@ -125,13 +125,48 @@ CGPathElementsRef add_chunk(CGMutablePathRef path )
 
 void CGPathMoveToPoint(CGMutablePathRef path, const CGAffineTransform *m, CGFloat x, CGFloat y)
 {
+	/****************************************************************************************
+	* CAPPUCCINO 
+	****************************************************************************************
+	CGPoint point = CGPointMake(x, y);
+	int count = path->count;
+
+	if (m != NULL)
+		point = _CGPointApplyAffineTransform(point, m);
+
+	path->start = point;
+	path->current = point;
+
+	var previous = path->elements[count - 1];
+
+	if (count != 0 && previous.type == kCGPathElementMoveToPoint)
+	{
+		previous.x = point.x;
+		previous.y = point.y;
+	}
+	else
+		aPath.elements[aPath.count++] = { type:kCGPathElementMoveToPoint, x:point.x, y:point.y };
+	*/
 	CGPoint point;
+	CGPathElementsRef previous;
 
 	if (!path) { return; }
 
 	point  = CGPointMake(x, y);
-	 if (m != NULL)
-		 point = CGPointApplyAffineTransform(point, *m);
+	if (m != NULL)
+		point = CGPointApplyAffineTransform(point, *m);
+	
+	previous = path->lastChunk;
+	if (previous->count != 0 && previous->type == kCGPathElementMoveToPoint)
+	{
+		//previous.x = point.x;
+		//previous.y = point.y;
+	}
+	else
+	{
+
+	}
+
 }
 
 void CGPathAddLineToPoint(CGMutablePathRef path, const CGAffineTransform *m, CGFloat x, CGFloat y)

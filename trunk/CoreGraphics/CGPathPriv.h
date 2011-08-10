@@ -32,7 +32,7 @@ typedef struct CGPathElements {
 
   struct CGPathElements *nextChunk;	//0x00
   int count;						//0x04
-  CGPoint elements[18]; 			//0x08
+  CGPathElementType type; 			//0x08
 
 } CGPathElements, *CGPathElementsRef;
 

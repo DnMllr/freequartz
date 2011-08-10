@@ -33,8 +33,9 @@ struct CGAffineTransform {
 CG_EXTERN const CGAffineTransform CGAffineTransformIdentity;
 
 /* functions */
-CG_EXTERN CGAffineTransform CGAffineTransformMake (CGFloat a, CGFloat b,
-CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
+CG_EXTERN CGAffineTransform CGAffineTransformMake (
+	CGFloat a, CGFloat b,
+	CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
 
 CG_EXTERN CGAffineTransform CGAffineTransformMakeRotation(CGFloat angle);
 
@@ -101,10 +102,8 @@ CG_INLINE CGSize
 __CGSizeApplyAffineTransform(CGSize size, CGAffineTransform t)
 {
   CGSize s;
-  s.width = (CGFloat)((double)t.a * size.width + (double)t.c *
-size.height);
-  s.height = (CGFloat)((double)t.b * size.width + (double)t.d *
-size.height);
+  s.width  = (CGFloat)((double)t.a * size.width + (double)t.c * size.height);
+  s.height = (CGFloat)((double)t.b * size.width + (double)t.d * size.height);
   return s;
 }
 #define CGSizeApplyAffineTransform __CGSizeApplyAffineTransform
