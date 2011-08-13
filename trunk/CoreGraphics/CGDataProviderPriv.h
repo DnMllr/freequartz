@@ -70,9 +70,11 @@ typedef struct CGDataProvider CGDataProvider, *CGDataProviderRef;
 void				CGDataProviderDestroy(CFTypeRef ctf);
 CGDataProviderRef	CGDataProviderCreateWithCopyOfData(void *data, size_t size);
 CGDataProviderRef	create_provider(void *info, Boolean bThreadSafe);
-void				dataReleaseInfo(void *info);
-const void*			dataGetBytePointer(void *info);
 
+static void			dataReleaseInfo(void *info);
+static const void*	dataGetBytePointer(void *info);
+static void			release_info(void *info);
+static size_t		get_bytes_at_position(void *info, void *buf, off_t pos, size_t count);
 
 CF_EXTERN_C_END
 
