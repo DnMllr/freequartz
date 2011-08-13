@@ -58,9 +58,9 @@ static _dev_t			root_dev = (unsigned int)-1;
 void get_root_dev()
 {
 	int result;
-	struct _stat buf;
+	struct stat buf;
 
-	result = _stat("\\", &buf);
+	result = stat("\\", &buf);
 	if (result == 0)
 		root_dev = buf.st_rdev;
 
@@ -248,7 +248,6 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 {
 	CGDataProviderRef provider = NULL;
 
-#if 1
 	CFStringRef urlScheme;
 	CFDataRef resData;
 	//CFDictionaryRef *properties;
@@ -280,7 +279,7 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 			CFRelease(resData);
 		}
 	}
-#endif
+
 	return provider;
 }
 
@@ -289,12 +288,12 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 {
 	CGDataProviderRef provider = NULL;
 	int fd, result;
-	struct _stat buf;
+	struct stat buf;
 
 	fd = open(filename, 0);
 	if (fd >=  0)
 	{
-		result = _fstat(fd, &buf);
+		result = fstat(fd, &buf);
 		if ((result < 1) || ((buf.st_mode & _S_IFMT) != _S_IFREG))
 			goto err_close_before_exit;
 
@@ -310,6 +309,8 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 
 		}
 	}
+	else
+		goto err_return;
 
 err_close_before_exit:
 	close(fd);
