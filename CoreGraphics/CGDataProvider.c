@@ -56,20 +56,31 @@ static int munmap(void *, size_t)
 
 static ssize_t pread (int fd, void *buf, size_t count, off_t offset)
 {
-//	DWORD written;
-//	HANDLE handle;
-//	OVERLAPPED olap;
-//
-//	handle = (HANDLE)(intptr_t)_get_osfhandle (fd);
-//	if (handle == INVALID_HANDLE_VALUE)
-//		return -1;
-//
-//	olap.Offset = offset;
-//	olap.OffsetHigh = (offset >> 32);
-//	
-//	if (ReadFile (handle, buf, count, &written, &olap))
-//		return written;
-	return -1;
+	DWORD written;
+	HANDLE handle;
+	OVERLAPPED olap;
+	int ret;
+	ULARGE_INTEGER ulioffset;
+
+	handle = (HANDLE)(intptr_t)_get_osfhandle (fd);
+	if (handle == INVALID_HANDLE_VALUE)
+		return -1;
+
+	memset(&olap, 0, sizeof(olap));
+	ulioffset.QuadPart = offset;
+	olap.Offset = ulioffset.LowPart;
+	olap.OffsetHigh = ulioffset.HighPart;
+	
+	ret = ReadFile (handle, buf, count, &written, &olap);
+	if (!ret) {
+        ret = GetOverlappedResult(handle, &olap, &written, TRUE);
+        if (!ret)
+            return -EIO;
+        else
+            return written;
+    }
+
+	return written;
 }
 #endif
 
@@ -379,8 +390,11 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 	if (fd >=  0)
 	{
 		result = fstat(fd, &file_info);
-		if ((result < 1) || ((file_info.st_mode & _S_IFMT) != _S_IFREG))
-			goto err_close_before_exit;
+		if ((result < 1) || ((file_info.st_mode & _S_IFMT) != _S_IFREG)) 
+		{
+			close(fd);
+			return NULL;
+		}
 
 		if (root_dev == (unsigned int)-1)
 			pthread_once(&get_root_dev_once, get_root_dev);
@@ -414,13 +428,7 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 
 		}
 	}
-	else
-		goto err_return;
-
-err_close_before_exit:
-	close(fd);
-
-err_return:
+		
 	return provider;
 }
 
