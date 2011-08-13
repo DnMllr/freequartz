@@ -107,11 +107,11 @@ bool CGPathEqualToPath(CGPathRef path1, CGPathRef path2)
 	return FALSE;
 }
 
-CGPathElementsRef add_chunk(CGMutablePathRef path )
+PathChunksRef add_chunk(CGMutablePathRef path )
 {
-	CGPathElementsRef chunk;
+	PathChunksRef chunk;
 
-	chunk = (CGPathElementsRef)malloc(sizeof(CGPathElements));
+	chunk = (PathChunksRef)malloc(sizeof(PathChunks));
 	if (chunk == NULL)
 		return NULL;
 
@@ -148,7 +148,7 @@ void CGPathMoveToPoint(CGMutablePathRef path, const CGAffineTransform *m, CGFloa
 		aPath.elements[aPath.count++] = { type:kCGPathElementMoveToPoint, x:point.x, y:point.y };
 	*/
 	CGPoint point;
-	CGPathElementsRef previous;
+	PathChunksRef previous;
 
 	if (!path) { return; }
 
@@ -157,7 +157,7 @@ void CGPathMoveToPoint(CGMutablePathRef path, const CGAffineTransform *m, CGFloa
 		point = CGPointApplyAffineTransform(point, *m);
 	
 	previous = path->lastChunk;
-	if (previous->count != 0 && previous->type == kCGPathElementMoveToPoint)
+	if (previous->count != 0 && previous[previous->count-1].type == kCGPathElementMoveToPoint)
 	{
 		//previous.x = point.x;
 		//previous.y = point.y;
@@ -285,6 +285,59 @@ void CGPathAddArcToPoint(CGMutablePathRef path,const CGAffineTransform *m,
 void CGPathAddPath(CGMutablePathRef path1, const CGAffineTransform *m, CGPathRef path2)
 {
 
+	/*for (var i = 0, count = anotherPath.count; i < count; ++i)
+    {
+        var element = anotherPath.elements[i];
+
+        switch (element.type)
+        {
+            case kCGPathElementAddLineToPoint:      CGPathAddLineToPoint(aPath, aTransform, element.x, element.y);
+                                                    break;
+
+            case kCGPathElementAddCurveToPoint:     CGPathAddCurveToPoint(aPath, aTransform,
+                                                                          element.cp1x, element.cp1y,
+                                                                          element.cp2x, element.cp2y,
+                                                                          element.x, element.y);
+                                                    break;
+
+            case kCGPathElementAddArc:              CGPathAddArc(aPath, aTransform, element.x, element.y,
+                                                                 element.radius, element.startAngle,
+                                                                 element.endAngle, element.isClockwise);
+                                                    break;
+
+            case kCGPathElementAddQuadCurveToPoint: CGPathAddQuadCurveToPoint(aPath, aTransform,
+                                                                              element.cpx, element.cpy,
+                                                                              element.x, element.y);
+                                                    break;
+
+            case kCGPathElementMoveToPoint:         CGPathMoveToPoint(aPath, aTransform, element.x, element.y);
+                                                    break;
+
+            case kCGPathElementCloseSubpath:        CGPathCloseSubpath(aPath);
+                                                    break;
+        }
+    }*/
+
+	//switch (element->type) 
+	//{
+ //   case kCGPathElementMoveToPoint:
+ //       if (!CGPathIsEmpty(path)) // to silence a warning when trying to close an empty path
+ //           CGPathCloseSubpath(path); // This is the only change from CGPathCreateMutableCopy
+ //       CGPathMoveToPoint(path, 0, points[0].x, points[0].y);
+ //       break;
+ //   case kCGPathElementAddLineToPoint:
+ //       CGPathAddLineToPoint(path, 0, points[0].x, points[0].y);
+ //       break;
+ //   case kCGPathElementAddQuadCurveToPoint:
+ //       CGPathAddQuadCurveToPoint(path, 0, points[0].x, points[0].y, points[1].x, points[1].y);
+ //       break;
+ //   case kCGPathElementAddCurveToPoint:
+ //       CGPathAddCurveToPoint(path, 0, points[0].x, points[0].y, points[1].x, points[1].y, points[2].x, points[2].y);
+ //       break;
+ //   case kCGPathElementCloseSubpath:
+ //       CGPathCloseSubpath(path);
+ //       break;
+ //   }
 }
 
 bool CGPathIsEmpty(CGPathRef path)

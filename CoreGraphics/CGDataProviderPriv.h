@@ -21,6 +21,9 @@
 
 #include <CoreFoundation/CFRuntime.h>
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "CGMacros.h"
 
 CF_EXTERN_C_BEGIN
