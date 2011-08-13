@@ -21,9 +21,9 @@
 #ifndef _SYS_MMAN_H
 #define _SYS_MMAN_H     1
 
-#include <features.h>
+//#include <features.h>
 
-#include "../posix4win.h"
+//#include "../posix4win.h"
 
 
 /*
@@ -117,7 +117,8 @@
 #define	MINCORE_REFERENCED_OTHER 0x8 /* Page has been referenced */
 #define	MINCORE_MODIFIED_OTHER	0x10 /* Page has been modified */
 
-__BEGIN_DECLS
+//__BEGIN_DECLS
+extern "C" {
 
 int    __cdecl mlock(const void *, size_t);
 
@@ -139,6 +140,8 @@ int    __cdecl munlockall(void);
 
 int   __cdecl  munmap(void *, size_t);
 
-__END_DECLS
+}
+//__END_DECLS
+
 
 #endif //_SYS_MMAN_H

@@ -66,6 +66,7 @@
 // Functions normally found in GNU header
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 #include <sys/types.h>
+#include <sys/mman.H>
 #include "posix4win_unistd.h"
 
 

@@ -24,6 +24,7 @@
 #include "CGDataProviderPriv.h"
 #include "CGColorSpacePriv.h"
 
+//TODO : provide implementation
 
 
 /* CoreFoundation runtime class for CGDataProvider.  */
@@ -41,6 +42,38 @@ static CFRuntimeClass CGDataProviderClass =  {
 static CFTypeID __kCGDataProviderID = _kCFRuntimeNotATypeID;
 
 
+#ifdef WIN32
+static void *  mmap(void *, size_t, int, int, int, off_t)
+{ 
+	return  NULL;
+}
+
+
+static int munmap(void *, size_t)
+{ 
+	return  0;
+}
+
+static ssize_t pread (int fd, void *buf, size_t count, off_t offset)
+{
+//	DWORD written;
+//	HANDLE handle;
+//	OVERLAPPED olap;
+//
+//	handle = (HANDLE)(intptr_t)_get_osfhandle (fd);
+//	if (handle == INVALID_HANDLE_VALUE)
+//		return -1;
+//
+//	olap.Offset = offset;
+//	olap.OffsetHigh = (offset >> 32);
+//	
+//	if (ReadFile (handle, buf, count, &written, &olap))
+//		return written;
+	return -1;
+}
+#endif
+
+
 static const void *getCFDataBytePointer(void *info) 
 { 
 	return  CFDataGetBytePtr((CFDataRef)info); 
@@ -49,6 +82,21 @@ static const void *getCFDataBytePointer(void *info)
 static void releaseCFData(void *info) 
 { 
 	CFRelease((CFDataRef)info); 
+}
+
+void dataReleaseInfo(void *info)
+{
+	CGProviderDataRef data = (CGProviderDataRef)info;
+	if (data->releaseData != NULL) {
+		data->releaseData(data->info, data->data, data->size);
+	}
+
+	free(info);
+}
+
+const void* dataGetBytePointer(void *info)
+{
+	return ((CGProviderDataRef)info)->data;
 }
 
 
@@ -165,6 +213,9 @@ CGDataProviderCreateWithCopyOfData(const void *data, size_t size)
 	return NULL;
 }
 
+
+
+
 CGDataProviderRef CGDataProviderCreateWithData(void *info,
 											   const void *data, size_t size,
 											   CGDataProviderReleaseDataCallback releaseData)
@@ -198,17 +249,6 @@ CGDataProviderRef CGDataProviderCreateWithData(void *info,
 	return provider;
 }	
 
-void dataReleaseInfo(void *info)
-{
-
-}
-
-
-
-const void* dataGetBytePointer(void *info)
-{
-	return NULL;
-}
 
 
 CGDataProviderRef CGDataProviderCreateWithCFData(CFDataRef data)
@@ -284,28 +324,93 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 }
 
 
+static const CGDataProviderDirectCallbacks file_callbacks = { 
+	0,							/* version */
+	NULL,						/* getBytePointer */
+	NULL,						/* releaseBytePointer */
+	&get_bytes_at_position,		/* getBytesAtPosition */
+	&release_info,				/* releaseInfo */
+};
+
+
+static void release_info(void *info)
+{ 
+	int fd;
+	fd = *((int*)info);
+	close(fd);
+	return;
+}
+
+static size_t get_bytes_at_position(void *info, void *buf, off_t pos, size_t count) 
+{ 
+	ssize_t size;
+	size = pread(*((int*)info), buf, count, pos);	
+	return size;
+}
+
+static void free_data(void *info, const void *data, size_t size)
+{
+	free((char *) data);
+}
+
+
+void unmap_file(void* start, size_t length)
+{
+	int result;
+
+	result = munmap(start, length);
+	if (result < 0)
+	{
+		CGPostError("Failed to unmap data (%p; 0x%lx): %s.\n", 
+			start, length, strerror(NULL));
+	}
+}
+
+
 CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 {
 	CGDataProviderRef provider = NULL;
 	int fd, result;
-	struct stat buf;
+	struct stat file_info;
+	void* ptr;
+	void* buf;
 
 	fd = open(filename, 0);
 	if (fd >=  0)
 	{
-		result = fstat(fd, &buf);
-		if ((result < 1) || ((buf.st_mode & _S_IFMT) != _S_IFREG))
+		result = fstat(fd, &file_info);
+		if ((result < 1) || ((file_info.st_mode & _S_IFMT) != _S_IFREG))
 			goto err_close_before_exit;
 
 		if (root_dev == (unsigned int)-1)
 			pthread_once(&get_root_dev_once, get_root_dev);
 		
-		if (root_dev == buf.st_rdev)
+		if (root_dev == file_info.st_rdev)
 		{
-
-		}
-		else
-		{
+			ptr = mmap((void*)0, file_info.st_size, PROT_EXEC, MAP_PRIVATE, fd, 0);
+			if ((ptr == MAP_FAILED || ptr == NULL) && (file_info.st_size > 0) && (file_info.st_size <= 10485760))
+			{
+				buf = malloc(file_info.st_size);
+				if (buf != NULL)
+				{
+					result = read(fd, buf, file_info.st_size);
+					if ((result == -1) || (result != file_info.st_size))
+					{
+						CGPostError("%s: warning: failed to read entire file", "read_file");
+						if (file_info.st_size > 0)
+						{
+							memset(((char*)buf+result), 0, file_info.st_size - result);
+							close(fd);
+							provider = CGDataProviderCreateWithData(0, buf, result, free_data);
+						}
+					}
+				}
+				else
+				{
+					close(fd);
+					provider = CGDataProviderCreateDirect((void*)&fd, file_info.st_size, &file_callbacks);
+				}
+			}
 
 		}
 	}

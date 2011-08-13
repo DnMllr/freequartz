@@ -72,14 +72,14 @@ GNU4WINCE_API int  __cdecl		_close(int fildes);
 
 #endif
 
-GNU4WINCE_API ssize_t __cdecl	_pread(int fd, void *buf, size_t nbyte, off_t offset);
+//GNU4WINCE_API ssize_t __cdecl	_pread(int fd, void *buf, size_t nbyte, off_t offset);
 GNU4WINCE_API ssize_t __cdecl	_pwrite(int fildes, const void *buf, size_t nbyte, off_t offset);
 GNU4WINCE_API int	  __cdecl	_fsync(int fildes);
 
 #define access	_access
 #define waccess	_waccess
 #define fsync	_fsync
-#define pread	_pread
+//#define pread	_pread
 #define pwrite	_pwrite
 
 #ifdef _WIN32_WCE
