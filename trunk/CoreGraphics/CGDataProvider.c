@@ -40,6 +40,35 @@ static CFRuntimeClass CGDataProviderClass =  {
   };
 static CFTypeID __kCGDataProviderID = _kCFRuntimeNotATypeID;
 
+
+static const void *getCFDataBytePointer(void *info) 
+{ 
+	return  CFDataGetBytePtr((CFDataRef)info); 
+}
+
+static void releaseCFData(void *info) 
+{ 
+	CFRelease((CFDataRef)info); 
+}
+
+
+static pthread_once_t	get_root_dev_once = PTHREAD_ONCE_INIT;
+static _dev_t			root_dev = (unsigned int)-1;
+
+void get_root_dev()
+{
+	int result;
+	struct _stat buf;
+
+	result = _stat("\\", &buf);
+	if (result == 0)
+		root_dev = buf.st_rdev;
+
+	return;
+}
+
+
+
 CFTypeID CGDataProviderGetTypeID(void)
 {	
 	return CGTypeRegisterWithCallbacks(&__kCGDataProviderID, &CGDataProviderClass );
@@ -104,12 +133,17 @@ CGDataProviderRef CGDataProviderCreateSequential(void *info,
 CGDataProviderRef CGDataProviderCreateDirect(void *info, off_t size,
 											 const CGDataProviderDirectCallbacks *callbacks)
 {
+
+	/* 
+	* Due to gcc optimization I think that : R0 = info, R2 =? , R1 = size, R3 = callbacks
+	*/
+
 	CGDataProviderRef provider;
 
-	if (!callbacks)
+	if (!callbacks || callbacks->version != 0)
 		return NULL;
 
-	provider = create_provider(info, TRUE);
+	provider = create_provider(info, FALSE);
 	if (!provider) 
 		return NULL;
 	
@@ -169,6 +203,8 @@ void dataReleaseInfo(void *info)
 
 }
 
+
+
 const void* dataGetBytePointer(void *info)
 {
 	return NULL;
@@ -178,17 +214,33 @@ const void* dataGetBytePointer(void *info)
 CGDataProviderRef CGDataProviderCreateWithCFData(CFDataRef data)
 {
 	CGDataProviderRef provider;
-	//CFIndex length;
+	CFIndex length;
+
+	static const CGDataProviderDirectCallbacks callbacks = { 
+		0,							/* version */
+		&getCFDataBytePointer,		/* getBytePointer */
+		NULL,						/* releaseBytePointer */
+		NULL,						/* getBytesAtPosition */
+		&releaseCFData,				/* releaseInfo */
+	};	
 
 	if (!data)
 		return NULL;
 
-	//CFRetain(data);
-	//length = CFDataGetLength(data);
-	//CGDataProviderCreateDirect();
-	//if (!provider) CFRelease(data);
-	//provider->data = CFDataGetBytePtr(data);
+	CFRetain(data);
+	length = CFDataGetLength(data);
 
+	// Don't understand in arm asm callbacks seem to be null (MOV.W   R2, #0)
+	provider = CGDataProviderCreateDirect((void*)data, length, &callbacks);
+	if (provider != NULL) 
+	{
+		provider->data = CFDataGetBytePtr(data);
+	}
+	else 
+	{
+		CFRelease(data);
+	}
+	
 	return provider;
 }
 
@@ -196,16 +248,13 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 {
 	CGDataProviderRef provider = NULL;
 
-	////////////////////////////////////////////////////////
-	// Need to compile CFLIte!!!! to have CF symbols
-	////////////////////////////////////////////////////////
-#if 0
+#if 1
 	CFStringRef urlScheme;
-	CFDataRef *resData;
-	CFDictionaryRef *properties;
+	CFDataRef resData;
+	//CFDictionaryRef *properties;
 	CFArrayRef desiredProperties;
 	SInt32 err;
-	Boolean bRet;
+	//Boolean bRet;
 	UInt8 buffer[MAX_PATH+1];
 
 
@@ -215,13 +264,13 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 		CFRelease(urlScheme);
 		if (CFURLGetFileSystemRepresentation(url, true, buffer, MAX_PATH)) {
 
-			provider = CGDataProviderCreateWithFilename(buffer);
+			provider = CGDataProviderCreateWithFilename((const char*)buffer);
 		}
 	}
 	
 	if (!urlScheme || !provider) {
 	
-		if (CFURLCreateDataAndPropertiesFromResource(NULL, url, resData, 
+		if (CFURLCreateDataAndPropertiesFromResource(NULL, url, &resData, 
 			NULL, desiredProperties, &err) == false) {
 				CGPostError("CFURLCreateDataAndPropertiesFromResource: failed with error code %d.", err);
 				return NULL;
@@ -239,7 +288,33 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 {
 	CGDataProviderRef provider = NULL;
+	int fd, result;
+	struct _stat buf;
 
+	fd = open(filename, 0);
+	if (fd >=  0)
+	{
+		result = _fstat(fd, &buf);
+		if ((result < 1) || ((buf.st_mode & _S_IFMT) != _S_IFREG))
+			goto err_close_before_exit;
+
+		if (root_dev == (unsigned int)-1)
+			pthread_once(&get_root_dev_once, get_root_dev);
+		
+		if (root_dev == buf.st_rdev)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+
+err_close_before_exit:
+	close(fd);
+
+err_return:
 	return provider;
 }
 
@@ -247,3 +322,4 @@ CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
 {
 	return NULL;
 }
+

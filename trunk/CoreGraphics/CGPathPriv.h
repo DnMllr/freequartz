@@ -26,24 +26,30 @@
 CF_EXTERN_C_BEGIN
 
 /////////////////////////////////////////////
-// CGPathElements - sizeof = 0x98(152)
+// PathChunk - sizeof = 0x98(152)
 /////////////////////////////////////////////
-typedef struct CGPathElements {
+typedef struct _PathChunks {
 
-  struct CGPathElements *nextChunk;	//0x00
+  struct _PathChunks *nextChunk;	//0x00
   int count;						//0x04
   CGPathElementType type; 			//0x08
+  CGPoint start;					//0x0C .x 0x10 .y
+  CGPoint current;					//0x14 .x 0X18 .y
+  float chunk[16];
 
-} CGPathElements, *CGPathElementsRef;
+} PathChunks, *PathChunksRef;
 
+/////////////////////////////////////////////
+// CGPath - sizeof = 0xB8(184)
+/////////////////////////////////////////////
 typedef struct CGPath {
 
 	CFRuntimeBase obj;				//0x00
 	bool bIsEmpty;					//0x08
 	CGPoint start;					//0x0C .x 0x10 .y
 	CGPoint current;				//0x14 .x 0X18 .y
-	CGPathElements elements; 		//0x1C 
-	CGPathElementsRef lastChunk;	//0xB4
+	PathChunks elements; 			//0x1C 
+	PathChunksRef lastChunk;		//0xB4
 
 } *CGMutablePathRef;
 
