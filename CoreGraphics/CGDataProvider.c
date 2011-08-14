@@ -436,18 +436,20 @@ static void free_data(void *info, const void *data, size_t size)
 }
 
 
-void unmap_file(void* start, size_t length)
+
+void unmap_file(void *info, const void *data, size_t size)
 {
 	int result;
 
-	result = munmap(start, length);
+	result = munmap((void*)data, size);
 	if (result < 0)
 	{
 		CGPostError("Failed to unmap data (%p; 0x%lx): %s.\n", 
-			start, length, strerror(NULL));
+			data, size, strerror(NULL));
 	}
-}
 
+	return;
+}
 
 CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 {
@@ -469,38 +471,46 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 
 		if (root_dev == (unsigned int)-1)
 			pthread_once(&get_root_dev_once, get_root_dev);
-		
-		if (root_dev == file_info.st_rdev)
+
+
+		if ((file_info.st_size > 0) && (file_info.st_size <= 10485760))
 		{
-			ptr = mmap((void*)0, file_info.st_size, PROT_EXEC, MAP_PRIVATE, fd, 0);
-			if ((ptr == MAP_FAILED || ptr == NULL) && (file_info.st_size > 0) && (file_info.st_size <= 10485760))
+			if (root_dev == file_info.st_rdev)
 			{
-				buf = malloc(file_info.st_size);
-				if (buf != NULL)
-				{
-					result = read(fd, buf, file_info.st_size);
-					if ((result == -1) || (result != file_info.st_size))
-					{
-						CGPostError("%s: warning: failed to read entire file", "read_file");
-						if (file_info.st_size > 0)
-						{
-							memset(((char*)buf+result), 0, file_info.st_size - result);
-							close(fd);
-							provider = CGDataProviderCreateWithData(0, buf, result, free_data);
-						}
-					}
-				}
-				else
+				ptr = mmap((void*)0, file_info.st_size, PROT_EXEC, MAP_PRIVATE, fd, 0);
+				if ((ptr != MAP_FAILED && ptr != NULL))
 				{
 					close(fd);
-					provider = CGDataProviderCreateDirect((void*)&fd, file_info.st_size, &file_callbacks);
+					provider = CGDataProviderCreateWithData(0,ptr, file_info.st_size, unmap_file);
+					return provider;
 				}
 			}
-
+			
+			buf = malloc(file_info.st_size);
+			if (buf != NULL)
+			{
+				result = read(fd, buf, file_info.st_size);
+				if ((result == -1) || (result != file_info.st_size))
+				{
+					CGPostError("%s: warning: failed to read entire file", "read_file");
+					if (result > 0)
+					{
+						memset(((char*)buf+result), 0, file_info.st_size - result);
+						close(fd);
+						provider = CGDataProviderCreateWithData(0, buf, result, free_data);
+					}
+				}
+			}
+			else
+			{
+				provider = CGDataProviderCreateDirect((void*)&fd, file_info.st_size, &file_callbacks);
+			}
 		}
-	}
-		
+		else
+		{
+			provider = CGDataProviderCreateDirect((void*)&fd, file_info.st_size, &file_callbacks);
+		}
+	}	
+
 	return provider;
 }
-
-
