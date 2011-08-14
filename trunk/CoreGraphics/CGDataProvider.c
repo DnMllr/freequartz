@@ -291,10 +291,7 @@ CGDataProviderRef CGDataProviderCreateDirect(void *info, off_t size,
 	return provider;
 }
 
-CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
-{
-	return NULL;
-}
+
 
 
 
@@ -450,6 +447,14 @@ void unmap_file(void *info, const void *data, size_t size)
 
 	return;
 }
+
+
+
+CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
+{
+	return NULL;
+}
+
 
 CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 {
