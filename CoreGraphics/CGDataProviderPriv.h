@@ -37,6 +37,7 @@ struct CGProviderData {
 };
 typedef struct CGProviderData CGProviderData, *CGProviderDataRef;
 
+
 //////////////////////////////////////////////////////
 // sizeof = 0x88
 //////////////////////////////////////////////////////
@@ -54,13 +55,11 @@ struct CGDataProvider {
 	CGDataProviderRewindCallback rewind;							//0x24
 	CGDataProviderReleaseInfoCallback releaseInfo;					//0x28
 	CGDataProviderGetBytePointerCallback getBytePointer;			//0x2C
-	unsigned int version;											//0x30
+	CGDataProviderGetBytePointerCallback getInfoBytePointer;		//0x30
 	CGDataProviderReleaseBytePointerCallback releaseBytePointer;	//0x34
 	CGDataProviderGetBytesAtPositionCallback getBytesAtPosition;	//0x38
-	//...
-	pthread_mutex_t* mutex;											//0x40
-	//...
-	uint32_t field6C;												//0x6C
+	pthread_mutex_t mutex;											//0x40
+	size_t byte_ptr_count;											//0x6C
 	const void* data;												//0x70;
 	
 };

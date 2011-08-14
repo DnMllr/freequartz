@@ -26,6 +26,9 @@
 
 //TODO : provide implementation
 
+static pthread_once_t	get_root_dev_once = PTHREAD_ONCE_INIT;
+static _dev_t			root_dev = (unsigned int)-1;
+static pthread_mutex_t get_byte_ptr_count_lock;
 
 /* CoreFoundation runtime class for CGDataProvider.  */
 static CFRuntimeClass CGDataProviderClass =  {
@@ -111,8 +114,19 @@ const void* dataGetBytePointer(void *info)
 }
 
 
-static pthread_once_t	get_root_dev_once = PTHREAD_ONCE_INIT;
-static _dev_t			root_dev = (unsigned int)-1;
+int decrement_get_byte_ptr_count(CGDataProviderRef provider)
+{
+	int result;
+
+	pthread_mutex_lock(&get_byte_ptr_count_lock); // Who init get_byte_ptr_count_lock ?
+	provider->byte_ptr_count--;
+	result = pthread_mutex_unlock(&get_byte_ptr_count_lock);
+	
+	return result;
+}
+
+
+
 
 void get_root_dev()
 {
@@ -159,14 +173,73 @@ CGDataProviderRef create_provider(void *info, Boolean bThreadSafe)
 
 	size = sizeof(CGDataProvider) - sizeof(CFRuntimeBase);
 	provider = (CGDataProviderRef) CGTypeCreateInstance( CGDataProviderGetTypeID(), size );
-	if (!provider) return NULL;
-	
-	if (bThreadSafe == TRUE) {
-
+	if (provider) 
+	{
+		provider->isThreadSafe = TRUE;
+		provider->info = info;
+		provider->size = -1;
+		provider->directCalls = NULL;
+		provider->byte_ptr_count = 0;
+		pthread_mutex_init(&(provider->mutex), NULL); 
+	}
+	else
+	{
+		provider = NULL;
 	}
 
 	return provider;
 }
+
+void* CGDataProviderGetBytePtr(CGDataProviderRef provider)
+{
+	void* data = NULL;
+
+	//TODO : finsih implementing, refactoring, completing....
+	if (!provider || !provider->getBytePointer)
+		return NULL;
+	
+	if (provider->releaseBytePointer)
+	{
+		pthread_mutex_lock(&get_byte_ptr_count_lock);
+		provider->byte_ptr_count--;
+		pthread_mutex_unlock(&get_byte_ptr_count_lock);
+	}
+
+	if (!provider->data)
+	{
+		pthread_mutex_lock(&get_byte_ptr_count_lock);
+		provider->data = provider->getBytePointer(provider->info);
+	}
+	else
+	{
+		if (provider->getInfoBytePointer != NULL)
+			provider->getBytePointer(provider->info);
+	}
+
+	return data;
+}
+
+size_t CGDataProviderGetSize(CGDataProviderRef provider)
+{
+	size_t size;
+
+	if (!provider || provider->size < 0) 
+	{
+		CGPostError("%s: size is too large for this function", "CGDataProviderGetSize");
+		return -1;
+	}
+
+	return provider->size;
+}
+
+size_t CGDataProviderGetSize2(CGDataProviderRef provider)
+{
+	if (!provider)
+		return -1;
+
+	return provider->size;
+}
+
 
 CGDataProviderRef CGDataProviderCreateSequential(void *info,
 												 const CGDataProviderSequentialCallbacks *callbacks)
@@ -206,7 +279,7 @@ CGDataProviderRef CGDataProviderCreateDirect(void *info, off_t size,
 	if (!provider) 
 		return NULL;
 	
-	provider->version = 0;
+	provider->getInfoBytePointer = NULL;
 	provider->size = size;
 	provider->directCalls = (CGDataProviderDirectCallbacks *)callbacks;
 
@@ -218,12 +291,10 @@ CGDataProviderRef CGDataProviderCreateDirect(void *info, off_t size,
 	return provider;
 }
 
-CGDataProviderRef	
-CGDataProviderCreateWithCopyOfData(const void *data, size_t size)
+CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
 {
 	return NULL;
 }
-
 
 
 
@@ -432,8 +503,4 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 	return provider;
 }
 
-CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
-{
-	return NULL;
-}
 
