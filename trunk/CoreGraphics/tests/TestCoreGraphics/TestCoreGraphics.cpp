@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "TestCoreGraphics.h"
+#include "CoreFoundation\CoreFoundation.h"
 
 #define MAX_LOADSTRING 100
 
@@ -118,6 +119,41 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
+#if 0
+   CFURLRef bundleURL;
+   CFBundleRef myBundle;
+   typedef size_t (*CGBITMAPGETALIGNEDBYTESPERROW)(size_t len);
+    size_t len;
+
+   typedef Boolean (*prototype)(long, Boolean);
+   static CGBITMAPGETALIGNEDBYTESPERROW CGBitmapGetAlignedBytesPerRow=NULL;
+
+   // Make a CFURLRef from the CFString representation of the
+   // bundle’s path.
+   bundleURL = CFURLCreateWithFileSystemPath(
+	   kCFAllocatorDefault,
+	   CFSTR("c:\\Users\\Vincent\\Developer\\freequartz\\dist\\CoreGraphics.framework"),
+	   kCFURLWindowsPathStyle,
+	   true );
+   // Make a bundle instance using the URLRef.
+   myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
+
+   if (myBundle!=NULL)
+   {
+	   if (CFBundleLoadExecutable(myBundle)==TRUE)
+	   {
+		   CGBitmapGetAlignedBytesPerRow=(CGBITMAPGETALIGNEDBYTESPERROW)
+			   CFBundleGetFunctionPointerForName(
+			   myBundle,CFSTR("CGBitmapGetAlignedBytesPerRow"));
+		   if (CGBitmapGetAlignedBytesPerRow != NULL)
+			   size_t len = CGBitmapGetAlignedBytesPerRow(128);
+	   }
+   }
+#endif
+
+
+   //CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.Xcode"));
+
    return TRUE;
 }
 
@@ -176,7 +212,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
+		{
+			
+			return (INT_PTR)TRUE;
+		}
 
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)

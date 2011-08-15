@@ -130,13 +130,11 @@ int decrement_get_byte_ptr_count(CGDataProviderRef provider)
 
 void get_root_dev()
 {
-	int result;
 	struct stat buf;
-
-	result = stat("\\", &buf);
-	if (result == 0)
+	
+	if (stat("\\", &buf) == 0) 
 		root_dev = buf.st_rdev;
-
+	
 	return;
 }
 
