@@ -38,10 +38,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\..\dist\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\..\..\dist\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\..\dist\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\..\..\dist\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -54,13 +54,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
       <Message>Prepare include path</Message>
-      <Command>mkdir "$(ProjectDir)\..\dist\bin"
-mkdir "$(ProjectDir)\..\dist\lib"
-mkdir "$(ProjectDir)\..\dist\include\CoreFoundation"
-copy "$(ProjectDir)\..\*.h" "$(ProjectDir)\..\dist\include\CoreFoundation\"
-mkdir "$(ProjectDir)\..\dist\include\CoreFoundation\GNUCompatibility\"
-copy "$(ProjectDir)\..\include\c99\*.h" "$(ProjectDir)\..\dist\include\"
-copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
+      <Command>mkdir "$(ProjectDir)\..\..\dist\bin"
+mkdir "$(ProjectDir)\..\..\dist\lib"
+mkdir "$(ProjectDir)\..\..\dist\include\CoreFoundation"
+copy "$(ProjectDir)\..\*.h" "$(ProjectDir)\..\..\dist\include\CoreFoundation\"
+mkdir "$(ProjectDir)\..\..\dist\include\CoreFoundation\GNUCompatibility\"
+copy "$(ProjectDir)\..\include\c99\*.h" "$(ProjectDir)\..\..\dist\include\"
+copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\..\dist\include\"
 </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -88,7 +88,7 @@ copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(ProjectDir)\..\dist\lib\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(ProjectDir)\..\..\dist\lib\$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <Bscmake>

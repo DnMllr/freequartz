@@ -248,8 +248,17 @@ RIPZoneDataSeed()
 }
 
 #if 0
-uint32_t
-ripc_Timeshift(RIPGlobal + 0x1C)
+//http://crisscross.googlecode.com/svn/trunk/source/system.cpp
+static double             timeShift = 0.0;
+double GetHighResTime_MacOS()
+{
+	double retval;
+	uint64_t      elapsed = mach_absolute_time() - __m_start;
+	retval = double( elapsed ) * (__m_timebase.numer / __m_timebase.denom) / 1000000000.0;
+	return retval - timeShift;
+}
+
+uint32_t ripc_Timeshift(RIPGlobal + 0x1C)
 {
 	uint32_t result;
 	signed int v2; 

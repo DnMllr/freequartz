@@ -7,11 +7,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CFLite", "..\..\..\CoreFoun
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRIP", "..\..\modules\libRIP\build\msvc\libRIP.vcxproj", "{37744F9F-9311-439E-8BF5-866262C4D2AE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCGR", "..\..\modules\libCGR\build\msvc\libCGR.vcxproj", "{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRIP_Cairo", "..\..\modules\libCGR\build\msvc\libCGR.vcxproj", "{FFCF8FDF-3117-4019-B6D4-63EDA1FC9AE3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libOGLES", "..\..\modules\libOGLES\build\msvc\libOGLES.vcxproj", "{DA9DC590-10DC-4604-974B-8E45A6D21C7F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRIP_OGLES", "..\..\modules\libOGLES\build\msvc\libOGLES.vcxproj", "{DA9DC590-10DC-4604-974B-8E45A6D21C7F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCoreGraphics", "..\..\tests\TestCoreGraphics\TestCoreGraphics.vcxproj", "{97847FFC-AE8F-4F32-BDAF-291CF949D654}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82C92E1C-B6B8-4C76-AB62-C4BB02C11652} = {82C92E1C-B6B8-4C76-AB62-C4BB02C11652}
+		{EC99198F-4CDD-4D85-AE6F-F837FF6CC372} = {EC99198F-4CDD-4D85-AE6F-F837FF6CC372}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

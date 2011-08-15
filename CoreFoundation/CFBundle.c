@@ -4008,10 +4008,10 @@ __private_extern__ Boolean _CFBundleDLLLoad(CFBundleRef bundle, CFErrorRef *erro
     CFErrorRef localError = NULL;
     if (!bundle->_isLoaded) {
         CFURLRef executableURL = CFBundleCopyExecutableURL(bundle);
-        TCHAR buff[CFMaxPathSize];
+        char buff[CFMaxPathSize];
 
         if (executableURL && CFURLGetFileSystemRepresentation(executableURL, true, (uint8_t *)buff, CFMaxPathSize)) {
-            bundle->_hModule = LoadLibrary(buff);
+            bundle->_hModule = LoadLibraryA((const char*)buff);
             if (bundle->_hModule) {
                 bundle->_isLoaded = true;
             } else {
