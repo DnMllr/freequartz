@@ -58,6 +58,13 @@ Boolean CGDashEqualToDash(CGDashRef dash1, CGDashRef dash2)
 	Boolean bRet = FALSE;
 	int cmp;
 
+	/*if ((dash1 == dash2) ||
+		(dash1 && dash2)  
+		(dash1->phase != dash2->phase) &&
+		(dash1->count != dash2->count) &&
+		!memcmp(dash1->lengths, dash2->lengths, dash1->count * sizeof(CGFloat)))
+		bRet = TRUE;*/
+
 	if (dash1 == dash2)
 		return TRUE;
 	if (!dash1 || !dash2)
