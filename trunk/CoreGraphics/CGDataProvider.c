@@ -450,6 +450,9 @@ void unmap_file(void *info, const void *data, size_t size)
 
 CGDataProviderRef CGDataProviderCreateWithCopyOfData(void *data, size_t size)
 {
+	// Allow to determine if address was otained through mmap or normall allocation
+	//SIZE_T WINAPI VirtualQuery( __in_opt  LPCVOID lpAddress, __out     PMEMORY_BASIC_INFORMATION lpBuffer, __in      SIZE_T dwLength);
+
 	return NULL;
 }
 

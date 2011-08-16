@@ -263,10 +263,12 @@ void CGContextRotateCTM(CGContextRef c, CGFloat angle)
 
 void CGContextConcatCTM(CGContextRef c, CGAffineTransform transform)
 {
-	if (!c) { return; }
-	
-	/* { sx, shy, w0, shx, sy, w1, tx, ty, w2 } */
-	
+	if (!c || c->magic != 0x43545854) { 
+		CGPostError("%s: invalid context", "CGContextConcatCTM");
+		return; 
+	}
+
+	CGGStateGetCTM(c->state) = CGAffineTransformConcat(transform, CGGStateGetCTM(c->state));
 }
 
 CGAffineTransform CGContextGetCTM(CGContextRef c)
@@ -286,8 +288,9 @@ void CGContextSetFillColorWithColor(CGContextRef c, CGColorRef color)
 
 void CGContextSetLineWidth(CGContextRef c, CGFloat width)
 {
-	if (!c) {
-		return;
+	if (!c || c->magic != 0x43545854) { 
+		CGPostError("%s: invalid context", "CGContextConcatCTM");
+		return; 
 	}
 	if (width < 0) {
 		return;
