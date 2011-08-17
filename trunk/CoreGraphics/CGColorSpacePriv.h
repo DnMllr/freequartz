@@ -100,6 +100,10 @@ CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
 
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
 
+CGColorSpaceRef create_display_color_space(CGColorSpaceModel spaceModel);
+
+CGColorSpaceRef create_device_color_space(CGColorSpaceModel colorModel);
+
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
 
 

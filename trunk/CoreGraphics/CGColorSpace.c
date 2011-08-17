@@ -25,6 +25,9 @@ static CFMutableDictionaryRef	__name_to_index_map = NULL;
 static pthread_once_t			__csNotifCenter_create_once = PTHREAD_ONCE_INIT;
 static CGNotificationCenterRef  __csNotifCenter = NULL;
 
+static CGColorSpaceRef			named_color_spaces[16] = {0};
+
+
 
 /* color space constants */
 CG_CONST_STRING_DECL(kCGColorSpaceDisplayGray,				"kCGColorSpaceDisplayGray");
@@ -190,6 +193,59 @@ CGColorSpaceRef CGColorSpaceCreateWithName(CFStringRef name)
 
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index)
 {
+	CGColorSpaceRef colorSpace;
+	CGColorSpaceModel colorModel;
+	//CFStringRef profilePath;
+	
+	if (index < 0 || index > 4)
+		return NULL;
+
+	if (named_color_spaces[index] != 0)
+	{
+		colorSpace = named_color_spaces[index];
+	}
+	else
+	{
+		//pthread_once(&create_named_color_spaces_mutex, loadBitmapContextDelegateCreator);
+		switch(index)
+		{
+		case 0: colorModel = kCGColorSpaceModelRGB;
+		case 1: colorModel = kCGColorSpaceModelDeviceN;
+			colorSpace = create_display_color_space(colorModel);
+			break;
+
+		case 2: colorModel = kCGColorSpaceModelRGB;
+		case 3: colorModel = kCGColorSpaceModelCMYK;
+		case 4: colorModel = kCGColorSpaceModelDeviceN;
+			colorSpace = create_device_color_space(colorModel);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+	CGColorSpaceRetain(colorSpace);
+	
+	
+	return colorSpace;
+}
+
+CGColorSpaceRef create_display_color_space(CGColorSpaceModel colorModel)
+{
+	return NULL;
+}
+
+CGColorSpaceRef create_device_color_space(CGColorSpaceModel colorModel)
+{
+	/*CGColorSpaceRef colorSpace;
+
+	colorSpace = (CGColorSpaceRef)CGTypeCreateSingleton(CGColorSpaceGetTypeID(), &rgb, 0x30);
+	if (colorSpace)
+	{
+
+	}*/
+
 	return NULL;
 }
 
