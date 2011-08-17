@@ -69,6 +69,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(ProjectDir)\..\..\..\dist\lib\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

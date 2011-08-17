@@ -3,7 +3,8 @@
 
 #include "stdafx.h"
 #include "TestCoreGraphics.h"
-#include "CoreFoundation\CoreFoundation.h"
+#include "CoreFoundation/CoreFoundation.h"
+#include "CoreGraphics/CoreGraphics.h"
 
 #define MAX_LOADSTRING 100
 
@@ -11,6 +12,9 @@
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
+CGContextRef g_Context;
+
+
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -92,6 +96,26 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClassEx(&wcex);
 }
 
+
+
+CGContextRef SetupContext()
+{
+	//UIGraphicsBeginImageContext
+	int w = 480, h = 640;
+	
+	CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, CGBitmapGetAlignedBytesPerRow(w*4), colourSpace, kCGImageAlphaPremultipliedFirst);
+	CGColorSpaceRelease (colourSpace);
+	CGContextClear(context);
+	CGContextTranslateCTM(context, 0.0, 640.0);
+	CGContextScaleCTM(context, 1.0, -1.0);
+
+   return context;
+}
+
+
+
+
 //
 //   FUNCTION: InitInstance(HINSTANCE, int)
 //
@@ -109,7 +133,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+      CW_USEDEFAULT, 0, 480, 640, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)
    {
@@ -119,40 +143,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-#if 0
-   CFURLRef bundleURL;
-   CFBundleRef myBundle;
-   typedef size_t (*CGBITMAPGETALIGNEDBYTESPERROW)(size_t len);
-    size_t len;
+   g_Context = SetupContext();
+  
 
-   typedef Boolean (*prototype)(long, Boolean);
-   static CGBITMAPGETALIGNEDBYTESPERROW CGBitmapGetAlignedBytesPerRow=NULL;
-
-   // Make a CFURLRef from the CFString representation of the
-   // bundle’s path.
-   bundleURL = CFURLCreateWithFileSystemPath(
-	   kCFAllocatorDefault,
-	   CFSTR("c:\\Users\\Vincent\\Developer\\freequartz\\dist\\CoreGraphics.framework"),
-	   kCFURLWindowsPathStyle,
-	   true );
-   // Make a bundle instance using the URLRef.
-   myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
-
-   if (myBundle!=NULL)
-   {
-	   if (CFBundleLoadExecutable(myBundle)==TRUE)
-	   {
-		   CGBitmapGetAlignedBytesPerRow=(CGBITMAPGETALIGNEDBYTESPERROW)
-			   CFBundleGetFunctionPointerForName(
-			   myBundle,CFSTR("CGBitmapGetAlignedBytesPerRow"));
-		   if (CGBitmapGetAlignedBytesPerRow != NULL)
-			   size_t len = CGBitmapGetAlignedBytesPerRow(128);
-	   }
-   }
-#endif
-
-
-   //CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.Xcode"));
 
    return TRUE;
 }
@@ -227,3 +220,38 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return (INT_PTR)FALSE;
 }
+
+
+// Move inside a test for CoreFoundation
+
+#if 0
+   CFURLRef bundleURL;
+   CFBundleRef myBundle;
+   typedef size_t (*CGBITMAPGETALIGNEDBYTESPERROW)(size_t len);
+    size_t len;
+
+   typedef Boolean (*prototype)(long, Boolean);
+   static CGBITMAPGETALIGNEDBYTESPERROW CGBitmapGetAlignedBytesPerRow=NULL;
+
+   // Make a CFURLRef from the CFString representation of the
+   // bundle’s path.
+   bundleURL = CFURLCreateWithFileSystemPath(
+	   kCFAllocatorDefault,
+	   CFSTR("c:\\Users\\Vincent\\Developer\\freequartz\\dist\\CoreGraphics.framework"),
+	   kCFURLWindowsPathStyle,
+	   true );
+   // Make a bundle instance using the URLRef.
+   myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
+
+   if (myBundle!=NULL)
+   {
+	   if (CFBundleLoadExecutable(myBundle)==TRUE)
+	   {
+		   CGBitmapGetAlignedBytesPerRow=(CGBITMAPGETALIGNEDBYTESPERROW)
+			   CFBundleGetFunctionPointerForName(
+			   myBundle,CFSTR("CGBitmapGetAlignedBytesPerRow"));
+		   if (CGBitmapGetAlignedBytesPerRow != NULL)
+			   size_t len = CGBitmapGetAlignedBytesPerRow(128);
+	   }
+   }
+#endif
