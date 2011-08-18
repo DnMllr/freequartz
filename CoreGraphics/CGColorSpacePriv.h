@@ -45,6 +45,29 @@ enum CGColorSpaceType {
 };
 typedef enum CGColorSpaceType CGColorSpaceType;
 
+
+typedef struct CGColorSpaceState {
+	
+	bool isUncalibrated;					//0x05
+	bool supportsOuput;						//0x06
+	CGColorSpaceType spaceType;				//0x0C
+	CGColorSpaceModel spaceModel;			//0x10
+	CGColorSpaceModel processColorModel;	//0x14
+	size_t numberOfComponents;				//0x18
+	void* associate;						//0x30
+	CGColorSpaceRef baseColorSpace;			//0x34
+	size_t baseColorSpaceCount;				//0x38
+} CGColorSpaceState, *CGColorSpaceStateRef;
+
+
+
+typedef struct CGColorSpace {
+	CFRuntimeBase obj;						//0x00
+	CGColorSpaceStateRef state;				//0x08
+} CGColorSpace, *CGColorSpaceRef;
+
+
+#if 0
 //sizeof(struct CGColorSpace) = 0x64;
 typedef struct CGColorSpace {
 	CFRuntimeBase obj;						//0x00
@@ -52,6 +75,7 @@ typedef struct CGColorSpace {
 	bool isSingleton;						//0x08
 	CGColorSpaceType spaceType;				//0x0C
 	CGColorSpaceModel spaceModel;			//0x10
+	CGColorSpaceModel processColorModel;	//0x14
 	size_t numberOfComponents;				//0x18
 	CGColorRef defaultColor;				//0x1C
 	CGDataProviderRef provider;				//0x3C
@@ -60,7 +84,7 @@ typedef struct CGColorSpace {
 	CGColorSpaceRef *cs5C;					//0x5C
 								
 } CGColorSpace, *CGColorSpaceRef;
-
+#endif
 
 /* private colorspace constants */
 CG_EXTERN const CFStringRef kCGColorSpaceDisplayGray;
@@ -105,6 +129,15 @@ CGColorSpaceRef create_display_color_space(CGColorSpaceModel spaceModel);
 CGColorSpaceRef create_device_color_space(CGColorSpaceModel colorModel);
 
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
+
+CGColorSpaceRef CGColorSpaceCreateWithState(CGColorSpaceStateRef colorSpaceState);
+
+void color_space_state_release(CGColorSpaceStateRef colorSpaceState);
+
+bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef state2);
+
+CGColorSpaceStateRef color_space_state_retain(CGColorSpaceStateRef colorSpaceState);
+
 
 
 CF_EXTERN_C_END
