@@ -30,26 +30,32 @@ typedef struct CGNotificationCenter *CGNotificationCenterRef;
 /* constants */
 enum CGColorSpaceType {
 
-	kCGColorSpaceTypeDeviceUnknown = 0,
-	kCGColorSpaceTypeDisplayGray,
-	kCGColorSpaceTypeDisplayRGB,
+	kCGColorSpaceTypeDeviceUnknown = -1,
 	kCGColorSpaceTypeDeviceGray,
 	kCGColorSpaceTypeDeviceRGB,
 	kCGColorSpaceTypeDeviceCMYK,
+	kCGColorSpaceTypeCalibratedGray,
+	kCGColorSpaceTypeCalibratedRGB,
+	kCGColorSpaceTypeLab,
+	kCGColorSpaceTypeICC,
+	kCGColorSpaceTypeIndexed,
+	kCGColorSpaceTypeDeviceN,
+	kCGColorSpaceTypePattern,
 	kCGColorSpaceTypeSystemDefaultGray,
 	kCGColorSpaceTypeSystemDefaultRGB,
 	kCGColorSpaceTypeSystemDefaultCMYK,
-
-	kCGColorSpaceTypePattern = 14
 
 };
 typedef enum CGColorSpaceType CGColorSpaceType;
 
 
 typedef struct CGColorSpaceState {
-	
+	size_t refcount;						//0x00
+	bool unknown04;							//0x04
 	bool isUncalibrated;					//0x05
 	bool supportsOuput;						//0x06
+	bool unknown07;							//0x07
+	bool unknown08;							//0x08
 	CGColorSpaceType spaceType;				//0x0C
 	CGColorSpaceModel spaceModel;			//0x10
 	CGColorSpaceModel processColorModel;	//0x14
@@ -57,6 +63,8 @@ typedef struct CGColorSpaceState {
 	void* associate;						//0x30
 	CGColorSpaceRef baseColorSpace;			//0x34
 	size_t baseColorSpaceCount;				//0x38
+	///////////// below maybe inherited struct
+	int id;									//0x40
 } CGColorSpaceState, *CGColorSpaceStateRef;
 
 
@@ -122,11 +130,19 @@ CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space);
 
 CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
 
+CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfComponents);
+
+CGColorSpaceRef CGColorSpaceCreateDisplayGrayWithID(int id);
+
+CGColorSpaceRef CGColorSpaceCreateDisplayRGBWithID(int id);
+
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
 
-CGColorSpaceRef create_display_color_space(CGColorSpaceModel spaceModel);
+CGColorSpaceRef create_display_color_space(size_t numComponents);
 
-CGColorSpaceRef create_device_color_space(CGColorSpaceModel colorModel);
+CGColorSpaceRef create_device_color_space(size_t numComponents);
+
+CGColorSpaceRef create_display_space_with_id(size_t numComponents, int id);
 
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
 
