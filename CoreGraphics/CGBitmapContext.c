@@ -92,12 +92,12 @@ CGBitmapContextInfoCreate(void *data, size_t width, size_t height, size_t bitsPe
 
 		break;
 	
-	case kCGColorSpaceTypeDisplayGray:
+	//case kCGColorSpaceTypeDisplayGray:
 	case kCGColorSpaceTypeDeviceGray:
 		isValid = validate_gray_bitmap_info(bitmapCtxInfo);
 		break;
 
-	case kCGColorSpaceTypeDisplayRGB:
+	//case kCGColorSpaceTypeDisplayRGB:
 	case kCGColorSpaceTypeDeviceRGB:
 		isValid = validate_rgb_bitmap_info(bitmapCtxInfo);
 		break;
