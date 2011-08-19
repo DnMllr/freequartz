@@ -271,7 +271,7 @@ CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
 
 bool cs_equal(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
 {
-
+	return FALSE;
 }
 
 
