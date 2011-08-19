@@ -49,9 +49,37 @@ enum CGColorSpaceType {
 typedef enum CGColorSpaceType CGColorSpaceType;
 
 
+typedef bool (*CGColorSpaceEqual)(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
+
+typedef void (*CGColorSpaceFinalize)(CFTypeRef ctf);
+
+typedef void (*CGColorSpaceGetMD5)(unsigned char* md5);
+
+typedef CGFloat* (*CGColorSpaceGetDefaultColorComponents2)(CGColorSpaceRef cs);
+
+typedef CGColorRef (*CGColorSpaceCreateDefaultColor)(CGColorSpaceRef cs);
+
+typedef CGColorSpaceRef (*CGColorSpaceResolved)(CGColorSpaceRef cs);
+
+
+struct CGColorSpaceCallbacks {
+    unsigned int version;
+    CGColorSpaceEqual equal;
+	CGColorSpaceFinalize finalize;
+    CGColorSpaceGetMD5 getMD5;
+    CGColorSpaceGetDefaultColorComponents2 getDefaultColorComponents;
+    CGColorSpaceCreateDefaultColor createDefaultColor;
+	CGColorSpaceResolved resolved;
+};
+typedef struct CGColorSpaceCallbacks
+    CGColorSpaceCallbacks;
+
+//CGColorSpaceCallBacks
+
+
 typedef struct CGColorSpaceState {
 	size_t refcount;						//0x00
-	bool unknown04;							//0x04
+	bool isPattern;							//0x04
 	bool isUncalibrated;					//0x05
 	bool supportsOuput;						//0x06
 	bool unknown07;							//0x07
@@ -60,6 +88,8 @@ typedef struct CGColorSpaceState {
 	CGColorSpaceModel spaceModel;			//0x10
 	CGColorSpaceModel processColorModel;	//0x14
 	size_t numberOfComponents;				//0x18
+	int index;								//0x28 ? maybe float* components instead ??
+	CGColorSpaceCallbacks* callbacks;		//0x2C
 	void* associate;						//0x30
 	CGColorSpaceRef baseColorSpace;			//0x34
 	size_t baseColorSpaceCount;				//0x38
@@ -142,6 +172,12 @@ CGColorSpaceRef create_display_color_space(size_t numComponents);
 
 CGColorSpaceRef create_device_color_space(size_t numComponents);
 
+CGColorSpaceRef create_generic_color_space(size_t numComponents);
+
+CGColorSpaceRef create_uncalibrated_color_space(size_t numComponents);
+
+CGColorSpaceRef create_color_space_with_path(CFStringRef path);
+
 CGColorSpaceRef create_display_space_with_id(size_t numComponents, int id);
 
 CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
@@ -154,7 +190,13 @@ bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef s
 
 CGColorSpaceStateRef color_space_state_retain(CGColorSpaceStateRef colorSpaceState);
 
+void device_gray_get_md5(unsigned char* md5);
 
+void device_rgb_get_md5(unsigned char* md5);
+
+CGFloat* device_get_default_color_components(CGColorSpaceRef cs);
+
+CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs);
 
 CF_EXTERN_C_END
 

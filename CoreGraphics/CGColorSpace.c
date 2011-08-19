@@ -25,7 +25,7 @@ static CFMutableDictionaryRef	__name_to_index_map = NULL;
 static pthread_once_t			__csNotifCenter_create_once = PTHREAD_ONCE_INIT;
 static CGNotificationCenterRef  __csNotifCenter = NULL;
 
-static CGColorSpaceRef			named_color_spaces[16] = {0};
+static CGColorSpaceRef			named_color_spaces[17] = {0};
 
 
 
@@ -77,7 +77,6 @@ static CGColorSpaceCallbacks indexed_vtable =  {
 	indexed_get_default_color_components,
 	0,
 	indexed_create_resolved,
-	0
 };
 
 static CGColorSpaceCallbacks pattern_vtable =  {
@@ -88,9 +87,13 @@ static CGColorSpaceCallbacks pattern_vtable =  {
 	pattern_get_default_color_components,
 	pattern_create_default_color,
 	pattern_create_resolved,
-	0
 };
+#endif
 
+static unsigned char device_gray_md5[16] = { 
+	0x32, 0x53, 0xAB, 0x07, 0xA5, 0xC6, 0xC9, 0x79,
+	0x65, 0x67, 0x94, 0x70, 0x4C, 0x2F, 0x58, 0x82
+};
 static CGColorSpaceCallbacks device_gray_vtable =  {
 	0,
 	0,
@@ -99,7 +102,12 @@ static CGColorSpaceCallbacks device_gray_vtable =  {
 	device_get_default_color_components,
 	0,
 	device_create_resolved,
-	0
+};
+
+
+static unsigned char device_rgb_md5[16] = { 
+	0x1B, 0x84, 0x38, 0x33, 0xBC, 0xA1, 0xF9, 0xF8,
+	0x75, 0x60, 0xC5, 0xBA, 0x33, 0x90, 0xDB, 0x62
 };
 
 static CGColorSpaceCallbacks device_rgb_vtable =  {
@@ -110,9 +118,9 @@ static CGColorSpaceCallbacks device_rgb_vtable =  {
 	device_get_default_color_components,
 	0,
 	device_create_resolved,
-	0
 };
 
+#if 0
 static CGColorSpaceCallbacks device_cmyk_vtable =  {
 	0,
 	0,
@@ -121,7 +129,6 @@ static CGColorSpaceCallbacks device_cmyk_vtable =  {
 	device_get_default_color_components,
 	0,
 	device_create_resolved,
-	0
 };
 #endif
 
@@ -129,6 +136,28 @@ CFTypeID CGColorSpaceGetTypeID(void)
 {	
 	return CGTypeRegisterWithCallbacks(&__kCGColorSpaceID, &CGColorSpaceClass );
 }
+
+
+void device_gray_get_md5(unsigned char* md5)
+{
+	memcpy(md5, device_gray_md5, 16);
+}
+
+void device_rgb_get_md5(unsigned char* md5)
+{
+	memcpy(md5, device_rgb_md5, 16);
+}
+
+CGFloat* device_get_default_color_components(CGColorSpaceRef cs)
+{
+	return NULL;
+}
+
+CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs)
+{
+	return NULL;
+}
+
 
 void csFinalize(CFTypeRef ctf)
 {
@@ -208,7 +237,7 @@ CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space)
 	return space->state->spaceType;
 }
 
-CGFloat* CGColorSpaceGetDefaultColorComponents(CGColorSpaceRef space)
+CGFloat* CGColorSpaceGetDefaultColorComponents(CGColorSpaceRef cs)
 {
 	return NULL;
 }
@@ -227,7 +256,7 @@ CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space)
 
 	color = CGColorCreate(space, components);*/
 
-	return color;
+	return NULL;
 }
 
 
@@ -253,39 +282,63 @@ CGColorSpaceRef CGColorSpaceCreateWithName(CFStringRef name)
 
 CGColorSpaceRef CGColorSpaceCreateWithIndex(int index)
 {
-	CGColorSpaceRef colorSpace;
-	CGColorSpaceModel colorModel;
+	CGColorSpaceRef cs;
+	//CGColorSpaceModel colorModel;
 	//CFStringRef profilePath;
 	
-	if (index < 0 || index > 5)
+	if (index > 17)
 		return NULL;
 
 	if (named_color_spaces[index] != 0)
 	{
-		colorSpace = named_color_spaces[index];
+		cs = named_color_spaces[index];
 	}
 	else
 	{
-		//pthread_once(&create_named_color_spaces_mutex, loadBitmapContextDelegateCreator);
 		switch(index)
 		{
 		/* display space type */
-		case 1: { colorSpace = create_display_color_space(1); break; } //CGColorSpaceCreateDisplayGray
-		case 2: { colorSpace = create_display_color_space(3); break; } //CGColorSpaceCreateDisplayRGB
+		case 1: { cs = create_display_color_space(1); break; } //CGColorSpaceCreateDisplayGray
+		case 2: { cs = create_display_color_space(3); break; } //CGColorSpaceCreateDisplayRGB
 		/* device space type */
-		case 3: { colorSpace = create_device_color_space(1); break; } // CGColorSpaceCreateDeviceGray
-		case 4: { colorSpace = create_device_color_space(3); break; } // CGColorSpaceCreateDeviceRGB
-		case 5: { colorSpace = create_device_color_space(4); break; } // CGColorSpaceCreateDeviceCMYK
+		case 3: { cs = create_device_color_space(1); break; } // CGColorSpaceCreateDeviceGray
+		case 4: { cs = create_device_color_space(3); break; } // CGColorSpaceCreateDeviceRGB
+		case 5: { cs = create_device_color_space(4); break; } // CGColorSpaceCreateDeviceCMYK
+        /* system default space type */
+		case 6: { cs = create_generic_color_space(1); break; } //CGColorSpaceCreateSystemDefaultGray
+		case 7: { cs = create_generic_color_space(3); break; } //CGColorSpaceCreateSystemDefaultGray
+		case 8: { cs = create_generic_color_space(4); break; } //CGColorSpaceCreateSystemDefaultGray
+		/* uncalibrated space type */
+		case 9:  { cs = create_uncalibrated_color_space(1); break; } 
+		case 10: { cs = create_uncalibrated_color_space(3); break; } 
+		case 11: { cs = create_uncalibrated_color_space(4); break; } 
+		/* pattern */
+		case 14: { cs = CGColorSpaceCreate(kCGColorSpaceTypePattern, 0); cs->state->isPattern = TRUE; break; }
+		/* ICC profile */
+		case 15: { cs = create_color_space_with_path(CFSTR("ColorSync/Profiles/AdobeRGB1998.icc")); break; } 
+		case 16: { cs = create_color_space_with_path(CFSTR("ColorSync/Profiles/sRGB Profile.icc")); break; } 
+		case 17: { cs = create_color_space_with_path(CFSTR("ColorSync/Profiles/Generic Gray Gamma 2.2 Profile.icc")); break; } 
+		default: { cs = NULL; break; }
+		}
 
-		default:
-			colorSpace = NULL;
-			break;
-
+		if (cs == NULL)
+		{
+			// Add some semphare/memory barrier/spin lock here - 
+			cs = named_color_spaces[index];
+		}
+		else
+		{
+			cs->state->index = index;
 		}
 	}
-	CGColorSpaceRetain(colorSpace);
+
 	
-	return colorSpace;
+
+
+
+	CGColorSpaceRetain(cs);
+	
+	return cs;
 }
 
 CGColorSpaceRef create_display_color_space(size_t numComponents)
@@ -338,15 +391,15 @@ CGColorSpaceRef create_device_color_space(size_t numComponents)
 	
 	if (numComponents == 1)
 	{
-		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceGray, 3);
+		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceGray, numComponents);
 	}
 	else if (numComponents == 3)
 	{
-		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceRGB, 3);
+		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceRGB, numComponents);
 	}
 	else if (numComponents == 4)
 	{
-		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceCMYK, 3);
+		colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceCMYK, numComponents);
 	}
 	else
 	{
@@ -356,64 +409,117 @@ CGColorSpaceRef create_device_color_space(size_t numComponents)
 	return colorSpace;
 }
 
+
+CGColorSpaceRef create_color_space_with_path(CFStringRef path)
+{
+	return NULL;
+}
+
+CGColorSpaceRef create_generic_color_space(size_t numComponents)
+{
+	return NULL;
+}
+
+CGColorSpaceRef create_uncalibrated_color_space(size_t numComponents)
+{
+	return NULL;
+}
+
+
 CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfComponents)
 {
 	CGColorSpaceRef colorSpace;
 	CGColorSpaceStateRef csState;
+	CGColorSpaceModel spaceModel;
+	CGColorSpaceModel processColorModel;
+	CGColorSpaceCallbacks *callbacks;
 	int size;
-
+	
 	switch(type)
 	{
 	case kCGColorSpaceTypeDeviceGray:
 		size = 0x34;
-		/*R1 = 0x34; R12 = 0; R3 = device_gray_vtable; R11 = 0;*/
+		spaceModel = kCGColorSpaceModelMonochrome;
+		callbacks = &device_gray_vtable;
+		processColorModel = kCGColorSpaceModelMonochrome;
 		break;
 	case kCGColorSpaceTypeDeviceRGB:
 		size = 0x34;
-		/*R1 = 0x34; R12 = 1; R3 = device_rgb_vtable; R11 = 1;*/
+		spaceModel = kCGColorSpaceModelRGB;
+		callbacks = &device_rgb_vtable;
+		processColorModel = kCGColorSpaceModelRGB;
 		break;
 	case kCGColorSpaceTypeDeviceCMYK:
 		size = 0x34;
-		/*R1 = 0x34; R12 = 2; R3 = device_cmyk_vtable; R11 = 2;*/
+		spaceModel = kCGColorSpaceModelCMYK;
+		processColorModel = kCGColorSpaceModelCMYK;
+		//callbacks = &device_cmyk_vtable;
 		break;
 	case kCGColorSpaceTypeCalibratedGray:
 		size = 0x50;
-		/*R1 = 0x50; R12 = 0; R3 = calibrated_gray_vtable; R11 = 0;*/
+		spaceModel = kCGColorSpaceModelMonochrome;
+		processColorModel = kCGColorSpaceModelMonochrome;
+		//callbacks = &calibrated_gray_vtable;
 		break;
 	case kCGColorSpaceTypeCalibratedRGB:
 		size = 0x7C;
-		/*R1 = 0x7C; R12 = 1; R3 = calibrated_rgb_vtable; R11 = 1;*/
+		spaceModel = kCGColorSpaceModelRGB;
+		processColorModel = kCGColorSpaceModelRGB;
+		//callbacks = &calibrated_rgb_vtable;
 		break;
 	case kCGColorSpaceTypeLab:
 		size = 0x5C;
-		/*R1 = 0x5C; R12 = 3; R3 = lab_vtable; R11 = 3;*/
+		spaceModel = kCGColorSpaceModelLab;
+		processColorModel = kCGColorSpaceModelLab;
+		//callbacks = &lab_vtable;
 		break;
 	case kCGColorSpaceTypeICC:
 		size = 0x60;
-		/*R1 = 0x60; R12 = -1; R3 = icc_vtable; R11 = -1;*/
+		spaceModel = kCGColorSpaceModelUnknown;
+		processColorModel = kCGColorSpaceModelUnknown;
+		//callbacks = &icc_vtable;
 		break;
 	case kCGColorSpaceTypeIndexed:
 		size = 0x40;
-		/*R1 = 0x40; R12 = -1; R3 = indexed_vtable; R11 = 5;*/
+		spaceModel = kCGColorSpaceModelIndexed;
+		processColorModel = kCGColorSpaceModelUnknown;
+		//callbacks = &indexed_vtable;
+		
 		break;
 	case kCGColorSpaceTypeDeviceN:
 		size = 0x44;
-		/*R1 = 0x44; R12 = 4; R3 = deviceN_vtable; R11 = 4;*/
+		spaceModel = kCGColorSpaceModelDeviceN;
+		processColorModel = kCGColorSpaceModelDeviceN;
+		//callbacks = &deviceN_vtable;
+		
 	case kCGColorSpaceTypePattern:
 		size = 0x38;
-		/*R1 = 0x38; R12 = -1; R3 = pattern_vtable; R11 = 6;*/
+		spaceModel = kCGColorSpaceModelPattern;
+		processColorModel = kCGColorSpaceModelUnknown;
+		//callbacks = &pattern_vtable;
 		break;
 	default:
 		break;
 	}
 
 	csState = (CGColorSpaceStateRef) calloc(1, size);
-	csState->unknown04 = FALSE;
+	csState->isPattern = FALSE;
 	csState->isUncalibrated = FALSE;
 	csState->supportsOuput = TRUE;
 	csState->unknown07 = FALSE;
 	csState->unknown08 = FALSE;
+	csState->spaceType = type;
+	csState->spaceModel = spaceModel;
+	csState->processColorModel= processColorModel;
+	csState->numberOfComponents = numberOfComponents;
+	csState->index = 0;
+	csState->callbacks = callbacks;
+	
+	
+	if (csState->spaceType == kCGColorSpaceTypeICC)
+	{
 
+	}
 
 	colorSpace = CGColorSpaceCreateWithState(csState);
 

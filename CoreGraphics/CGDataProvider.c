@@ -215,7 +215,7 @@ void* CGDataProviderGetBytePtr(CGDataProviderRef provider)
 
 size_t CGDataProviderGetSize(CGDataProviderRef provider)
 {
-	size_t size;
+	//size_t size;
 
 	if (!provider || provider->size < 0) 
 	{
@@ -364,7 +364,7 @@ CGDataProviderRef CGDataProviderCreateWithURL(CFURLRef url)
 	CFStringRef urlScheme;
 	CFDataRef resData;
 	//CFDictionaryRef *properties;
-	CFArrayRef desiredProperties;
+	CFArrayRef desiredProperties = NULL;
 	SInt32 err;
 	//Boolean bRet;
 	UInt8 buffer[MAX_PATH+1];
