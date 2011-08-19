@@ -179,7 +179,7 @@ typedef struct _args {
     void *func;
     void *arg;
     HANDLE handle;
-};
+} _args;
 
 static unsigned int __stdcall __CFWinThreadFunc(void *arg) {
     struct _args *args = (struct _args*)arg;

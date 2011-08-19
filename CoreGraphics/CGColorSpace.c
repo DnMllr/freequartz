@@ -305,7 +305,7 @@ CGFloat* CGColorSpaceGetDefaultColorComponents(CGColorSpaceRef cs)
 
 CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space)
 {
-	CGColorRef color;
+	CGColorRef color = NULL;
 	/*float* components;
 
 	if (!space)
@@ -317,7 +317,7 @@ CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space)
 
 	color = CGColorCreate(space, components);*/
 
-	return NULL;
+	return color;
 }
 
 
@@ -422,7 +422,7 @@ CGColorSpaceRef create_display_color_space(size_t numComponents)
 
 CGColorSpaceRef CGColorSpaceCreateWithICCData()
 {
-	CGColorSpaceRef colorSpace;
+	CGColorSpaceRef colorSpace = NULL;
 
 
 	return colorSpace;
@@ -499,7 +499,7 @@ CGColorSpaceRef create_device_color_space(size_t numComponents)
 
 CGColorSpaceRef create_color_space_with_path(CFStringRef path)
 {
-	CGColorSpaceRef colorSpace;
+	CGColorSpaceRef colorSpace = NULL;
 	CFArrayRef paths;
 	CGDataProviderRef provider;
 	CFURLRef url, urlCopy;
@@ -534,7 +534,7 @@ CGColorSpaceRef create_color_space_with_path(CFStringRef path)
 	}
 
 
-	return NULL;
+	return colorSpace;
 }
 
 CGColorSpaceRef create_generic_color_space(size_t numComponents)

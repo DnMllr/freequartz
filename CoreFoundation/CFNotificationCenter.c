@@ -307,7 +307,7 @@ void __CFDeliverQueue( void )
  *	revealed their names. I'm just guessing their prototypes at the moment, and hoping
  *	that nothing tries to call them directly.
  */
-Boolean _CFNotificationCenterIsSuspended( CFNotificationCenterRef center ) { return center->suspended; }
+Boolean _CFNotificationCenterIsSuspended( CFNotificationCenterRef center ) { return (Boolean)center->suspended; }
 
 void _CFNotificationCenterSetSuspended( CFNotificationCenterRef center, Boolean suspended )
 { 

@@ -42,16 +42,17 @@ static CFTypeID __kCGDataProviderID = _kCFRuntimeNotATypeID;
 
 
 #ifdef WIN32
-static void *  mmap(void *, size_t, int, int, int, off_t)
-{ 
-	return  NULL;
-}
 
-
-static int munmap(void *, size_t)
-{ 
-	return  0;
-}
+//static void *  mmap(void *start, size_t length, int prot , int flags, int fd, off_t offset)
+//{ 
+//	return  NULL;
+//}
+//
+//
+//static int munmap(void *, size_t)
+//{ 
+//	return  0;
+//}
 
 static ssize_t pread (int fd, void *buf, size_t count, off_t offset)
 {
@@ -126,11 +127,12 @@ int decrement_get_byte_ptr_count(CGDataProviderRef provider)
 
 void get_root_dev()
 {
-	struct stat buf;
+	/*struct stat buf;
 	
 	if (stat("\\", &buf) == 0) 
-		root_dev = buf.st_rdev;
-	
+		root_dev = buf.st_rdev;*/
+	root_dev = 0;
+
 	return;
 }
 
@@ -298,7 +300,7 @@ CGDataProviderRef CGDataProviderCreateWithData(void *info,
 	CGDataProviderDirectCallbacks directCallBacks;
 		
 	providerData = (CGProviderDataRef) malloc(sizeof(CGProviderData));
-	if (!providerData) {
+	if (providerData) {
 		providerData->info = info;
 		providerData->size = (off_t)size;
 		providerData->data = data;

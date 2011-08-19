@@ -112,7 +112,7 @@ copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\compat4msvc;$(ProjectDir)\..\dist\include;$(ProjectDir)\..\dist\include\CoreFoundation\GNUCompatibility;$(SolutionDir);$(ProjectDir)\..\icu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\dist\include;$(ProjectDir)\..\dist\include\CoreFoundation\GNUCompatibility;$(SolutionDir);$(ProjectDir)\..\icu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CFLITELIB_EXPORTS;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;__STDC_LIMIT_MACROS;CF_BUILDING_CF;_WIN32_WINNT=0x0500;WINVER=0x0500;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -425,6 +425,7 @@ copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
     </ClCompile>
     <ClCompile Include="..\NSSystemDirectories.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

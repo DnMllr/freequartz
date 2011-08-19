@@ -287,11 +287,11 @@ static void __CFYMDFromAbsolute(int64_t absolute, int64_t *year, int8_t *month, 
     /* Now we have year and days-into-year */
     if (year) *year = y;
     if (month || day) {
-	int8_t m = absolute / 33 + 1; /* search from the approximation */
+	int8_t m = (int8_t)(absolute / 33 + 1); /* search from the approximation */
 	bool leap = isleap(y);
 	while (__CFDaysBeforeMonth(m + 1, y, leap) <= absolute) m++;
 	if (month) *month = m;
-	if (day) *day = absolute - __CFDaysBeforeMonth(m, y, leap) + 1;
+	if (day) *day = (int8_t)(absolute - __CFDaysBeforeMonth(m, y, leap) + 1);
     }
 }
 
@@ -353,7 +353,7 @@ CFGregorianDate CFAbsoluteTimeGetGregorianDate(CFAbsoluteTime at, CFTimeZoneRef 
     absolute = (int64_t)floor(fixedat / 86400.0);
     __CFYMDFromAbsolute(absolute, &year, &month, &day);
     if (INT32_MAX - 2001 < year) year = INT32_MAX - 2001;
-    gdate.year = year + 2001;
+    gdate.year = (SInt32)(year + 2001);
     gdate.month = month;
     gdate.day = day;
     gdate.hour = __CFDoubleModToInt(floor(fixedat / 3600.0), 24);

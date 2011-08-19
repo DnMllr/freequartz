@@ -1475,7 +1475,7 @@ static CFSocketRef _CFSocketCreateWithNative(CFAllocatorRef allocator, CFSocketN
         __CFSpinUnlock(&__CFAllSocketsLock);
         return NULL;
     }
-    __CFSocketSetCallBackTypes(memory, callBackTypes);
+    __CFSocketSetCallBackTypes(memory, (uint8_t)callBackTypes);
     if (INVALID_SOCKET != sock) __CFSocketSetValid(memory);
     __CFSocketUnsetWriteSignalled(memory);
     __CFSocketUnsetReadSignalled(memory);

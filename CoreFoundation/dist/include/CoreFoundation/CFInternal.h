@@ -201,6 +201,10 @@ CF_INLINE int32_t _CFAtomicIncrement32(volatile int32_t *theValue) {
 	return (unsigned int)InterlockedIncrement((VOLATILE LONG*)theValue);
 }
 
+CF_INLINE int32_t _CFAtomicDecrement32(volatile int32_t *theValue) {
+	return (unsigned int)InterlockedDecrement((VOLATILE LONG*)theValue);
+}
+
 #if DEPLOYMENT_TARGET_WINDOWSCE
 	CF_INLINE void MemoryBarrier(void) {}
 #endif
