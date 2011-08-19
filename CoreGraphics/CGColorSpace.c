@@ -370,14 +370,29 @@ CGColorSpaceRef CGColorSpaceCreateDisplayRGBWithID(int id)
 CGColorSpaceRef create_display_space_with_id(size_t numComponents, int id)
 {
 	CGColorSpaceRef colorSpace;
+	CGColorSpaceRef csGray;
+	CGColorSpaceStateICCRef csStateICC;
 
 	colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeICC, numComponents);
 	if (colorSpace)
 	{
-		colorSpace->state->id = id;
+		csStateICC = ((CGColorSpaceStateICCRef)(colorSpace->state));
+		csStateICC->id = id;
 		if (numComponents == 1)
 		{
-			colorSpace = CGColorSpaceCreate(kCGColorSpaceTypeDeviceGray, 3);
+			csStateICC->state.spaceModel = kCGColorSpaceModelMonochrome;
+			csStateICC->state.processColorModel = kCGColorSpaceModelMonochrome;
+			csGray = CGColorSpaceCreateDeviceGray();
+			if (csGray != NULL)
+			{
+				colorSpace->state->unknown07 = TRUE;
+			}
+			else
+			{
+				CGColorSpaceRelease(colorSpace);
+				colorSpace = NULL;
+			}
+
 		}
 	}
 
@@ -584,7 +599,7 @@ CGColorSpaceRef CGColorSpaceGetBaseColorSpace(CGColorSpaceRef cs)
 	if (cs->state->spaceModel == kCGColorSpaceModelIndexed ||
 		cs->state->spaceModel == kCGColorSpaceModelPattern)
 	{
-		baseColorSpace = cs->state->baseColorSpace;
+		//baseColorSpace = cs->state->baseColorSpace;
 	}
 	else
 	{
