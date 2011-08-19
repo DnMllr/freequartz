@@ -541,9 +541,9 @@ __private_extern__ uint8_t CFUniCharGetBitmapForPlane(uint32_t charset, uint32_t
 
         for (idx = 0x2000;idx <= 0x200B;idx++) {
             if (isInverted) {
-                CFUniCharRemoveCharacterFromBitmap(idx, bitmapBase);
+                CFUniCharRemoveCharacterFromBitmap((UTF16Char)idx, bitmapBase);
             } else {
-                CFUniCharAddCharacterToBitmap(idx, bitmapBase);
+                CFUniCharAddCharacterToBitmap((UTF16Char)idx, bitmapBase);
             }
         }
         return kCFUniCharBitmapFilled;

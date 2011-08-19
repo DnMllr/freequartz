@@ -2645,7 +2645,7 @@ CFCharacterSetKeyedCodingType _CFCharacterSetGetKeyedCodingType(CFCharacterSetRe
     }
 }
 
-bool _CFCharacterSetIsMutable(CFCharacterSetRef cset) { return __CFCSetIsMutable(cset); }
+bool _CFCharacterSetIsMutable(CFCharacterSetRef cset) { return (bool)__CFCSetIsMutable(cset); }
 CFCharacterSetPredefinedSet _CFCharacterSetGetKeyedCodingBuiltinType(CFCharacterSetRef cset) { return __CFCSetBuiltinType(cset); }
 CFRange _CFCharacterSetGetKeyedCodingRange(CFCharacterSetRef cset) { return CFRangeMake(__CFCSetRangeFirstChar(cset), __CFCSetRangeLength(cset)); }
 CFStringRef _CFCharacterSetCreateKeyedCodingString(CFCharacterSetRef cset) { return CFStringCreateWithCharacters(kCFAllocatorSystemDefault, __CFCSetStringBuffer(cset), __CFCSetStringLength(cset)); }

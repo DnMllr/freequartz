@@ -369,7 +369,7 @@ CGRect CGPathGetBoundingBox(CGPathRef path)
 		return CGRectZero;
 	}
 
-
+	return CGRectZero;
 }
 
 bool CGPathContainsPoint(CGPathRef path, const CGAffineTransform *m, 

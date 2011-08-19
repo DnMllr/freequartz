@@ -303,7 +303,7 @@ CGContextDelegateRef
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 								CFDictionaryRef theDict)
 {
-	CGContextDelegateRef ctxDelegate;
+	CGContextDelegateRef ctxDelegate = NULL;
 	uint32_t format, depth;
 	size_t numOfComponents;
 	RIPRef ripc;

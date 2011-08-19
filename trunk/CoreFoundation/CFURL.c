@@ -1562,8 +1562,8 @@ CF_EXPORT void _CFURLInitFSPath(CFURLRef url, CFStringRef path) {
 CF_EXPORT void _CFURLInitFSPath(CFURLRef url, CFStringRef path) {
     CFIndex len = CFStringGetLength(path);
     if (len > 2) {
-        char firstChar = CFStringGetCharacterAtIndex(path, 0);
-        char secondChar = CFStringGetCharacterAtIndex(path, 1);
+        char firstChar = (char)CFStringGetCharacterAtIndex(path, 0);
+        char secondChar = (char)CFStringGetCharacterAtIndex(path, 1);
         if (((((firstChar >= 'A') && (firstChar <= 'Z')) || ((firstChar >= 'a') && (firstChar <= 'z'))) &&
             ((secondChar == ':') || (secondChar == '|'))) ||
         ((firstChar == '\\') && (secondChar == '\\')))

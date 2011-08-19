@@ -844,7 +844,7 @@ static void __CFRunLoopTimerRescheduleWithAllModes(CFRunLoopTimerRef rlt, CFRunL
 typedef struct _collectTimersContext {
     CFMutableArrayRef results;
     int64_t cutoffTSR;
-};
+} _collectTimersContext;
 
 static void __CFRunLoopCollectTimers(const void *value, void *ctx) {
     CFRunLoopTimerRef rlt = (CFRunLoopTimerRef)value;
