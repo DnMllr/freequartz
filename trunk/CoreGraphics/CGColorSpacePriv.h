@@ -76,7 +76,6 @@ typedef struct CGColorSpaceCallbacks
 
 //CGColorSpaceCallBacks
 
-
 typedef struct CGColorSpaceState {
 	size_t refcount;						//0x00
 	bool isPattern;							//0x04
@@ -91,13 +90,26 @@ typedef struct CGColorSpaceState {
 	int index;								//0x28 ? maybe float* components instead ??
 	CGColorSpaceCallbacks* callbacks;		//0x2C
 	void* associate;						//0x30
-	CGColorSpaceRef baseColorSpace;			//0x34
-	size_t baseColorSpaceCount;				//0x38
-	///////////// below maybe inherited struct
-	int id;									//0x40
+	
+	/////////////// below maybe inherited struct
+	//CGColorSpaceRef baseColorSpace;			//0x34
+	//size_t baseColorSpaceCount;				//0x38
+	//int id;									//0x40
+	//...
 } CGColorSpaceState, *CGColorSpaceStateRef;
 
+typedef struct CGColorSpaceStateDevice {
 
+
+} CGColorSpaceStateDevice, *CGColorSpaceStateDeviceRef;
+
+typedef struct CGColorSpaceStateICC {
+	CGColorSpaceState state;				//0x00
+	size_t numberOfComponents;				//0x34 ???? numberOfComponents is already inside state
+	int id;									//0x40
+	CGColorSpaceRef colorSpace;				//0x58
+
+} CGColorSpaceStateICC, *CGColorSpaceStateICCRef;
 
 typedef struct CGColorSpace {
 	CFRuntimeBase obj;						//0x00
