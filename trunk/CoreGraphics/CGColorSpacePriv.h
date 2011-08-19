@@ -77,8 +77,8 @@ typedef struct CGColorSpaceCallbacks
 //CGColorSpaceCallBacks
 
 typedef struct CGColorSpaceState {
-	size_t refcount;						//0x00
-	bool isPattern;							//0x04
+	int32_t refcount;						//0x00
+	bool isSingleton;						//0x04
 	bool isUncalibrated;					//0x05
 	bool supportsOuput;						//0x06
 	bool unknown07;							//0x07
@@ -87,6 +87,9 @@ typedef struct CGColorSpaceState {
 	CGColorSpaceModel spaceModel;			//0x10
 	CGColorSpaceModel processColorModel;	//0x14
 	size_t numberOfComponents;				//0x18
+	CGColorRef color1C;						//0x1C
+	void* field20;							//0x20
+	void* field24;							//0x24
 	//int index;								//0x28 ? maybe float* components instead ??
 	float* components;						//0x28
 	CGColorSpaceCallbacks* callbacks;		//0x2C
@@ -182,61 +185,66 @@ CG_EXTERN const CFStringRef kCGColorSpaceWillDeallocate;
 
 
 /* functions */
-void	cs_finalize(CFTypeRef ctf);
+void		cs_finalize(CFTypeRef ctf);
 
-Boolean cs_equal(CFTypeRef cf1, CFTypeRef cf2);
+Boolean		cs_equal(CFTypeRef cf1, CFTypeRef cf2);
 
-CFHashCode cs_hash(CFTypeRef cf);
+CFHashCode	cs_hash(CFTypeRef cf);
 
-CFStringRef cs_copy_debug_description(CFTypeRef cf);
+CFStringRef	cs_copy_debug_description(CFTypeRef cf);
+
 
 void csNotificationCenterCreate(void);
 
-CGNotificationCenterRef getNotificationCenter(bool notFinalize);
+CG_EXTERN CGNotificationCenterRef getNotificationCenter(bool notFinalize);
 
-bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
+CG_EXTERN bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2);
 
-CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space);
+CG_EXTERN CGColorRef CGColorSpaceCopyDefaultColor(CGColorSpaceRef space);
 
-CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
+CG_EXTERN CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space);
 
-CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfComponents);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfComponents);
 
-CGColorSpaceRef CGColorSpaceCreateDisplayGrayWithID(int id);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreateWithICCData();
 
-CGColorSpaceRef CGColorSpaceCreateDisplayRGBWithID(int id);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreateDisplayGrayWithID(int id);
 
-CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreateDisplayRGBWithID(int id);
 
-CGColorSpaceRef create_display_color_space(size_t numComponents);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
 
-CGColorSpaceRef create_device_color_space(size_t numComponents);
+CG_EXTERN CGColorSpaceRef create_display_color_space(size_t numComponents);
 
-CGColorSpaceRef create_generic_color_space(size_t numComponents);
+CG_EXTERN CGColorSpaceRef create_device_color_space(size_t numComponents);
 
-CGColorSpaceRef create_uncalibrated_color_space(size_t numComponents);
+CG_EXTERN CGColorSpaceRef create_generic_color_space(size_t numComponents);
 
-CGColorSpaceRef create_color_space_with_path(CFStringRef path);
+CG_EXTERN CGColorSpaceRef create_uncalibrated_color_space(size_t numComponents);
 
-CGColorSpaceRef create_display_space_with_id(size_t numComponents, int id);
+CG_EXTERN CGColorSpaceRef create_color_space_with_path(CFStringRef path);
 
-CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
+CG_EXTERN CGColorSpaceRef create_display_space_with_id(size_t numComponents, int id);
 
-CGColorSpaceRef CGColorSpaceCreateWithState(CGColorSpaceStateRef colorSpaceState);
+CG_EXTERN CFIndex CGColorSpaceGetIndexForName(CFStringRef name);
 
-void color_space_state_release(CGColorSpaceStateRef colorSpaceState);
+CG_EXTERN CGColorSpaceRef CGColorSpaceCreateWithState(CGColorSpaceStateRef colorSpaceState);
 
-bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef state2);
+CG_EXTERN void color_space_state_dealloc(CGColorSpaceStateRef csState);
 
-CGColorSpaceStateRef color_space_state_retain(CGColorSpaceStateRef colorSpaceState);
+CG_EXTERN void color_space_state_release(CGColorSpaceStateRef colorSpaceState);
 
-void device_gray_get_md5(unsigned char* md5);
+CG_EXTERN bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef state2);
 
-void device_rgb_get_md5(unsigned char* md5);
+CG_EXTERN CGColorSpaceStateRef color_space_state_retain(CGColorSpaceStateRef colorSpaceState);
 
-CGFloat* device_get_default_color_components(CGColorSpaceRef cs);
+CG_EXTERN void device_gray_get_md5(unsigned char* md5);
 
-CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs);
+CG_EXTERN void device_rgb_get_md5(unsigned char* md5);
+
+CG_EXTERN CGFloat* device_get_default_color_components(CGColorSpaceRef cs);
+
+CG_EXTERN CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs);
 
 CF_EXTERN_C_END
 
