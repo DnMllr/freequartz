@@ -96,13 +96,14 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClassEx(&wcex);
 }
 
-
+extern "C" __declspec(dllimport) CGColorSpaceRef CGColorSpaceCreateWithIndex(int index);
 
 CGContextRef SetupContext()
 {
 	//UIGraphicsBeginImageContext
 	int w = 480, h = 640;
 	
+	CGColorSpaceRef csICC = CGColorSpaceCreateWithIndex(15);
 	CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, CGBitmapGetAlignedBytesPerRow(w*4), colourSpace, kCGImageAlphaPremultipliedFirst);
 	CGColorSpaceRelease (colourSpace);

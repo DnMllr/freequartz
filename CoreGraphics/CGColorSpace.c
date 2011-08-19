@@ -374,7 +374,7 @@ CGColorSpaceRef CGColorSpaceCreateWithIndex(int index)
 		case 10: { cs = create_uncalibrated_color_space(3); break; } 
 		case 11: { cs = create_uncalibrated_color_space(4); break; } 
 		/* pattern */
-		case 14: { cs = CGColorSpaceCreate(kCGColorSpaceTypePattern, 0); cs->state->isPattern = TRUE; break; }
+		case 14: { cs = CGColorSpaceCreate(kCGColorSpaceTypePattern, 0); cs->state->isSingleton = TRUE; break; }
 		/* ICC profile */
 		case 15: { cs = create_color_space_with_path(CFSTR("ColorSync/Profiles/AdobeRGB1998.icc")); break; } 
 		case 16: { cs = create_color_space_with_path(CFSTR("ColorSync/Profiles/sRGB Profile.icc")); break; } 
@@ -419,6 +419,15 @@ CGColorSpaceRef create_display_color_space(size_t numComponents)
 
 	return NULL;
 }
+
+CGColorSpaceRef CGColorSpaceCreateWithICCData()
+{
+	CGColorSpaceRef colorSpace;
+
+
+	return colorSpace;
+}
+
 
 CGColorSpaceRef CGColorSpaceCreateDisplayGrayWithID(int id)
 {
@@ -490,17 +499,68 @@ CGColorSpaceRef create_device_color_space(size_t numComponents)
 
 CGColorSpaceRef create_color_space_with_path(CFStringRef path)
 {
+	CGColorSpaceRef colorSpace;
+	CFArrayRef paths;
+	CGDataProviderRef provider;
+	CFURLRef url, urlCopy;
+
+	paths = CFCopySearchPathForDirectoriesInDomains(kCFLibraryDirectory, kCFSystemDomainMask, TRUE);
+	if (paths)
+	{
+		for (int i=0; i < CFArrayGetCount(paths); i++)
+		{
+			url = (CFURLRef)CFArrayGetValueAtIndex(paths, i);
+			urlCopy = CFURLCreateCopyAppendingPathComponent(NULL, url, path, FALSE);
+			provider = CGDataProviderCreateWithURL(urlCopy);
+			
+			/*if (provider && urlCopy)
+			{
+				CFRelease(urlCopy);
+				CFRelease(paths);
+				colorSpace = CGColorSpaceCreateWithICCData();
+				CGDataProviderRelease(provider);
+			}
+			else
+			{
+				if (urlCopy)
+					CFRelease(urlCopy);
+
+			}*/
+		}
+
+		//CFRelease(paths);
+		//colorSpace = CGColorSpaceCreateWithICCData();
+		//CGDataProviderRelease
+	}
+
+
 	return NULL;
 }
 
 CGColorSpaceRef create_generic_color_space(size_t numComponents)
 {
-	return NULL;
+	CGColorSpaceRef colorSpace;
+	
+	if (numComponents == 1)
+		colorSpace = CGColorSpaceCreateDeviceGray();
+	else if (numComponents == 3)
+		colorSpace = CGColorSpaceCreateDeviceRGB();
+	else if (numComponents == 4)
+		colorSpace = CGColorSpaceCreateDeviceCMYK();
+	else
+		colorSpace = NULL;
+
+	return colorSpace;
 }
 
 CGColorSpaceRef create_uncalibrated_color_space(size_t numComponents)
 {
-	return NULL;
+	CGColorSpaceRef colorSpace;
+
+	colorSpace = create_device_color_space(numComponents);
+	colorSpace->state->isUncalibrated = TRUE;
+
+	return colorSpace;
 }
 
 
@@ -581,7 +641,7 @@ CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfCompone
 	}
 
 	csState = (CGColorSpaceStateRef) calloc(1, size);
-	csState->isPattern = FALSE;
+	csState->isSingleton = FALSE;
 	csState->isUncalibrated = FALSE;
 	csState->supportsOuput = TRUE;
 	csState->unknown07 = FALSE;
@@ -620,17 +680,43 @@ CGColorSpaceRef CGColorSpaceCreateWithState(CGColorSpaceStateRef colorSpaceState
 	return colorSpace;
 }
 
-void color_space_state_release(CGColorSpaceStateRef colorSpaceState)
-{
-
-}
 
 CGColorSpaceStateRef color_space_state_retain(CGColorSpaceStateRef colorSpaceState)
 {
 	if (!colorSpaceState) { return NULL; }
 
-	// TODO
-	return NULL;
+	_CFAtomicIncrement32(&colorSpaceState->refcount);
+
+	return colorSpaceState;
+}
+
+void color_space_state_release(CGColorSpaceStateRef colorSpaceState)
+{
+	if (!colorSpaceState) { return; }
+
+	_CFAtomicDecrement32(&colorSpaceState->refcount);
+	if (colorSpaceState->refcount == 0)
+	{
+		color_space_state_dealloc(colorSpaceState);
+	}
+}
+
+void color_space_state_dealloc(CGColorSpaceStateRef csState)
+{
+	if (!csState) { return; }
+
+	if (csState->isSingleton == FALSE)
+	{
+		if (csState->associate)
+			CFRelease((CFTypeRef)csState->associate);
+		if (csState->callbacks->finalize)
+			csState->callbacks->finalize((CFTypeRef)csState);
+		
+		CGColorRelease(csState->color1C);
+		free(csState->field20);
+		free(csState->field24);
+	}
+
 }
 
 void CGColorSpaceRelease(CGColorSpaceRef space)

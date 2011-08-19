@@ -50,14 +50,19 @@ extern size_t strlcpy(char *dst, const char *src, size_t siz);
 extern size_t strlcat(char *dst, const char *src, size_t siz);
 #endif
 
-#if DEPLOYMENT_TARGET_MACOSX
+#if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_WINDOWS
 
 /* We use the System framework implementation on Mach.
 */
+#if DEPLOYMENT_TARGET_WINDOWS
+#include <string.h>
+#define PATH_MAX 260
+#else
 #include <libc.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
-#include <NSSystemDirectories.h>
+#include "NSSystemDirectories.h"
 
 CFSearchPathEnumerationState __CFStartSearchPathEnumeration(CFSearchPathDirectory dir, CFSearchPathDomainMask domainMask) {
     return (NSSearchPathEnumerationState)NSStartSearchPathEnumeration((NSSearchPathDirectory)dir, (NSSearchPathDomainMask)domainMask);
@@ -76,27 +81,27 @@ CFSearchPathEnumerationState __CFGetNextSearchPathEnumeration(CFSearchPathEnumer
     return result;
 }
 
-#elif DEPLOYMENT_TARGET_WINDOWS
-CFSearchPathEnumerationState __CFStartSearchPathEnumeration(CFSearchPathDirectory dir, CFSearchPathDomainMask domainMask) {
-    CFSearchPathEnumerationState result = 0;
-    //return (NSSearchPathEnumerationState)NSStartSearchPathEnumeration((NSSearchPathDirectory)dir, (NSSearchPathDomainMask)domainMask);
-    return result;
-}
-
-CFSearchPathEnumerationState __CFGetNextSearchPathEnumeration(CFSearchPathEnumerationState state, uint8_t *path, CFIndex pathSize) {
-    CFSearchPathEnumerationState result = 0;
-    /*
-    // NSGetNextSearchPathEnumeration requires a MAX_PATH size
-    if (pathSize < PATH_MAX) {
-        uint8_t tempPath[PATH_MAX];
-        result = NSGetNextSearchPathEnumeration(state, (char *)tempPath);
-        strlcpy((char *)path, (char *)tempPath, pathSize);
-    } else {
-        result = NSGetNextSearchPathEnumeration(state, (char *)path);
-    }
-    */
-    return result;
-}
+//#elif DEPLOYMENT_TARGET_WINDOWS
+//CFSearchPathEnumerationState __CFStartSearchPathEnumeration(CFSearchPathDirectory dir, CFSearchPathDomainMask domainMask) {
+//    CFSearchPathEnumerationState result = 0;
+//    //return (NSSearchPathEnumerationState)NSStartSearchPathEnumeration((NSSearchPathDirectory)dir, (NSSearchPathDomainMask)domainMask);
+//    return result;
+//}
+//
+//CFSearchPathEnumerationState __CFGetNextSearchPathEnumeration(CFSearchPathEnumerationState state, uint8_t *path, CFIndex pathSize) {
+//    CFSearchPathEnumerationState result = 0;
+//    /*
+//    // NSGetNextSearchPathEnumeration requires a MAX_PATH size
+//    if (pathSize < PATH_MAX) {
+//        uint8_t tempPath[PATH_MAX];
+//        result = NSGetNextSearchPathEnumeration(state, (char *)tempPath);
+//        strlcpy((char *)path, (char *)tempPath, pathSize);
+//    } else {
+//        result = NSGetNextSearchPathEnumeration(state, (char *)path);
+//    }
+//    */
+//    return result;
+//}
 
 #elif DEPLOYMENT_TARGET_LINUX
 CFSearchPathEnumerationState __CFStartSearchPathEnumeration(CFSearchPathDirectory dir, CFSearchPathDomainMask domainMask) {

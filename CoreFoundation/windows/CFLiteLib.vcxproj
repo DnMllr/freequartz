@@ -423,6 +423,9 @@ copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\NSSystemDirectories.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\compat\dirent.h" />
@@ -493,6 +496,7 @@ copy "$(ProjectDir)\..\include\*.h" "$(ProjectDir)\..\dist\include\"
     <ClInclude Include="..\CFXMLParser.h" />
     <ClInclude Include="..\CoreFoundation.h" />
     <ClInclude Include="..\ForFoundationOnly.h" />
+    <ClInclude Include="..\NSSystemDirectories.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

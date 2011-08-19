@@ -224,6 +224,9 @@
     <ClCompile Include="..\compat\strlcpy.c">
       <Filter>Source Files\compat</Filter>
     </ClCompile>
+    <ClCompile Include="..\NSSystemDirectories.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\compat\dirent.h">
@@ -428,6 +431,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ForFoundationOnly.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NSSystemDirectories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
