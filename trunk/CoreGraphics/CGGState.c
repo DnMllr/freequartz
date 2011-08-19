@@ -255,7 +255,7 @@ void CGGStateClipReset(CGGStateRef agstate)
 
 void CGGStateResetClip(CGGStateRef state)
 {
-	CGClipStackRef clipStack;
+	//CGClipStackRef clipStack;
 
 	CGClipStackRelease(state->clipStack);
 	state->clipStack = CGClipStackCreateMutable();
