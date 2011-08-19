@@ -87,7 +87,8 @@ typedef struct CGColorSpaceState {
 	CGColorSpaceModel spaceModel;			//0x10
 	CGColorSpaceModel processColorModel;	//0x14
 	size_t numberOfComponents;				//0x18
-	int index;								//0x28 ? maybe float* components instead ??
+	//int index;								//0x28 ? maybe float* components instead ??
+	float* components;						//0x28
 	CGColorSpaceCallbacks* callbacks;		//0x2C
 	void* associate;						//0x30
 	
@@ -98,10 +99,21 @@ typedef struct CGColorSpaceState {
 	//...
 } CGColorSpaceState, *CGColorSpaceStateRef;
 
-typedef struct CGColorSpaceStateDevice {
+typedef struct CGColorSpaceStatePattern {
+	CGColorSpaceState state;				//0x00
+	CGColorSpaceRef baseColorSpace;			//0x34
+
+} CGColorSpaceStatePattern, *CGColorSpaceStatePatternRef;
 
 
-} CGColorSpaceStateDevice, *CGColorSpaceStateDeviceRef;
+typedef struct CGColorSpaceStateIndexed {
+	CGColorSpaceState state;				//0x00
+	CGColorSpaceRef baseColorSpace;			//0x34   
+	size_t lastIndex;						//0x38
+	uint8_t* indexes;						//0x3C
+
+} CGColorSpaceStateIndexed, *CGColorSpaceStateIndexedRef;
+
 
 typedef struct CGColorSpaceStateICC {
 	CGColorSpaceState state;				//0x00
@@ -145,6 +157,8 @@ CG_EXTERN const CFStringRef kCGColorSpaceDeviceCMYK;
 CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultGray;
 CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultRGB;
 CG_EXTERN const CFStringRef kCGColorSpaceSystemDefaultCMYK;
+CG_EXTERN const CFStringRef kCGColorSpaceCalibratedGray;
+CG_EXTERN const CFStringRef kCGColorSpaceCalibratedRGB;
 CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedGray;
 CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedRGB;
 CG_EXTERN const CFStringRef kCGColorSpaceUncalibratedCMYK;
@@ -153,6 +167,14 @@ CG_EXTERN const CFStringRef kCGColorSpaceGenericRGBHDR;
 CG_EXTERN const CFStringRef kCGColorSpaceUndo601;
 CG_EXTERN const CFStringRef kCGColorSpaceColoredPattern;
 
+CG_EXTERN const CFStringRef kCGColorSpaceLAB;
+CG_EXTERN const CFStringRef kCGColorSpaceIndexed;
+CG_EXTERN const CFStringRef kCGColorSpaceDeviceN;
+
+	
+
+
+
 /* Notifications */
 CG_EXTERN const CFStringRef kCGColorSpaceWillDeallocate;
 
@@ -160,7 +182,13 @@ CG_EXTERN const CFStringRef kCGColorSpaceWillDeallocate;
 
 
 /* functions */
-void csFinalize(CFTypeRef ctf);
+void	cs_finalize(CFTypeRef ctf);
+
+Boolean cs_equal(CFTypeRef cf1, CFTypeRef cf2);
+
+CFHashCode cs_hash(CFTypeRef cf);
+
+CFStringRef cs_copy_debug_description(CFTypeRef cf);
 
 void csNotificationCenterCreate(void);
 

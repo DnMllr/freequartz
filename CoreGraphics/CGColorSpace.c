@@ -38,6 +38,8 @@ CG_CONST_STRING_DECL(kCGColorSpaceDeviceCMYK,				"kCGColorSpaceDeviceCMYK");
 CG_CONST_STRING_DECL(kCGColorSpaceSystemDefaultGray,		"kCGColorSpaceSystemDefaultGray");
 CG_CONST_STRING_DECL(kCGColorSpaceSystemDefaultRGB,			"kCGColorSpaceSystemDefaultRGB");
 CG_CONST_STRING_DECL(kCGColorSpaceSystemDefaultCMYK,		"kCGColorSpaceSystemDefaultCMYK");
+CG_CONST_STRING_DECL(kCGColorSpaceCalibratedGray,			"kCGColorSpaceCalibratedGray");
+CG_CONST_STRING_DECL(kCGColorSpaceCalibratedRGB,			"kCGColorSpaceCalibratedRGB");
 CG_CONST_STRING_DECL(kCGColorSpaceUncalibratedGray,			"kCGColorSpaceUncalibratedGray");
 CG_CONST_STRING_DECL(kCGColorSpaceUncalibratedRGB,			"kCGColorSpaceUncalibratedRGB");
 CG_CONST_STRING_DECL(kCGColorSpaceUncalibratedCMYK,			"kCGColorSpaceUncalibratedCMYK");
@@ -46,6 +48,11 @@ CG_CONST_STRING_DECL(kCGColorSpaceGenericRGBHDR,			"kCGColorSpaceGenericRGBHDR")
 CG_CONST_STRING_DECL(kCGColorSpaceUndo601,					"kCGColorSpaceUndo601");
 CG_CONST_STRING_DECL(kCGColorSpaceColoredPattern,			"kCGColorSpaceColoredPattern");
 CG_CONST_STRING_DECL(kCGColorSpaceGenericGray,				"kCGColorSpaceGenericGray");
+CG_CONST_STRING_DECL(kCGColorSpaceLAB,						"kCGColorSpaceLAB");
+CG_CONST_STRING_DECL(kCGColorSpaceIndexed,					"kCGColorSpaceIndexed");
+CG_CONST_STRING_DECL(kCGColorSpaceDeviceN,					"kCGColorSpaceDeviceN");
+
+
 
 /* color space notifications */
 CG_CONST_STRING_DECL(kCGColorSpaceWillDeallocate,			"kCGColorSpaceWillDeallocate");
@@ -59,11 +66,11 @@ static CFRuntimeClass CGColorSpaceClass =  {
     "CGColorSpace",				/* Name of class.  */
     0,							/* init */
     0,							/* copy  */
-    csFinalize,					/* finalize  */
-	0,							/* equal  */
+    cs_finalize,				/* finalize  */
+	cs_equal,					/* equal  */
 	0,							/* hash  */
 	0,							/* copyFormattingDesc */
-	0							/* copyDebugDesc */
+	cs_copy_debug_description	/* copyDebugDesc */
   };
 CFTypeID __kCGColorSpaceID = _kCFRuntimeNotATypeID;
 
@@ -159,7 +166,7 @@ CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs)
 }
 
 
-void csFinalize(CFTypeRef ctf)
+void cs_finalize(CFTypeRef ctf)
 {
 	/*CGColorSpaceRef cs;
 	bool isSingleton;
@@ -176,6 +183,56 @@ void csFinalize(CFTypeRef ctf)
 	}*/
 	//.....
 }
+
+Boolean cs_equal(CFTypeRef cf1, CFTypeRef cf2)
+{
+	return CGColorSpaceEqualToColorSpace((CGColorSpaceRef)cf1, (CGColorSpaceRef)cf2);
+}
+
+CFHashCode cs_hash(CFTypeRef cf)
+{
+	CFHashCode hash;
+	CGColorSpaceRef cs;
+
+	cs = (CGColorSpaceRef)cf;
+	if (!cs | !cs->state) 
+		return 0;
+
+	/*if (cs->state->callbacks)
+		hash = cs->state->callbacks->getMD5(*/
+	
+	return hash;
+}
+
+
+CFStringRef cs_copy_debug_description(CFTypeRef cf)
+{
+	CGColorSpaceRef cs;
+	CFMutableStringRef msg;
+	CFStringRef csTypeString = NULL;
+
+	cs = (CGColorSpaceRef)cf;
+	if (cs)
+	{
+		msg = CFStringCreateMutable(CFGetAllocator(cf), 0);
+		switch(cs->state->spaceType)
+		{
+		case kCGColorSpaceTypeDeviceGray: { csTypeString = kCGColorSpaceDeviceGray; break; }
+		case kCGColorSpaceTypeDeviceRGB: { csTypeString = kCGColorSpaceDeviceRGB; break; }
+		case kCGColorSpaceTypeDeviceCMYK: { csTypeString = kCGColorSpaceDeviceCMYK; break; }
+		case kCGColorSpaceTypeCalibratedGray: { csTypeString = kCGColorSpaceCalibratedGray; break; }
+		case kCGColorSpaceTypeCalibratedRGB: { csTypeString = kCGColorSpaceCalibratedRGB; break; }
+		case kCGColorSpaceTypeLab: { csTypeString = kCGColorSpaceLAB; break; }
+		case kCGColorSpaceTypeIndexed: { csTypeString = kCGColorSpaceIndexed; break; }
+		case kCGColorSpaceTypeDeviceN: { csTypeString = kCGColorSpaceDeviceN; break; }
+		}
+
+		//CFStringAppendFormat(CF
+	}
+
+	return csTypeString;
+}
+
 
 void csNotificationCenterCreate(void)
 {
@@ -212,6 +269,10 @@ CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
 	return ret;
 }
 
+bool cs_equal(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
+{
+
+}
 
 
 bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
@@ -328,7 +389,9 @@ CGColorSpaceRef CGColorSpaceCreateWithIndex(int index)
 		}
 		else
 		{
-			cs->state->index = index;
+			// DISCREPANCY HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
+			// Sometimes it's index and sometimes a float *
+			//cs->state->index = index;
 		}
 	}
 
@@ -527,13 +590,18 @@ CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfCompone
 	csState->spaceModel = spaceModel;
 	csState->processColorModel= processColorModel;
 	csState->numberOfComponents = numberOfComponents;
-	csState->index = 0;
+	csState->components = NULL;
 	csState->callbacks = callbacks;
 	
-	
-	if (csState->spaceType == kCGColorSpaceTypeICC)
+	if (csState->spaceType != kCGColorSpaceTypePattern)
 	{
-
+		csState->components = (float *)malloc(numberOfComponents * sizeof(float));
+		// IMPLEMENTATION HERE
+	}
+	else
+	{
+		((CGColorSpaceStatePatternRef)csState)->baseColorSpace = NULL;
+		csState->supportsOuput = FALSE;
 	}
 
 	colorSpace = CGColorSpaceCreateWithState(csState);
@@ -599,7 +667,7 @@ CGColorSpaceRef CGColorSpaceGetBaseColorSpace(CGColorSpaceRef cs)
 	if (cs->state->spaceModel == kCGColorSpaceModelIndexed ||
 		cs->state->spaceModel == kCGColorSpaceModelPattern)
 	{
-		//baseColorSpace = cs->state->baseColorSpace;
+		baseColorSpace = ((CGColorSpaceStatePatternRef)cs->state)->baseColorSpace;
 	}
 	else
 	{
@@ -611,10 +679,26 @@ CGColorSpaceRef CGColorSpaceGetBaseColorSpace(CGColorSpaceRef cs)
 
 size_t CGColorSpaceGetColorTableCount(CGColorSpaceRef cs)
 {
-  return 0;
+	size_t count;
+
+	if (cs && cs->state->spaceModel == kCGColorSpaceModelIndexed) 
+		count = ((CGColorSpaceStateIndexedRef)cs->state)->lastIndex + 1;
+	else
+		count = 0;
+
+	return count;
 }
 
 void CGColorSpaceGetColorTable(CGColorSpaceRef space, uint8_t *table)
 {
+	size_t numComponents, count;
+	CGColorSpaceStateIndexedRef csStateIndexed;
 
+	if (space && space->state->spaceModel == kCGColorSpaceModelIndexed && table)
+	{
+		csStateIndexed = (CGColorSpaceStateIndexedRef)space->state;
+		numComponents = CGColorSpaceGetNumberOfComponents(csStateIndexed->baseColorSpace);
+		count = csStateIndexed->lastIndex + 1;
+		memmove(table, csStateIndexed->indexes, numComponents * count);
+	}
 }
