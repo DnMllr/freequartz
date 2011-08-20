@@ -62,7 +62,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\CoreFoundation\include;..\..\..\CoreFoundation\dist\include;..\..\include;C:\Users\Vincent\Developer\freequartz\posix4win\msvc\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\CoreFoundation\include;..\..\..\CoreFoundation\dist\include;..\..\include;..\..\..\posix4win\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
