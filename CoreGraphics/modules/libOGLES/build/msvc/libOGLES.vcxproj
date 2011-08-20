@@ -54,7 +54,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../../../../posix4win/msvc/include;../../../../../;../../../../../CoreFoundation;../../../../../CoreFoundation/include;../../../../../CoreGraphics;../../../../../CoreGraphics/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../../posix4win/include;../../../../../;../../../../../CoreFoundation;../../../../../CoreFoundation/include;../../../../../CoreGraphics;../../../../../CoreGraphics/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OGLES_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;CGBUILDINGFOUNDATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -75,7 +75,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../posix4win/msvc/include;../../../../../;../../../../../CoreFoundation;../../../../../CoreFoundation/include;../../../../../CoreGraphics;../../../../../CoreGraphics/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../../posix4win/include;../../../../../;../../../../../CoreFoundation;../../../../../CoreFoundation/include;../../../../../CoreGraphics;../../../../../CoreGraphics/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGLES_EXPORT_DYNAMIC;DEPLOYMENT_TARGET_WINDOWS;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;CGBUILDINGFOUNDATION=1</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
