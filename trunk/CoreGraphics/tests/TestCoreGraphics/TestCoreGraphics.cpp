@@ -5,6 +5,7 @@
 #include "TestCoreGraphics.h"
 #include "CoreFoundation/CoreFoundation.h"
 #include "CoreGraphics/CoreGraphics.h"
+#include <sys/stat.h>
 
 #define MAX_LOADSTRING 100
 

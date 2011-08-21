@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCGR_D2D", "libCGR_D2D.vcproj", "{0ECC2413-FFB9-4C36-B269-248D02C73BE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ECC2413-FFB9-4C36-B269-248D02C73BE1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0ECC2413-FFB9-4C36-B269-248D02C73BE1}.Debug|Win32.Build.0 = Debug|Win32
+		{0ECC2413-FFB9-4C36-B269-248D02C73BE1}.Release|Win32.ActiveCfg = Release|Win32
+		{0ECC2413-FFB9-4C36-B269-248D02C73BE1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
