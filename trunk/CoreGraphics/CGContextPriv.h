@@ -105,10 +105,10 @@ typedef enum {
 	
 } CGContextType;
 
-
+//sizeof(struct CGBitmapContextInfo) = 0x4C;
 typedef struct CGBitmapContextInfo {
 	
-	signed long refcount;						//0x00 - +0
+	int32_t refcount;							//0x00 - +0
 	size_t	width;								//0x04 - +1
 	size_t	height;								//0x08 - +2
 	void* dataWithAlpha;						//0x0C - +3
