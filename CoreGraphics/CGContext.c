@@ -161,7 +161,7 @@ CGContextRef CGContextCreateWithDelegate(CGContextDelegateRef ctxDelegate,
 	if (ctxDelegate)
 		CGContextSetDelegate(cxtRef, ctxDelegate);
 
-	return NULL;
+	return cxtRef;
 }
 
 CGContextRef CGContextAddFilter(CGContextRef c, void* unknown1, void* unknown2)

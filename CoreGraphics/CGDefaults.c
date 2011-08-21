@@ -152,7 +152,8 @@ getBooleanProperty(const char* propName, copyDefVal fnCopyVal, Boolean* boolean)
 			*boolean = bValue;
 	}
 	
-	CFRelease(cftype);
+	if (cftype)
+		CFRelease(cftype);
 
 	return bRet;
 }
