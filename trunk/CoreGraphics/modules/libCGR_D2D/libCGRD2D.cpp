@@ -12,9 +12,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//#include <mach/mach_time.h>
+
+//#include <libkern/OSAtomic.h>
 #include "libCGRD2D.h"
 
+
+
+
+static RIPRef _ripc_globals = 0;
+static int32_t _ripc_globals_lock = 0;
 
 #if 0
 CGCallback _CGRD2DCallbacks[] =
@@ -40,8 +46,47 @@ CGCallback _CGRD2DCallbacks[] =
 };
 #endif
 
+CGCallback _CGRD2DCallbacks[] =
+{		
+	{	kCGContextDelegateOperation,			d2d_Operation				},
+};
 
 
+RIPRef RIPGlobalState()
+{
+	RIPRef rip;
+
+	if (_ripc_globals == NULL)
+	{
+		//OSSpinLockLock(&_ripc_globals_lock);
+		_ripc_globals = (RIPRef)malloc(sizeof(RIP));
+	}
+
+	return _ripc_globals;
+}
+
+
+CGContextDelegateRef 
+__CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+								CFDictionaryRef theDict)
+{
+	uint32_t format, depth;
+	size_t numOfComponents;
+
+	format = d2d_InitializeFormat(bitmapContextInfo);
+	depth = D2DLayerDepthForFormat(format);
+	
+	if (format == -1 || depth == 0) {
+		numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
+		CGPostError("Unsupported pixel description - %lu components, %lu bits-per-com",
+			numOfComponents, bitmapContextInfo->bitsPerComponent);
+		return NULL;
+	}
+
+	d2d_Initialize(NULL);
+
+	return _ripc_globals->ctxDelegate;
+}
 
 int CGBlt_depth(const char *encoding)
 {
@@ -75,47 +120,29 @@ d2d_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 	return ((uint32_t)-1);
 }
 
-D2DRef 
-d2d_Initialize(D2DRef rip)
+RIPRef 
+d2d_Initialize(RIPRef arip)
 {
-	CGContextDelegateRef ctxDelegate;
+	RIPRef rip;
+	
+	rip = RIPGlobalState();
 
 	rip->ctxDelegate = CGContextDelegateCreate(NULL/*FIXME*/);
 	if (rip->ctxDelegate == NULL) {
 
 	}
 	else {
-		//CGContextDelegateSetCallbacks(ctxDelegate, _kCGCallbacks2, sizeof(_kCGCallbacks2)/sizeof(_kCGCallbacks2[0])
+		CGContextDelegateSetCallbacks(rip->ctxDelegate, _CGRD2DCallbacks, sizeof(_CGRD2DCallbacks)/sizeof(_CGRD2DCallbacks[0]));
 	}
 
-	return NULL;
+	return rip;
 }
 
 
 
 
 
-CGContextDelegateRef 
-__CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-								CFDictionaryRef theDict)
-{
-	CGContextDelegateRef ctxDelegate;
-	uint32_t format, depth;
-	size_t numOfComponents;
 
-	format = d2d_InitializeFormat(bitmapContextInfo);
-	depth = D2DLayerDepthForFormat(format);
-	
-	if (format == -1 || depth == 0) {
-		numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
-		CGPostError("Unsupported pixel description - %lu components, %lu bits-per-com",
-			numOfComponents, bitmapContextInfo->bitsPerComponent);
-		return NULL;
-	}
-
-
-	return ctxDelegate;
-}
 
 
 CGError d2d_DrawImage(CGContextDelegateRef ctxDelegate, 

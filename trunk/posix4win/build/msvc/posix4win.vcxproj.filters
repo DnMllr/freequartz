@@ -16,9 +16,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\libkern">
+      <UniqueIdentifier>{a3733bdc-d0fa-4c86-8f09-8e11768f8ba2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\mmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osatomic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,8 +62,8 @@
     <ClInclude Include="..\..\include\sys\mman.h">
       <Filter>Header Files\sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sys\stat.h">
-      <Filter>Header Files\sys</Filter>
+    <ClInclude Include="..\..\include\libkern\OSAtomic.h">
+      <Filter>Header Files\libkern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
