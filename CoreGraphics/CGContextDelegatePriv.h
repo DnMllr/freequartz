@@ -57,6 +57,8 @@ typedef enum CGContextDelegateType CGContextDelegateType;
 
 // Callbacks
 
+typedef int (*CGFunctionPtr)();
+
 typedef CGColorTransformRef (*CGCallbackGetColorTransform) (CGContextDelegateRef ctxDelegate, 
 															CGRenderingStateRef rendering, 
 															CGGStateRef state);
@@ -204,7 +206,7 @@ CG_EXTERN CGError CGContextDelegateDrawShading(CGContextDelegateRef ctxDelegate,
 											   CGShadingRef shading);
 
 
-void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName);
+CGFunctionPtr* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName);
 
 CF_EXTERN_C_END
 
