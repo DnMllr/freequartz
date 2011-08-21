@@ -656,6 +656,10 @@ CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfCompone
 	if (csState->spaceType == kCGColorSpaceTypeICC)
 	{
 		csState->components = (float *)malloc(numberOfComponents * sizeof(float));
+		for (size_t i; i < numberOfComponents; i++)
+		{
+
+		}
 	}
 	else
 	{

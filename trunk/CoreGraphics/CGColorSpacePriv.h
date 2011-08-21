@@ -120,7 +120,7 @@ typedef struct CGColorSpaceStateIndexed {
 
 typedef struct CGColorSpaceStateICC {
 	CGColorSpaceState state;				//0x00
-	size_t numberOfComponents;				//0x34 ???? numberOfComponents is already inside state
+	size_t numberOfComponents2;				//0x34 ???? numberOfComponents is already inside state
 	int id;									//0x40
 	CGColorSpaceRef colorSpace;				//0x58
 
