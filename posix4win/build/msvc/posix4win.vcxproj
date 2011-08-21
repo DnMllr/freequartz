@@ -87,10 +87,12 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\src\osatomic.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\dlfcn.h" />
     <ClInclude Include="..\..\include\features.h" />
+    <ClInclude Include="..\..\include\libkern\OSAtomic.h" />
     <ClInclude Include="..\..\include\posix4win.h" />
     <ClInclude Include="..\..\include\posix4win_unistd.h" />
     <ClInclude Include="..\..\include\pthread.h" />
@@ -98,7 +100,6 @@
     <ClInclude Include="..\..\include\semaphore.h" />
     <ClInclude Include="..\..\include\stdbool.h" />
     <ClInclude Include="..\..\include\stdint.h" />
-    <ClInclude Include="..\..\include\sys\stat.h" />
     <ClInclude Include="..\..\include\unistd.h" />
     <ClInclude Include="..\..\include\sys\mman.h" />
   </ItemGroup>

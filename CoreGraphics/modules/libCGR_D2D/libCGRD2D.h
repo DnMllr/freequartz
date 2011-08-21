@@ -45,14 +45,25 @@
 #endif /* __cplusplus */
 
 
-typedef struct D2D {
+typedef struct RIP {
 
 	CGContextDelegateRef ctxDelegate;
 
-} *D2DRef;
-
+} *RIPRef;
 
 CGRD2D_EXTERN CGContextDelegateRef 
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef theDict);
+
+uint32_t	d2d_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo);
+RIPRef		d2d_Initialize(RIPRef rip);
+
+CGError		d2d_Operation(CGContextDelegateRef ctxDelegate,
+						  CGRenderingStateRef rendering, 
+						  CGGStateRef state,
+						  CFStringRef op, 
+						  void* tmp);
+
+
+int			D2DLayerDepthForFormat(int index);
 
 #endif /* LIBCGRD2D_H_ */
