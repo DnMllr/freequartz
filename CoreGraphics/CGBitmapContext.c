@@ -28,9 +28,9 @@ loadBitmapContextDelegateCreator(void)
 	_CGBitmapContextDelegateCreate bitmapContextDelegate;
 
 	bitmapContextDelegate =  
-		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("OGLES", "__CGBitmapContextDelegateCreate");
+		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("CGRD2D", "__CGBitmapContextDelegateCreate");
 	
-	if (CGBitmapContextDelegateCreate) {
+	if (bitmapContextDelegate) {
 		CGBitmapContextDelegateCreate = bitmapContextDelegate;
 	}
 	else {
@@ -39,7 +39,7 @@ loadBitmapContextDelegateCreator(void)
 }
 
 static CGContextDelegateRef 
-__CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+bitmap_context_delegate_create(CGBitmapContextInfoRef bitmapContextInfo, 
 								CFDictionaryRef theDict)
 {
 	CGContextDelegateRef ctxDelegate;
@@ -334,7 +334,8 @@ bitmap_context_create(CGBitmapContextInfoRef bitmapContextInfo, CFDictionaryRef 
 		context->bitmapContextInfo->horzRes,
 		context->bitmapContextInfo->vertRes);
 
-	context->ctxDelegate = __CGBitmapContextDelegateCreate(bitmapContextInfo, theDict);
+	
+	context->ctxDelegate = bitmap_context_delegate_create(bitmapContextInfo, theDict);
 	if (!context->ctxDelegate) {
 		CGPostError("%s: failed to create delegate.", "createBitmapContext");
 		CGContextRelease(context);

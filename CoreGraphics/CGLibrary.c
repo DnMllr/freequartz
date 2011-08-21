@@ -16,6 +16,7 @@
 #include "CGDefaultsPriv.h"
 #include "CGLibraryPriv.h"
 
+#include <sys/stat.h>
 #include <pthread.h>
 #include <dlfcn.h>
 
@@ -58,7 +59,13 @@ open_handle_to_dylib_path(const char* libname)
 void*
 load_function(CFArrayRef paths, const char* fullLibName, const char* symName)
 {
-	CFStringRef cStr;
+	CFStringRef cStr, cStr2;
+	void* funcaddr;
+	void* libhandle;
+	char buffer[MAX_PATH+1];
+	char fullpath[MAX_PATH+1];
+	Boolean bRet;
+	struct stat finfo;
 
 	pthread_mutex_lock(&functionload_mutex);
 	if (!handles) {
@@ -66,15 +73,49 @@ load_function(CFArrayRef paths, const char* fullLibName, const char* symName)
 	}
 	
 	cStr = CFStringCreateWithFileSystemRepresentation(NULL, fullLibName);
-	if (!cStr)
-		return NULL;
+	if (cStr)
+	{
+		libhandle = (void *)CFDictionaryGetValue(handles, cStr);
+		if (libhandle == NULL)
+		{
+			if (paths != NULL)
+			{
+				for (int i = 0; i < CFArrayGetCount(paths); i++)
+				{
+					cStr2 = (CFStringRef)CFArrayGetValueAtIndex(paths, i);
+					bRet = CFStringGetFileSystemRepresentation(cStr2, buffer, MAX_PATH); 
+					if (bRet)
+					{
+						snprintf(fullpath, MAX_PATH, "%s/%s", buffer, fullLibName);
+						if (!stat(fullpath, &finfo))
+						{
+							libhandle = open_handle_to_dylib_path(fullpath);
+							if (libhandle)
+							{
+								CFDictionarySetValue(handles, cStr,libhandle);
+							}
+						}
+					}
+				}//for
+			}
+			else
+			{
+				snprintf(fullpath, MAX_PATH, "%s/System/Library/Frameworks/CoreGraphics/%s", getenv("NEXT_ROOT"), fullLibName); 
+				libhandle = open_handle_to_dylib_path(fullpath);
+			}
+		}
 
-	/*str = (const char*)CFDictionaryGetValue((CFDictionaryRef)handles, (const void*)cStr);
-	if (!str && paths) {
-		CFArrayGetCount(paths);
-	}*/
+		CFRelease(cStr);
+		funcaddr = dlsym(libhandle, symName);
+	}
+	else
+	{
+		funcaddr = NULL;
+	}
 
-	return NULL;
+	pthread_mutex_unlock(&functionload_mutex);
+
+	return funcaddr;
 }
 
 void* 
