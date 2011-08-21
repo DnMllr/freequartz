@@ -650,18 +650,20 @@ CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfCompone
 	csState->spaceModel = spaceModel;
 	csState->processColorModel= processColorModel;
 	csState->numberOfComponents = numberOfComponents;
-	csState->components = NULL;
+	csState->components = NULL; //STR     R6, [R0,#0x28]
 	csState->callbacks = callbacks;
 	
-	if (csState->spaceType != kCGColorSpaceTypePattern)
+	if (csState->spaceType == kCGColorSpaceTypeICC)
 	{
 		csState->components = (float *)malloc(numberOfComponents * sizeof(float));
-		// IMPLEMENTATION HERE
 	}
 	else
 	{
-		((CGColorSpaceStatePatternRef)csState)->baseColorSpace = NULL;
-		csState->supportsOuput = FALSE;
+		if (csState->spaceType == kCGColorSpaceTypePattern)
+		{
+			((CGColorSpaceStatePatternRef)csState)->baseColorSpace = NULL;
+			csState->supportsOuput = FALSE;
+		}
 	}
 
 	colorSpace = CGColorSpaceCreateWithState(csState);
