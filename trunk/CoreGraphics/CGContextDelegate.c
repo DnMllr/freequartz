@@ -107,42 +107,42 @@ void CGContextDelegateSetCallbacks(CGContextDelegateRef ctxDelegate, const CGCal
 
 void CGContextDelegateSetCallback(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, void* callback)
 {
-	void* addr;
+	CGFunctionPtr* addr;
 
 	if (!ctxDelegate)
 		return;
 	
 	addr = get_callback_address(ctxDelegate, type, "CGContextDelegateSetCallback");
 	if (addr) {
-		//*addr = callback;
+		*addr = (CGFunctionPtr) callback;
 	}
 }
 
 
-void* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName)
+CGFunctionPtr* get_callback_address(CGContextDelegateRef ctxDelegate, CGContextDelegateType type, const char* callerName)
 {
 	switch(type) {
 
-		case kCGContextDelegateFinalize:			{ return ctxDelegate->finalize;  }
-		case kCGContextDelegateGetColorTransform:	{ return ctxDelegate->getColorTransform; }
-		case kCGContextDelegateGetBounds:			{ return ctxDelegate->getBounds; }
-		case kCGContextDelegateDrawLines:			{ return ctxDelegate->drawLines; }
-		case kCGContextDelegateDrawRects:			{ return ctxDelegate->drawRects; }
-		case kCGContextDelegateDrawPath:			{ return ctxDelegate->drawPath; }
-		case kCGContextDelegateDrawImage:			{ return ctxDelegate->drawImage; }
-		case kCGContextDelegateDrawGlyphs:			{ return ctxDelegate->drawGlyphs; }
-		case kCGContextDelegateDrawShading:			{ return ctxDelegate->drawShading; }
-		case kCGContextDelegateDrawDisplayList:		{ return ctxDelegate->drawDisplayList; }
-		case kCGContextDelegateDrawImages:			{ return ctxDelegate->drawImages; }
-		case kCGContextDelegateBeginPage:			{ return ctxDelegate->beginPage; }
-		case kCGContextDelegateEndPage:				{ return ctxDelegate->endPage; }
-		case kCGContextDelegateOperation:			{ return ctxDelegate->operation; }
-		case kCGContextDelegateDrawWindowContents:	{ return ctxDelegate->drawWindowContents; }
-		case kCGContextDelegateDirtyWindowContents:	{ return ctxDelegate->dirtyWindowContents; }
-		case kCGContextDelegateBeginLayer:			{ return ctxDelegate->beginLayer; }
-		case kCGContextDelegateEndLayer:			{ return ctxDelegate->endLayer; }
-		case kCGContextDelegateGetLayer:			{ return ctxDelegate->getLayer; }
-		case kCGContextDelegateDrawLayer:			{ return ctxDelegate->drawLayer; }
+		case kCGContextDelegateFinalize:			{ return (CGFunctionPtr*)&ctxDelegate->finalize;  }
+		case kCGContextDelegateGetColorTransform:	{ return (CGFunctionPtr*)&ctxDelegate->getColorTransform; }
+		case kCGContextDelegateGetBounds:			{ return (CGFunctionPtr*)&ctxDelegate->getBounds; }
+		case kCGContextDelegateDrawLines:			{ return (CGFunctionPtr*)&ctxDelegate->drawLines; }
+		case kCGContextDelegateDrawRects:			{ return (CGFunctionPtr*)&ctxDelegate->drawRects; }
+		case kCGContextDelegateDrawPath:			{ return (CGFunctionPtr*)&ctxDelegate->drawPath; }
+		case kCGContextDelegateDrawImage:			{ return (CGFunctionPtr*)&ctxDelegate->drawImage; }
+		case kCGContextDelegateDrawGlyphs:			{ return (CGFunctionPtr*)&ctxDelegate->drawGlyphs; }
+		case kCGContextDelegateDrawShading:			{ return (CGFunctionPtr*)&ctxDelegate->drawShading; }
+		case kCGContextDelegateDrawDisplayList:		{ return (CGFunctionPtr*)&ctxDelegate->drawDisplayList; }
+		case kCGContextDelegateDrawImages:			{ return (CGFunctionPtr*)&ctxDelegate->drawImages; }
+		case kCGContextDelegateBeginPage:			{ return (CGFunctionPtr*)&ctxDelegate->beginPage; }
+		case kCGContextDelegateEndPage:				{ return (CGFunctionPtr*)&ctxDelegate->endPage; }
+		case kCGContextDelegateOperation:			{ return (CGFunctionPtr*)&ctxDelegate->operation; }
+		case kCGContextDelegateDrawWindowContents:	{ return (CGFunctionPtr*)&ctxDelegate->drawWindowContents; }
+		case kCGContextDelegateDirtyWindowContents:	{ return (CGFunctionPtr*)&ctxDelegate->dirtyWindowContents; }
+		case kCGContextDelegateBeginLayer:			{ return (CGFunctionPtr*)&ctxDelegate->beginLayer; }
+		case kCGContextDelegateEndLayer:			{ return (CGFunctionPtr*)&ctxDelegate->endLayer; }
+		case kCGContextDelegateGetLayer:			{ return (CGFunctionPtr*)&ctxDelegate->getLayer; }
+		case kCGContextDelegateDrawLayer:			{ return (CGFunctionPtr*)&ctxDelegate->drawLayer; }
 		default:    {
 				CGPostError("%s: Unsupported delegate callback: %d.", callerName, (int)type);
 				abort();
