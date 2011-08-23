@@ -190,8 +190,8 @@ void* CGDataProviderGetBytePtr(CGDataProviderRef provider)
 {
 	void* data = NULL;
 
-	//TODO : finsih implementing, refactoring, completing....
-	if (!provider || !provider->getBytePointer)
+	// IMPLEMENT HERE
+	/*if (!provider || !provider->getBytePointer)
 		return NULL;
 	
 	if (provider->releaseBytePointer)
@@ -210,7 +210,7 @@ void* CGDataProviderGetBytePtr(CGDataProviderRef provider)
 	{
 		if (provider->getInfoBytePointer != NULL)
 			provider->getBytePointer(provider->info);
-	}
+	}*/
 
 	return data;
 }
