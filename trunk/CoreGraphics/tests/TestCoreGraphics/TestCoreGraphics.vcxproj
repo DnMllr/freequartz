@@ -59,7 +59,7 @@
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\..\CoreFoundation\include;..\..\..\CoreFoundation\dist\include;..\..\include;..\..\..\posix4win\include</AdditionalIncludeDirectories>
@@ -68,7 +68,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>..\..\..\dist\lib\CFLite.lib;..\..\..\dist\lib\CoreGraphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\dist\lib\CFLite.lib;..\..\..\dist\lib\CoreGraphics.lib;d2d1.lib;WindowsCodecs.lib;dwrite.lib;%(AdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,21 +89,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>..\..\..\dist\lib\CFLite.lib;..\..\..\dist\lib\CoreGraphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\dist\lib\CFLite.lib;..\..\..\dist\lib\CoreGraphics.lib;d2d1.lib;WindowsCodecs.lib;dwrite.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="TestCoreGraphics.cpp" />
+    <ClCompile Include="DemoApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DemoApp.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TestCoreGraphics.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="small.ico" />

@@ -513,19 +513,7 @@ CGColorSpaceRef create_color_space_with_path(CFStringRef path)
 			urlCopy = CFURLCreateCopyAppendingPathComponent(NULL, url, path, FALSE);
 			provider = CGDataProviderCreateWithURL(urlCopy);
 			
-			/*if (provider && urlCopy)
-			{
-				CFRelease(urlCopy);
-				CFRelease(paths);
-				colorSpace = CGColorSpaceCreateWithICCData();
-				CGDataProviderRelease(provider);
-			}
-			else
-			{
-				if (urlCopy)
-					CFRelease(urlCopy);
-
-			}*/
+			//IMPLEMENT HERE
 		}
 
 		//CFRelease(paths);
@@ -658,7 +646,7 @@ CGColorSpaceRef CGColorSpaceCreate(CGColorSpaceType type, size_t numberOfCompone
 		csState->components = (float *)malloc(numberOfComponents * sizeof(float));
 		for (size_t i; i < numberOfComponents; i++)
 		{
-
+			//IMPLEMENT HERE
 		}
 	}
 	else

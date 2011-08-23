@@ -98,7 +98,7 @@ bool CGPathEqualToPath(CGPathRef path1, CGPathRef path2)
 {
 	if (path1 == path2)
 		return TRUE;
-	// TODO
+	//IMPLEMENT HERE
 
 	return FALSE;
 }
@@ -121,6 +121,8 @@ PathChunksRef add_chunk(CGMutablePathRef path )
 
 void CGPathMoveToPoint(CGMutablePathRef path, const CGAffineTransform *m, CGFloat x, CGFloat y)
 {
+	//IMPLEMENT HERE
+
 	/****************************************************************************************
 	* CAPPUCCINO 
 	****************************************************************************************
@@ -199,13 +201,14 @@ void CGPathAddCurveToPoint(CGMutablePathRef path,
 						   CGFloat cp2x, CGFloat cp2y, CGFloat x, CGFloat y)
 {
 	if (!path) { return; }
+	//IMPLEMENT HERE
 }
 
 void CGPathCloseSubpath(CGMutablePathRef path)
 {
 	if (!path) { return; }
 
-
+	//IMPLEMENT HERE
 	path->bIsEmpty = FALSE;
 
 }
@@ -258,7 +261,7 @@ void CGPathAddLines(CGMutablePathRef path, const CGAffineTransform *m, const CGP
 void CGPathAddEllipseInRect(CGMutablePathRef path, const CGAffineTransform *m, CGRect rect)
 {
 	if (!path) { return; }
-
+	//IMPLEMENT HERE
 	
 }
 
@@ -266,7 +269,7 @@ void CGPathAddArc(CGMutablePathRef path, const CGAffineTransform *m,
 				  CGFloat x, CGFloat y, CGFloat radius, CGFloat startAngle, 
 				  CGFloat endAngle, bool clockwise)
 {
-
+	//IMPLEMENT HERE
 }
 
 
@@ -275,7 +278,7 @@ void CGPathAddArcToPoint(CGMutablePathRef path,const CGAffineTransform *m,
 						 CGFloat x1, CGFloat y1, CGFloat x2, CGFloat y2,
 						 CGFloat radius)
 {
-
+	//IMPLEMENT HERE
 }
 
 
@@ -347,6 +350,7 @@ bool CGPathIsEmpty(CGPathRef path)
 
 bool CGPathIsRect(CGPathRef path, CGRect *rect)
 {
+	//IMPLEMENT HERE
 	return FALSE;
 }
 
@@ -375,6 +379,7 @@ CGRect CGPathGetBoundingBox(CGPathRef path)
 bool CGPathContainsPoint(CGPathRef path, const CGAffineTransform *m, 
 						 CGPoint point, bool eoFill)
 {
+	//IMPLEMENT HERE
 	return FALSE;
 }
 

@@ -90,7 +90,7 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 
 int CGBlt_depth(const char *encoding)
 {
-	return 0;
+	return 16;
 }
 
 bool D2DLayerInitialize()
@@ -117,7 +117,7 @@ d2d_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 
 	//if (bitmapContextInfo->bitmapInfo & kCGBitmapByteOrderMask)
 
-	return ((uint32_t)-1);
+	return ((uint32_t)0);
 }
 
 RIPRef 
@@ -128,10 +128,12 @@ d2d_Initialize(RIPRef arip)
 	rip = RIPGlobalState();
 
 	rip->ctxDelegate = CGContextDelegateCreate(NULL/*FIXME*/);
-	if (rip->ctxDelegate == NULL) {
+	if (rip->ctxDelegate == NULL) 
+	{
 
 	}
-	else {
+	else 
+	{
 		CGContextDelegateSetCallbacks(rip->ctxDelegate, _CGRD2DCallbacks, sizeof(_CGRD2DCallbacks)/sizeof(_CGRD2DCallbacks[0]));
 	}
 
