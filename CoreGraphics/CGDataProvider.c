@@ -518,3 +518,51 @@ CGDataProviderRef CGDataProviderCreateWithFilename(const char *filename)
 
 	return provider;
 }
+
+CGAccessSessionRef	CGAccessSessionCreate(CGDataProviderRef provider)
+{
+	CGAccessSessionRef session;
+
+	if (provider) 
+	{
+		pthread_mutex_lock(&(provider->mutex));
+		provider->session = provider;
+		if (provider->releaseBytePointer)
+		{
+			//IMPLEMENT HERE
+		}
+
+		session = CGAccessSessionRewind(provider);
+	}
+	else
+	{
+		session = NULL;
+	}
+
+	return session;
+}
+
+
+CGAccessSessionRef	CGAccessSessionRewind(CGDataProviderRef provider)
+{
+	//IMPLEMENT HERE
+	return NULL;
+}
+
+void *	CGAccessSessionGetBytePointer(CGAccessSessionRef session)
+{
+	//IMPLEMENT HERE
+	return NULL;
+}
+
+size_t	CGAccessSessionGetBytes(CGAccessSessionRef session,void *buffer,size_t bytes)
+{
+	//IMPLEMENT HERE
+	return 0;
+}
+
+void CGAccessSessionRelease(CGAccessSessionRef session)
+{
+	//IMPLEMENT HERE
+	return;
+}

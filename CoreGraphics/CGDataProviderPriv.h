@@ -57,15 +57,32 @@ struct CGDataProvider {
 	pthread_mutex_t mutex;											//0x40
 	size_t byte_ptr_count;											//0x6C
 	const void* data;												//0x70;
-	
+	CGDataProviderRef session;										//0x74
 };
 typedef struct CGDataProvider CGDataProvider, *CGDataProviderRef;
 
 
+struct CGAccessSession {
+
+
+};
+typedef struct CGAccessSession CGAccessSession, *CGAccessSessionRef;
+
+
+
+
 void				CGDataProviderDestroy(CFTypeRef ctf);
 CGDataProviderRef	CGDataProviderCreateWithCopyOfData(void *data, size_t size);
-CGDataProviderRef	create_provider(void *info, Boolean bThreadSafe);
 
+/* AccessSession */
+CGAccessSessionRef	CGAccessSessionCreate(CGDataProviderRef provider);
+CGAccessSessionRef	CGAccessSessionRewind(CGDataProviderRef provider);
+void *				CGAccessSessionGetBytePointer(CGAccessSessionRef session);
+size_t				CGAccessSessionGetBytes(CGAccessSessionRef session,void *buffer,size_t bytes);
+void				CGAccessSessionRelease(CGAccessSessionRef session);
+
+
+CGDataProviderRef	create_provider(void *info, Boolean bThreadSafe);
 static void			dataReleaseInfo(void *info);
 static const void*	dataGetBytePointer(void *info);
 static void			release_info(void *info);
