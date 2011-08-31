@@ -164,6 +164,31 @@ CGDefaultsGetBoolean(const char* propName, Boolean* boolean)
 	return getBooleanProperty(propName, copyDefaultValue, boolean);
 }
 
+Boolean
+CGCFDictionaryGetBoolean(CFDictionaryRef theDict, CFStringRef key, Boolean* boolean)
+{
+	Boolean ret;
+	CFTypeRef type;
+
+	if (!theDict || !key)
+		return FALSE;
+
+	type = (CFTypeRef)CFDictionaryGetValue(theDict, (const void*)key);
+	if (type && CFGetTypeID(type) == CFBooleanGetTypeID())
+	{
+		ret = TRUE;
+		if (boolean)
+		{
+			*boolean = CFBooleanGetValue((CFBooleanRef)type) != 0;
+		}
+	}
+	else
+	{
+		ret = FALSE;
+	}
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 //Integer 
 //////////////////////////////////////////////////////////////////////////

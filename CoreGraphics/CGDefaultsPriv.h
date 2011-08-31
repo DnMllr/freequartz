@@ -35,13 +35,14 @@ CG_EXTERN const CFStringRef CGAllowDebuggingDefaults;
 
 CFStringRef CGCFStringCreate(const char* cStr);
 
-
-
 void loadAllowDebuggingDefaults(void);
 
 CFTypeRef copyDefaultValue(const char* propName);
 
 Boolean CGDefaultsGetBoolean(const char* propName, Boolean* boolean);
+
+Boolean CGCFDictionaryGetBoolean(CFDictionaryRef theDict, CFStringRef key, Boolean* boolean);
+
 
 Boolean getBool(CFTypeRef preference, Boolean* boolean);
 

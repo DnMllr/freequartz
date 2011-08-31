@@ -144,6 +144,10 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\CGDirectDisplay.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\..\CGDisplayList.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
@@ -225,6 +229,7 @@
     <ClInclude Include="..\..\CGDashPriv.h" />
     <ClInclude Include="..\..\CGDataProviderPriv.h" />
     <ClInclude Include="..\..\CGDefaultsPriv.h" />
+    <ClInclude Include="..\..\CGDirectDisplayPriv.h" />
     <ClInclude Include="..\..\CGDisplayListPriv.h" />
     <ClInclude Include="..\..\CGErrorPriv.h" />
     <ClInclude Include="..\..\CGFontPriv.h" />
