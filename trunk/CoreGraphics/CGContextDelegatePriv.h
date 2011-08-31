@@ -157,6 +157,18 @@ struct CGContextDelegate {
 typedef struct CGContextDelegate CGContextDelegate, *CGContextDelegateRef;
 
 
+// Move inside CGWindowPriv.h
+typedef struct _CGWindowContextInfo {
+    
+	//CGSConnection cid;
+	//CGSWindow wid;
+
+} CGWindowContextInfo, *CGWindowContextInfoRef;
+
+typedef CGContextDelegateRef  (*_CGWindowContextDelegateCreate)(
+	CGWindowContextInfoRef bitmapContextInfo, 
+	CFDictionaryRef theDict);
+
 
 
 

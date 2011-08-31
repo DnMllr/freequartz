@@ -102,6 +102,9 @@
     <ClCompile Include="..\..\CGZone.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CGDirectDisplay.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CGBasePriv.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CoreGraphics.h">
       <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGDirectDisplayPriv.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

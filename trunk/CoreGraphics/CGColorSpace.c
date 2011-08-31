@@ -157,11 +157,13 @@ void device_rgb_get_md5(unsigned char* md5)
 
 CGFloat* device_get_default_color_components(CGColorSpaceRef cs)
 {
+	// IMPLEMENT HERE
 	return NULL;
 }
 
 CGColorSpaceRef device_create_resolved(CGColorSpaceRef cs)
 {
+	// IMPLEMENT HERE
 	return NULL;
 }
 
@@ -271,6 +273,7 @@ CFIndex CGColorSpaceGetIndexForName(CFStringRef name)
 
 bool cs_equal(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
 {
+	// IMPLEMENT HERE
 	return FALSE;
 }
 
@@ -285,6 +288,7 @@ bool CGColorSpaceEqualToColorSpace(CGColorSpaceRef cs1, CGColorSpaceRef cs2)
 
 bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef state2)
 {
+	// IMPLEMENT HERE
 	return false;
 }
 
