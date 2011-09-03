@@ -12,10 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <CoreGraphics/CGColor.h>
 
-#include "CGBasePriv.h"
-#include "CGColorTransformPriv.h"
+#include <CoreGraphics/CoreGraphicsPrivate.h>
+#include <pthread.h>
+
+
+static pthread_mutex_t cacheMutex	= PTHREAD_MUTEX_INITIALIZER;
+static CFArrayRef baseCache	= NULL;
 
 
 /* CoreFoundation runtime class for CGPath.  */
@@ -63,7 +66,52 @@ int CGColorTransformGetIdentifier(CGColorTransformRef colorTransform)
 }
 
 
-CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef, CFDictionaryRef theDict)
+CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRef theDict)
 {
-	return NULL;
+	CGColorTransformRef colorTransform;
+	size_t numComponents;
+	CGColorSpaceType spaceType;
+	CFIndex extraBytes;
+	CGColorSpaceRef space2;
+
+	if (!space || !CGColorSpaceSupportsOutput(space))
+		return NULL;
+
+	numComponents = CGColorSpaceGetNumberOfComponents(space);
+	extraBytes = (numComponents <= 4) ? 328 : 16; // 0x148 : 0x10
+	
+	colorTransform = (CGColorTransformRef)_CFRuntimeCreateInstance(NULL, CGColorTransformGetTypeID(), extraBytes, NULL);
+
+	spaceType = CGColorSpaceGetType(space);
+	switch(spaceType)
+	{
+	case kCGColorSpaceTypeDeviceGray:
+		space2 = CGColorSpaceCreateDisplayGray();
+		break;
+	case kCGColorSpaceTypeDeviceRGB:
+		space2 = CGColorSpaceCreateDisplayRGB();
+		break;
+	case kCGColorSpaceTypeDeviceCMYK:
+		space2 = CGColorSpaceCreateSystemDefaultCMYK();
+		break;
+	}
+
+	if (space2)
+	{
+		pthread_mutex_lock(&cacheMutex);
+		if (baseCache)
+		{
+			for (int i=0; i < CFArrayGetCount(baseCache); i++)
+			{
+				CGColorSpaceGetMD5Digest(space2);
+			}
+		}
+	}
+	else
+	{
+		CFRelease(colorTransform);
+		colorTransform = NULL;
+	}
+
+	return colorTransform;
 }

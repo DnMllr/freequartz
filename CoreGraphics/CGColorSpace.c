@@ -293,6 +293,25 @@ bool color_space_state_equal(CGColorSpaceStateRef state1, CGColorSpaceStateRef s
 }
 
 
+unsigned char* CGColorSpaceGetMD5Digest(CGColorSpaceRef space)
+{
+	unsigned char* digest;
+
+	if (!space || !space->state)
+		return NULL;
+
+	if (space->state->md5)
+	{
+		digest = space->state->md5;
+	}
+	else
+	{
+		space->state->md5 = (unsigned char*) malloc(0x16);
+		space->state->callbacks->getMD5(space->state->md5);
+	}
+
+	return digest;
+}
 
 CGColorSpaceType CGColorSpaceGetType(CGColorSpaceRef space)
 {
@@ -712,7 +731,7 @@ void color_space_state_dealloc(CGColorSpaceStateRef csState)
 		
 		CGColorRelease(csState->color1C);
 		free(csState->field20);
-		free(csState->field24);
+		free(csState->md5);
 	}
 
 }
@@ -730,6 +749,13 @@ CGColorSpaceRef CGColorSpaceRetain(CGColorSpaceRef space)
 	CFRetain((CFTypeRef) space);
 
 	return space;
+}
+
+bool CGColorSpaceSupportsOutput(CGColorSpaceRef space)
+{
+	if (!space) { return 0; }
+
+	return space->state->supportsOuput;
 }
 
 CGColorSpaceModel CGColorSpaceGetModel(CGColorSpaceRef space)
