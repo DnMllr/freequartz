@@ -19,16 +19,16 @@
 #include "CGLibraryPriv.h"
 
 static pthread_once_t	bitmap_delegate_once = PTHREAD_ONCE_INIT;
-static _CGBitmapContextDelegateCreate CGBitmapContextDelegateCreate = NULL;
+static CGBitmapContextDelegateCreateCallback CGBitmapContextDelegateCreate = NULL;
 
 
 void 
 loadBitmapContextDelegateCreator(void)
 {
-	_CGBitmapContextDelegateCreate bitmapContextDelegate;
+	CGBitmapContextDelegateCreateCallback bitmapContextDelegate;
 
 	bitmapContextDelegate =  
-		(_CGBitmapContextDelegateCreate)(void *)CGLibraryLoadFunction("CGRD2D", "__CGBitmapContextDelegateCreate");
+		(CGBitmapContextDelegateCreateCallback)(void *)CGLibraryLoadFunction("CGRD2D", "__CGBitmapContextDelegateCreate");
 	
 	if (bitmapContextDelegate) {
 		CGBitmapContextDelegateCreate = bitmapContextDelegate;

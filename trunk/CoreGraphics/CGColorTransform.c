@@ -61,3 +61,9 @@ int CGColorTransformGetIdentifier(CGColorTransformRef colorTransform)
 	if (!colorTransform) { return 0; }
 	return colorTransform->identifier;
 }
+
+
+CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef, CFDictionaryRef theDict)
+{
+	return NULL;
+}

@@ -44,7 +44,8 @@ DemoApp::DemoApp() :
     m_pDirect2dFactory(NULL),
     m_pRenderTarget(NULL),
     m_pLightSlateGrayBrush(NULL),
-    m_pCornflowerBlueBrush(NULL)
+    m_pCornflowerBlueBrush(NULL),
+	m_context(NULL)
 {
 }
 
@@ -112,8 +113,12 @@ HRESULT DemoApp::Initialize()
         hr = m_hwnd ? S_OK : E_FAIL;
         if (SUCCEEDED(hr))
         {
-            ShowWindow(m_hwnd, SW_SHOWNORMAL);
-            UpdateWindow(m_hwnd);
+			m_context =  CGWindowContextCreate(0, (CGSConnectionID)m_hwnd, NULL);
+			if (m_context)
+			{
+				ShowWindow(m_hwnd, SW_SHOWNORMAL);
+				UpdateWindow(m_hwnd);
+			}
         }
     }
 

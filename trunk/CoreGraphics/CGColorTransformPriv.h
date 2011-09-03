@@ -18,6 +18,7 @@
 #include <CoreFoundation/CFRuntime.h>
 #include <CoreGraphics/CGColorSpace.h>
 #include <CoreGraphics/CGPattern.h>
+#include <CoreGraphics/CGColorTransform.h>
 
 #include "CGMacros.h"
 
