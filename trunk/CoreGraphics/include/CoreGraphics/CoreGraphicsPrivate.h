@@ -15,7 +15,7 @@
 #ifndef COREGRAPHICSPRIVATE_H_
 #define COREGRAPHICSPRIVATE_H_
 
-
+#include "../../CGBasePriv.h"
 #include "../../CGErrorPriv.h"
 #include "../../CGContextPriv.h"
 #include "../../CGContextDelegatePriv.h"
@@ -23,6 +23,9 @@
 #include "../../CGLibraryPriv.h"
 #include "../../CGWindowContextPriv.h"
 #include "../../CGDirectDisplayPriv.h"
+#include "../../CGColorSpacePriv.h"
+#include "../../CGColorTransformPriv.h"
+
 
 //#include <CoreGraphics/CGBltPriv.h>
 //#include <CoreGraphics/CGColorPriv.h>

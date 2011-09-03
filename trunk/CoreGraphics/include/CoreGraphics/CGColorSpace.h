@@ -102,4 +102,6 @@ CG_EXTERN void CGColorSpaceGetColorTable(CGColorSpaceRef space, uint8_t *table);
 
 CG_EXTERN CFDataRef CGColorSpaceCopyICCProfile(CGColorSpaceRef space);
 
+
+
 #endif	/* CGCOLORSPACE_H_ */
