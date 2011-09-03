@@ -208,19 +208,9 @@ ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 	return ((uint32_t)-1);
 }
 
-RIPRef 
-ripc_Initialize(RIPRef rip)
+RIPContextRef 
+ripc_Initialize()
 {
-	CGContextDelegateRef ctxDelegate;
-
-	rip->ctxDelegate = CGContextDelegateCreate(NULL/*FIXME*/);
-	if (rip->ctxDelegate == NULL) {
-
-	}
-	else {
-		//CGContextDelegateSetCallbacks(ctxDelegate, _kCGCallbacks2, sizeof(_kCGCallbacks2)/sizeof(_kCGCallbacks2[0])
-	}
-
 	return NULL;
 }
 
@@ -300,13 +290,60 @@ uint32_t ripc_Timeshift(RIPGlobal + 0x1C)
 
 
 CGContextDelegateRef 
+_CGWindowContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+								CFDictionaryRef theDict)
+{
+	RIPContextRef ripc; 
+	RIPDeviceRef ripd;
+	CGColorSpaceRef colorSpace;
+
+	ripc = ripc_Initialize();
+	if ( !ripc )
+	{
+		CGPostError("Failed to create window context delegate");
+		goto Exit;
+	}
+	ripd = RIPDeviceCreate(bitmapContextInfo->refcount, bitmapContextInfo->width, bitmapContextInfo->height, 0, 0);
+	ripc->ripd = ripd;
+	if (!ripd )
+	{
+		CGPostError("Failed to create window context device");
+		goto Release_Exit;
+	}
+	//
+	// TODO RIPDeviceGetResolution(ripd)
+	//   
+	colorSpace = RIPDeviceGetColorSpace(ripc->ripd);
+	if ( !colorSpace )
+	{
+		CGPostError("Failed to create window context color space");
+		goto Release_Exit;
+	}
+
+	ripc->colorTransform = CGColorTransformCreate(colorSpace, theDict);
+	if (!ripc->colorTransform )
+	{
+		CGPostError("Failed to create window context color transform");
+		goto Release_Exit;
+	}
+
+Release_Exit:
+	CGContextDelegateRelease(ripc->ctxDelegate);
+	ripc->ctxDelegate = NULL;
+
+Exit:
+	return ripc->ctxDelegate;
+}
+
+
+CGContextDelegateRef 
 __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 								CFDictionaryRef theDict)
 {
 	CGContextDelegateRef ctxDelegate = NULL;
 	uint32_t format, depth;
 	size_t numOfComponents;
-	RIPRef ripc;
+	RIPContextRef ripc;
 
 	format = ripc_InitializeFormat(bitmapContextInfo);
 	depth = RIPLayerDepthForFormat(format);
@@ -338,6 +375,10 @@ __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo,
 	return ctxDelegate;
 }
 
+RIPDeviceRef RIPDeviceCreate(int count, size_t width, size_t height, void* a4, void* a5)
+{
+	return NULL;
+}
 
 CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
 					   CGRenderingStateRef rendering,
@@ -347,6 +388,13 @@ CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate,
 {
 	return kCGErrorNotImplemented;
 }
+
+CGColorSpaceRef RIPDeviceGetColorSpace(RIPDeviceRef ripd)
+{
+	return NULL;
+}
+
+
 
 
 CGError ripc_Operation(CGContextDelegateRef ctxDelegate,

@@ -245,15 +245,19 @@
     <ClInclude Include="..\..\CGSoftMaskPriv.h" />
     <ClInclude Include="..\..\CGStylePriv.h" />
     <ClInclude Include="..\..\CGTypesPriv.h" />
+    <ClInclude Include="..\..\CGWindowContextPriv.h" />
     <ClInclude Include="..\..\CGZonePriv.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGAffineTransform.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGBase.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGBitmapContext.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGColor.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGColorSpace.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CGColorTransform.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGContext.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CGDashPriv.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGDataConsumer.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGDataProvider.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CGDirectDisplay.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGError.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGFont.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGFunction.h" />
@@ -261,6 +265,7 @@
     <ClInclude Include="..\..\include\CoreGraphics\CGGradient.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGImage.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGLayer.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CGMacros.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGPath.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGPattern.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGPDFArray.h" />
@@ -275,7 +280,9 @@
     <ClInclude Include="..\..\include\CoreGraphics\CGPDFStream.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGPDFString.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CGShading.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CGWindowContextPriv.h" />
     <ClInclude Include="..\..\include\CoreGraphics\CoreGraphics.h" />
+    <ClInclude Include="..\..\include\CoreGraphics\CoreGraphicsPrivate.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\CoreFoundation\windows\CFLiteLib.vcxproj">

@@ -20,7 +20,7 @@
 
 CG_EXTERN_C_BEGIN
 
-typedef CGContextDelegateRef  (*_CGBitmapContextDelegateCreate)(
+typedef CGContextDelegateRef  (*CGBitmapContextDelegateCreateCallback)(
 	CGBitmapContextInfoRef bitmapContextInfo, 
 	CFDictionaryRef theDict);
 

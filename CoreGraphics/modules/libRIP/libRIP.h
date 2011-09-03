@@ -44,20 +44,42 @@
 #endif
 #endif /* __cplusplus */
 
-typedef struct RIP {
 
-	CGContextDelegateRef ctxDelegate;
 
-} *RIPRef;
+typedef struct RIPDevice {
+
+
+
+} RIPDevice, *RIPDeviceRef;
+
+
+
+typedef struct RIPContext {
+
+	CGContextDelegateRef ctxDelegate;	//+8
+	CGColorTransformRef colorTransform;	//+20
+	RIPDeviceRef ripd;					//+36
+
+} RIPContext, *RIPContextRef;
+
+
+
+
+RIP_EXTERN RIPDeviceRef RIPDeviceCreate(int count, size_t width, size_t height, void* a4, void* a5);
+
+RIP_EXTERN CGColorSpaceRef RIPDeviceGetColorSpace(RIPDeviceRef ripd);
 
 RIP_EXTERN int RIPLayerDepthForFormat(int index);
 
-RIP_EXTERN CGContextDelegateRef __CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+RIP_EXTERN CGContextDelegateRef _CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
+															   CFDictionaryRef theDict);
+
+RIP_EXTERN CGContextDelegateRef _CGWindowContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
 															   CFDictionaryRef theDict);
 
 RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo);
 
-RIP_EXTERN RIPRef ripc_Initialize(RIPRef rip);
+RIP_EXTERN RIPContextRef ripc_Initialize();
 
 RIP_EXTERN int CGBlt_depth(const char *encoding);
 

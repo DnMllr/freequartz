@@ -13,16 +13,15 @@
  * limitations under the License.
  */
 
-#include <CoreGraphics/CGContext.h>
-#include <CoreGraphics/CGBitmapContext.h>
-#include <CoreGraphics/CGDirectDisplay.h>
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreGraphics/CoreGraphicsPrivate.h>
 
-#include "CGBasePriv.h"
-#include "CGDefaultsPriv.h"
-#include "CGErrorPriv.h"
-#include "CGContextPriv.h"
-#include "CGDirectDisplayPriv.h"
-#include "CGLibraryPriv.h"
+//#include <CoreGraphics/CGContext.h>
+//#include <CoreGraphics/CGBitmapContext.h>
+//#include <CoreGraphics/CGDirectDisplay.h>
+//#include "CGWindowContextPriv.h"
+
+
 
 CGSConnection _CGSDefaultConnection()
 {

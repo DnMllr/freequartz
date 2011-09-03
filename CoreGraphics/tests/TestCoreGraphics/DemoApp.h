@@ -39,6 +39,11 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreGraphics/CoreGraphics.h>
+#include <CoreGraphics/CoreGraphicsPrivate.h>
+
+
 /******************************************************************
 *                                                                 *
 *  Macros                                                         *
@@ -90,6 +95,9 @@ public:
     void RunMessageLoop();
 
 private:
+
+	
+
     // Initialize device-independent resources.
     HRESULT CreateDeviceIndependentResources();
 
@@ -117,6 +125,7 @@ private:
         );
 private:
     HWND m_hwnd;
+	CGContextRef m_context;
     ID2D1Factory* m_pDirect2dFactory;
     ID2D1HwndRenderTarget* m_pRenderTarget;
     ID2D1SolidColorBrush* m_pLightSlateGrayBrush;

@@ -12,25 +12,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef CGDIRECTDISPLAYPRIV_H_
-#define CGDIRECTDISPLAYPRIV_H_
+#ifndef CGCOLORTRANSFORM_H_
+#define CGCOLORTRANSFORM_H_
 
 #include <CoreFoundation/CFRuntime.h>
-#include <CoreGraphics/CGDirectDisplay.h>
+#include <CoreGraphics/CGColorTransform.h>
 
 #include "CGMacros.h"
 
+typedef struct CGColorTransform *CGColorTransformRef;
+
+CG_EXTERN CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef, CFDictionaryRef theDict);
 
 
 
-typedef int     CGSConnection;
-typedef int     CGSWindow;
-typedef int		CGSWorkspace;
-typedef int     CGSValue;
-
-CG_EXTERN CGContextRef CGDisplayGetDrawingContext (CGDirectDisplayID display);
-
-CG_EXTERN CGContextRef CGWindowContextCreate(CGSConnection cid, CGSWindow wid, CFDictionaryRef theDict);
+#endif /* CGCOLORTRANSFORM_H_ */
 
 
-#endif	/* CGDIRECTDISPLAY_H_ */

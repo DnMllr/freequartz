@@ -107,6 +107,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\CGMacros.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\CGBasePriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -143,6 +146,9 @@
     <ClInclude Include="..\..\CGDefaultsPriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\CGDirectDisplayPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\CGDisplayListPriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -167,9 +173,6 @@
     <ClInclude Include="..\..\CGLibraryPriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CGMacros.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\CGNotificationCenterPriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -186,6 +189,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CGTypesPriv.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CGWindowContextPriv.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CGZonePriv.h">
@@ -206,13 +212,22 @@
     <ClInclude Include="..\..\include\CoreGraphics\CGColorSpace.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGColorTransform.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGContext.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGDashPriv.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGDataConsumer.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGDataProvider.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGDirectDisplay.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGError.h">
@@ -234,6 +249,9 @@
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGLayer.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGMacros.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CGPath.h">
@@ -278,11 +296,14 @@
     <ClInclude Include="..\..\include\CoreGraphics\CGShading.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\CoreGraphics\CGWindowContextPriv.h">
+      <Filter>Header Files\CoreGraphics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\CoreGraphics\CoreGraphics.h">
       <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CGDirectDisplayPriv.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\include\CoreGraphics\CoreGraphicsPrivate.h">
+      <Filter>Header Files\CoreGraphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
