@@ -73,6 +73,7 @@ CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRe
 	CGColorSpaceType spaceType;
 	CFIndex extraBytes;
 	CGColorSpaceRef space2;
+	unsigned char* md5;
 
 	if (!space || !CGColorSpaceSupportsOutput(space))
 		return NULL;
@@ -103,7 +104,7 @@ CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRe
 		{
 			for (int i=0; i < CFArrayGetCount(baseCache); i++)
 			{
-				CGColorSpaceGetMD5Digest(space2);
+				md5 = CGColorSpaceGetMD5Digest(space2);
 			}
 		}
 	}

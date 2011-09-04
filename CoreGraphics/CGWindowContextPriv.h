@@ -41,7 +41,7 @@ typedef struct CGWindowContextInfo {
 
 } CGWindowContextInfo, *CGWindowContextInfoRef;
 
-typedef CGContextDelegateRef  (*_CGWindowContextDelegateCreate)(
+typedef CGContextDelegateRef  (*CGWindowContextDelegateCreateCallback)(
 	CGWindowContextInfoRef windowContextInfo, 
 	CFDictionaryRef theDict);
 

@@ -25,6 +25,7 @@
 #include "../../CGDirectDisplayPriv.h"
 #include "../../CGColorSpacePriv.h"
 #include "../../CGColorTransformPriv.h"
+#include "../../CGBitmapContextPriv.h"
 
 
 //#include <CoreGraphics/CGBltPriv.h>

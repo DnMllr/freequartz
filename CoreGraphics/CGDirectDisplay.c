@@ -44,7 +44,7 @@ CGContextRef CGWindowContextCreate(CGSConnection cid, CGSWindow wid, CFDictionar
 	CGContextRef context;
 	CGContextDelegateRef ctxDelegate;
 	CGWindowContextInfoRef window_info;
-	_CGWindowContextDelegateCreate CGWindowContextDelegateCreate;
+	CGWindowContextDelegateCreateCallback CGWindowContextDelegateCreate;
 	void *filterInfo;
 	Boolean bValue;
 
@@ -70,7 +70,7 @@ CGContextRef CGWindowContextCreate(CGSConnection cid, CGSWindow wid, CFDictionar
 	else
 	{
 		CGWindowContextDelegateCreate = 
-			(_CGWindowContextDelegateCreate)CGLibraryLoadFunction("CGRD2D", "__CGWindowContextDelegateCreate");
+			(CGWindowContextDelegateCreateCallback)CGLibraryLoadFunction("CGRD2D", "_CGWindowContextDelegateCreate");
 	
 		if (!CGWindowContextDelegateCreate) {
 			CGPostError("Failed to load RIP CGWindowContext.");
