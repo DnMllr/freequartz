@@ -63,6 +63,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -83,6 +84,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>../../../../../posix4win/msvc/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -94,19 +96,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\libRIP.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\libRIP.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\build\msvc\CoreGraphics.vcxproj">
       <Project>{82c92e1c-b6b8-4c76-ab62-c4bb02c11652}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\RIP.c" />
+    <ClCompile Include="..\..\RIPContext.c" />
+    <ClCompile Include="..\..\RIPDevice.c" />
+    <ClCompile Include="..\..\RIPLayer.c" />
+    <ClCompile Include="..\..\RIPZone.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\RIP.h" />
+    <ClInclude Include="..\..\RIPBase.h" />
+    <ClInclude Include="..\..\RIPContext.h" />
+    <ClInclude Include="..\..\RIPDevice.h" />
+    <ClInclude Include="..\..\RIPLayer.h" />
+    <ClInclude Include="..\..\RIPZone.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

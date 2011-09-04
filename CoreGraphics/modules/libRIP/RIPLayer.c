@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 //#include <mach/mach_time.h>
-#include "libRIP.h"
+#include "RIPLayer.h"
+
 
 /*
 http://.../DOCUMENTATION/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_context/dq_context.html
@@ -96,29 +97,7 @@ CMYK	64 bpp,  16 bpc, kCGImageAlphaNone											10.5
 //CCCCCCCCMMMMMMMMYYYYYYYYKKKKKKKK
 //32 bits per pixel CMYK format without alpha
 
-#if 0
-CGCallback _RIPCallbacks[] =
-{
-	{	kCGContextDelegateFinalize,				ripc_Finalize			},
-	{	kCGContextDelegateGetColorTransform,	ripc_GetColorTransform	},
-	{	kCGContextDelegateGetBounds,			ripc_GetBounds			},		
-	{	kCGContextDelegateDrawLines,			ripc_DrawLines			},		
-	{	kCGContextDelegateDrawRects,			ripc_DrawRects			},		
-	{	kCGContextDelegateDrawPath,				ripc_DrawPath			},		
-	{	kCGContextDelegateDrawImage,			ripc_DrawImage			},		
-	{	kCGContextDelegateDrawImages,			ripc_DrawImages			},
-	{	kCGContextDelegateDrawGlyphs,			ripc_DrawGlyphs			},		
-	{	kCGContextDelegateDrawShading,			ripc_DrawShading		},
-	{	kCGContextDelegateOperation,			ripc_Operation			},
-	{	kCGContextDelegateDrawWindowContents,	ripc_DrawWindowContents	},
-	{	kCGContextDelegateDirtyWindowContents,	ripc_DirtyWindowContents},		
-	{	kCGContextDelegateBeginLayer,			ripc_BeginLayer			},		
-	{	kCGContextDelegateEndLayer,				ripc_EndLayer			},		
-	{	kCGContextDelegateGetLayer,				ripc_GetLayer			},		
-	{	kCGContextDelegateDrawLayer,			ripc_DrawLayer			},		
-															
-};
-#endif
+
 
 /*
 http://developer.apple.com/mac/library/qa/qa2001/qa1037.html
@@ -154,11 +133,6 @@ static const char* _ripl_encoding[] = {
 };
 
 
-int CGBlt_depth(const char *encoding)
-{
-	return 0;
-}
-
 bool RIPLayerInitialize()
 {
 	return TRUE;
@@ -193,223 +167,4 @@ int RIPLayerDepthForFormat(int index)
 		}
 	}*/
 	return depth;
-}
-
-
-uint32_t 
-ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
-{
-	size_t numOfComponents;
-
-	numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
-
-	//if (bitmapContextInfo->bitmapInfo & kCGBitmapByteOrderMask)
-
-	return ((uint32_t)-1);
-}
-
-RIPContextRef 
-ripc_Initialize()
-{
-	return NULL;
-}
-
-
-CGError
-ripc_DrawWindowContents()
-{
-	return kCGErrorFailure;
-}
-
-void *
-RIPZoneDataBarrier(void *memory)
-{
-	return memory;
-}
-
-bool
-RIPZoneDataSeed()
-{
-	return 0;
-}
-
-#if 0
-//http://crisscross.googlecode.com/svn/trunk/source/system.cpp
-static double             timeShift = 0.0;
-double GetHighResTime_MacOS()
-{
-	double retval;
-	uint64_t      elapsed = mach_absolute_time() - __m_start;
-	retval = double( elapsed ) * (__m_timebase.numer / __m_timebase.denom) / 1000000000.0;
-	return retval - timeShift;
-}
-
-uint32_t ripc_Timeshift(RIPGlobal + 0x1C)
-{
-	uint32_t result;
-	signed int v2; 
-	uint64_t v3; 
-	mach_timebase_info_data_t info;
-
-	if ( mach_timebase_info(&info) )
-		abort();
-
-	v3 = 10000000 * (uint64_t)info.denom / info.numer;
-	v2 = 31;
-	result = 0;
-	do
-	{
-		if ( (1 << v2) & v3 )
-		{
-			result = v2;
-			if ( 2 * (1 << v2) - v3 < (unsigned int)(v3 - (1 << v2)) )
-				result = v2 + 1;
-		}
-		--v2;
-	}
-	while ( v2 && !result );
-	if ( !result )
-		result = 1;
-	*(_DWORD *)(ctxDelegate + 28) = result;
-
-	return result;
-}
-#endif
-
-//CGRect
-//ripc_GetBounds(CGRect *bounds, CGContextDelegateRef ctxDelegate)
-//{
-//	CGContextDelegateInfoRef delegateInfo;
-//
-//	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
-//	if (delegateInfo->ctxDelegate->getBounds == NULL) {
-//		return CGRectNull;
-//	}
-//  return delegateInfo->ctxDelegate->getBounds(bounds);
-//}
-
-
-CGContextDelegateRef 
-_CGWindowContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-								CFDictionaryRef theDict)
-{
-	RIPContextRef ripc; 
-	RIPDeviceRef ripd;
-	CGColorSpaceRef colorSpace;
-
-	ripc = ripc_Initialize();
-	if ( !ripc )
-	{
-		CGPostError("Failed to create window context delegate");
-		goto Exit;
-	}
-	ripd = RIPDeviceCreate(bitmapContextInfo->refcount, bitmapContextInfo->width, bitmapContextInfo->height, 0, 0);
-	ripc->ripd = ripd;
-	if (!ripd )
-	{
-		CGPostError("Failed to create window context device");
-		goto Release_Exit;
-	}
-	//
-	// TODO RIPDeviceGetResolution(ripd)
-	//   
-	colorSpace = RIPDeviceGetColorSpace(ripc->ripd);
-	if ( !colorSpace )
-	{
-		CGPostError("Failed to create window context color space");
-		goto Release_Exit;
-	}
-
-	ripc->colorTransform = CGColorTransformCreate(colorSpace, theDict);
-	if (!ripc->colorTransform )
-	{
-		CGPostError("Failed to create window context color transform");
-		goto Release_Exit;
-	}
-
-Release_Exit:
-	CGContextDelegateRelease(ripc->ctxDelegate);
-	ripc->ctxDelegate = NULL;
-
-Exit:
-	return ripc->ctxDelegate;
-}
-
-
-CGContextDelegateRef 
-__CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-								CFDictionaryRef theDict)
-{
-	CGContextDelegateRef ctxDelegate = NULL;
-	uint32_t format, depth;
-	size_t numOfComponents;
-	RIPContextRef ripc;
-
-	format = ripc_InitializeFormat(bitmapContextInfo);
-	depth = RIPLayerDepthForFormat(format);
-	
-	if (format == -1 || depth == 0) {
-		numOfComponents = CGColorSpaceGetNumberOfComponents(bitmapContextInfo->colorspace);
-		CGPostError("Unsupported pixel description - %lu components, %lu bits-per-com",
-			numOfComponents, bitmapContextInfo->bitsPerComponent);
-		return NULL;
-	}
-
-#if 0
-	ripc = ripc_Initialize();
-	if (ripc == NULL) {
-		CGPostError("Failed to create bitmap context delegate");
-		return NULL;
-	}
-
-	if (bitmapContextInfo->data == NULL) {
-		
-		//RIPLayer(ripc);
-	}
-	else {
-
-	}
-#endif
-
-
-	return ctxDelegate;
-}
-
-RIPDeviceRef RIPDeviceCreate(int count, size_t width, size_t height, void* a4, void* a5)
-{
-	return NULL;
-}
-
-CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
-					   CGRenderingStateRef rendering,
-					   CGGStateRef state,
-					   CGRect rect,
-					   CGImage image)
-{
-	return kCGErrorNotImplemented;
-}
-
-CGColorSpaceRef RIPDeviceGetColorSpace(RIPDeviceRef ripd)
-{
-	return NULL;
-}
-
-
-
-
-CGError ripc_Operation(CGContextDelegateRef ctxDelegate,
-					   CGRenderingStateRef rendering,
-					   CGGStateRef state,
-					   CFStringRef op,
-					   void* tmp)
-
-{
-	CGContextDelegateInfoRef delegateInfo;
-
-	delegateInfo = CGContextDelegateGetInfo(ctxDelegate);
-	if ( tmp != NULL)
-		return kCGErrorNotImplemented;
-
-
-	return kCGErrorNotImplemented; 
 }
