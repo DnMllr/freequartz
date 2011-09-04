@@ -45,50 +45,15 @@
 #endif /* __cplusplus */
 
 
-
-typedef struct RIPDevice {
-
-
-
-} RIPDevice, *RIPDeviceRef;
+#include "RIPZone.h"
+#include "RIPDevice.h"
+#include "RIPContext.h"
+#include "RIPLayer.h"
 
 
-
-typedef struct RIPContext {
-
-	CGContextDelegateRef ctxDelegate;	//+8
-	CGColorTransformRef colorTransform;	//+20
-	RIPDeviceRef ripd;					//+36
-
-} RIPContext, *RIPContextRef;
-
-
-
-
-RIP_EXTERN RIPDeviceRef RIPDeviceCreate(int count, size_t width, size_t height, void* a4, void* a5);
-
-RIP_EXTERN CGColorSpaceRef RIPDeviceGetColorSpace(RIPDeviceRef ripd);
-
-RIP_EXTERN int RIPLayerDepthForFormat(int index);
-
-RIP_EXTERN CGContextDelegateRef _CGBitmapContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-															   CFDictionaryRef theDict);
-
-RIP_EXTERN CGContextDelegateRef _CGWindowContextDelegateCreate(CGBitmapContextInfoRef bitmapContextInfo, 
-															   CFDictionaryRef theDict);
-
-RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo);
-
-RIP_EXTERN RIPContextRef ripc_Initialize();
 
 RIP_EXTERN int CGBlt_depth(const char *encoding);
 
-RIP_EXTERN CGError ripc_DrawImage(CGContextDelegateRef ctxDelegate, 
-								  CGRenderingStateRef rendering,
-								  CGGStateRef state,
-								  CGRect rect,
-								  CGImage image);
 
-//RIP_EXTERN Boolean RIPLayerInitialize();
 
 #endif /* LIBRIP_H_ */
