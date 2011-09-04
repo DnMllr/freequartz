@@ -15,36 +15,7 @@
 #ifndef LIBRIP_H_
 #define LIBRIP_H_
 
-#include <CoreGraphics/CoreGraphics.h>
-#include "CGBitmapContextPriv.h"
-
-
-
-#ifdef __cplusplus
-
-#if defined(__WIN32__)
-#	if defined(RIP_EXPORT_DYNAMIC)
-#		define RIP_EXTERN extern "C" DLLEXPORT
-#	else
-#		define RIP_EXTERN extern "C" DLLIMPORT 
-#	endif
-#else
-#	define RIP_EXTERN extern "C"
-#endif
-
-#else
-#if defined(__WIN32__)
-#	if defined(RIP_EXPORT_DYNAMIC)
-#		define RIP_EXTERN extern DLLEXPORT
-#	else
-#		define RIP_EXTERN extern DLLIMPORT 
-#	endif
-#else
-	#define RIP_EXTERN extern
-#endif
-#endif /* __cplusplus */
-
-
+#include "RIPBase.h"
 #include "RIPZone.h"
 #include "RIPDevice.h"
 #include "RIPContext.h"
