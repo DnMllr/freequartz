@@ -12,29 +12,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef LIBRIP_H_
-#define LIBRIP_H_
+#ifndef RIPBASE_H_
+#define RIPBASE_H_
 
-#include "RIPBase.h"
-#include "RIPZone.h"
-#include "RIPDevice.h"
-#include "RIPContext.h"
-#include "RIPLayer.h"
+#include <CoreGraphics/CoreGraphicsPrivate.h>
 
 
-typedef struct RIPState {
+#ifdef __cplusplus
 
-	
+#if defined(__WIN32__)
+#	if defined(RIP_EXPORT_DYNAMIC)
+#		define RIP_EXTERN extern "C" DLLEXPORT
+#	else
+#		define RIP_EXTERN extern "C" DLLIMPORT 
+#	endif
+#else
+#	define RIP_EXTERN extern "C"
+#endif
 
-} RIPState, *RIPStateRef;
+#else
+#if defined(__WIN32__)
+#	if defined(RIP_EXPORT_DYNAMIC)
+#		define RIP_EXTERN extern DLLEXPORT
+#	else
+#		define RIP_EXTERN extern DLLIMPORT 
+#	endif
+#else
+	#define RIP_EXTERN extern
+#endif
+#endif /* __cplusplus */
 
 
 
-RIP_EXTERN RIPStateRef RIPGlobalState();
-
-
-RIP_EXTERN int CGBlt_depth(const char *encoding);
-
-
-
-#endif /* LIBRIP_H_ */
+#endif /* RIPBASE_H_ */

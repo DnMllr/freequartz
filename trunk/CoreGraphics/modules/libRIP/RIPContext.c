@@ -146,6 +146,7 @@ ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 RIPContextRef 
 ripc_Initialize()
 {
+	//CGContextDelegateSetCallbacks(*(_DWORD *)(v3 + 8), &callbacks_81802, 18);
 	return NULL;
 }
 

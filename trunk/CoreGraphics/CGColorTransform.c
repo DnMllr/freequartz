@@ -69,6 +69,7 @@ int CGColorTransformGetIdentifier(CGColorTransformRef colorTransform)
 CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRef theDict)
 {
 	CGColorTransformRef colorTransform;
+	CGColorTransformRef colTransformTmp;
 	size_t numComponents;
 	CGColorSpaceType spaceType;
 	CFIndex extraBytes;
@@ -82,6 +83,8 @@ CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRe
 	extraBytes = (numComponents <= 4) ? 328 : 16; // 0x148 : 0x10
 	
 	colorTransform = (CGColorTransformRef)_CFRuntimeCreateInstance(NULL, CGColorTransformGetTypeID(), extraBytes, NULL);
+	if (!colorTransform)
+		return NULL;
 
 	spaceType = CGColorSpaceGetType(space);
 	switch(spaceType)
@@ -102,9 +105,14 @@ CGColorTransformRef CGColorTransformCreate(CGColorSpaceRef space, CFDictionaryRe
 		pthread_mutex_lock(&cacheMutex);
 		if (baseCache)
 		{
+			md5 = CGColorSpaceGetMD5Digest(space2);
 			for (int i=0; i < CFArrayGetCount(baseCache); i++)
 			{
-				md5 = CGColorSpaceGetMD5Digest(space2);
+				/*colTransformTmp = (CGColorTransformRef) CFArrayGetValueAtIndex(baseCache, i);
+				 if (!memcmp((unsigned char *)CFArrayGetValueAtIndex(baseCache, i), md5, 16))
+				 {
+
+				 }*/
 			}
 		}
 	}
