@@ -6,6 +6,9 @@
 #include    <stdint.h>
 #include    <stdbool.h>
 
+#define OS_SPINLOCK_INIT 0
+
+
 __BEGIN_DECLS
 
 typedef int32_t OSSpinLock;

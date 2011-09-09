@@ -14,8 +14,10 @@
  */
 //#include <mach/mach_time.h>
 #include "RIP.h"
+#include <libkern/OSAtomic.h>
 
-
+static RIPStateRef	_ripc_globals = NULL;
+static OSSpinLock	_ripc_globals_lock = OS_SPINLOCK_INIT;
 
 #if 0
 CGCallback _RIPCallbacks[] =
@@ -43,6 +45,23 @@ CGCallback _RIPCallbacks[] =
 
 
 
+RIPStateRef RIPGlobalState()
+{
+	if (_ripc_globals == NULL)
+	{
+
+	}
+	else
+	{
+		OSSpinLockLock(&_ripc_globals_lock);
+		if (_ripc_globals_lock == 0)
+		{
+			CGSZoneGetMallocZone();
+		}
+	}
+
+	return _ripc_globals;
+}
 
 int CGBlt_depth(const char *encoding)
 {

@@ -17,6 +17,7 @@
 
 #include "../../CGBasePriv.h"
 #include "../../CGErrorPriv.h"
+#include "../../CGZonePriv.h"
 #include "../../CGContextPriv.h"
 #include "../../CGContextDelegatePriv.h"
 #include "../../CGDefaultsPriv.h"

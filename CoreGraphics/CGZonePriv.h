@@ -16,7 +16,49 @@
 #define CGZONERIV_H_
 
 
-CG_EXTERN void* CGSZoneCreate();
+//sizeof = 0x28
+typedef struct _CGZone {
+	
+	unsigned int version;													//0x00
+	void 	*(*malloc)		(void *zone, size_t size);						//0x04
+    void 	*(*calloc)		(void *zone, size_t num_items, size_t size);	//0x08
+    void 	*(*realloc)		(void *zone, void *ptr, size_t size);			//0x0C
+	void 	(*free)			(void *zone, void *ptr);						//0x10
+	void 	(*barrier)		(void *zone, void *ptr);						//0x14
+	void 	*(*allocate)	(void *zone, size_t size);						//0x18
+	void 	(*deallocate)	(void *zone, void *ptr);						//0x1C
+	void 	*(*purge)		(void *zone);									//0x20
+    void	(*RUF)			(void *zone);									//0x24
+
+} CGZone, *CGZoneRef;
+
+
+CG_EXTERN size_t CGSystemGetMemorySize();
+
+CG_PRIVATE_EXTERN void check_capabilities();
+
+CG_EXTERN CGZoneRef CGSZoneGetMallocZone();
+
+CG_EXTERN CGZoneRef CGSZoneCreate();
+
+CG_EXTERN void zone_create();
+
+CG_EXTERN void* zone_malloc(void* na, size_t size);
+
+CG_EXTERN void* zone_calloc(void* na, size_t num, size_t size);
+
+CG_EXTERN void* zone_realloc(void* na, void * ptr, size_t size);
+
+CG_EXTERN void zone_free(void* na, void * ptr);
+
+CG_EXTERN void zone_barrier(void* na, void * ptr);
+
+CG_EXTERN void* zone_allocate(void* na, size_t size);
+
+CG_EXTERN void zone_deallocate(void* na, void * ptr);
+
+CG_EXTERN void* zone_purge(void* na);
+
 
 
 
