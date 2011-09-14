@@ -116,6 +116,7 @@ extern CGCallback _kCGCallbacks[];
 struct CGContextDelegateInfo {
 
 	CGContextDelegateRef ctxDelegate;	//0x00
+										//0x24
 	Boolean allowDithering;				//0x35
 	Boolean shouldAntialias;			//0x36
 	Boolean allowAcceleration;			//0x37

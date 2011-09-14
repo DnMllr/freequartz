@@ -22,9 +22,10 @@
 #include "RIPLayer.h"
 
 
+//sizeof = 0x78
 typedef struct RIPState {
-
-	
+									//0x4C return of ripc_Timestamp
+	size_t memsize;					//0x58
 
 } RIPState, *RIPStateRef;
 

@@ -47,20 +47,30 @@ CGCallback _RIPCallbacks[] =
 
 RIPStateRef RIPGlobalState()
 {
+	RIPStateRef ripState;
+	CGZoneRef zone;
+
 	if (_ripc_globals == NULL)
 	{
+		OSSpinLockLock(&_ripc_globals_lock);
+		if (_ripc_globals)
+		{
+			OSSpinLockUnlock(&_ripc_globals_lock);
+			ripState = _ripc_globals;
+		}
+		else
+		{
+			zone = CGSZoneGetMallocZone(1);
+			ripState = (RIPStateRef)zone->calloc(zone, 1, 0x78);
 
+		}
 	}
 	else
 	{
-		OSSpinLockLock(&_ripc_globals_lock);
-		if (_ripc_globals_lock == 0)
-		{
-			CGSZoneGetMallocZone();
-		}
+		
 	}
 
-	return _ripc_globals;
+	return ripState;
 }
 
 int CGBlt_depth(const char *encoding)

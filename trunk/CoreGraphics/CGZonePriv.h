@@ -28,7 +28,7 @@ typedef struct _CGZone {
 	void 	*(*allocate)	(void *zone, size_t size);						//0x18
 	void 	(*deallocate)	(void *zone, void *ptr);						//0x1C
 	void 	*(*purge)		(void *zone);									//0x20
-    void	(*RUF)			(void *zone);									//0x24
+    void	(*reference)	(void *zone);									//0x24
 
 } CGZone, *CGZoneRef;
 
@@ -37,7 +37,7 @@ CG_EXTERN size_t CGSystemGetMemorySize();
 
 CG_PRIVATE_EXTERN void check_capabilities();
 
-CG_EXTERN CGZoneRef CGSZoneGetMallocZone();
+CG_EXTERN CGZoneRef CGSZoneGetMallocZone(int zoneID);
 
 CG_EXTERN CGZoneRef CGSZoneCreate();
 

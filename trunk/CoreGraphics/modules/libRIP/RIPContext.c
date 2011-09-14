@@ -143,6 +143,62 @@ ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo)
 	return ((uint32_t)-1);
 }
 
+
+
+bool ripc_GetRenderingState(CGContextDelegateInfoRef info, CGRenderingStateRef rendering, CGGStateRef state)
+{
+	return NULL;
+}
+
+CGError ripc_DrawPath(CGContextDelegateRef ctxDelegate, 
+					  CGRenderingStateRef rendering,
+					  CGGStateRef state,
+					  CGPathDrawingMode mode,
+					  CGMutablePathRef path)
+{
+	CGError error;
+	CGContextDelegateInfoRef info = CGContextDelegateGetInfo(ctxDelegate);
+	CGFloat flatness;
+	int tmp;
+
+	switch(mode)
+	{
+	case kCGTextFill:		{ tmp = 2; break; }
+	case kCGTextStroke:		{ tmp = 4; break; }
+	case kCGTextFillStroke: { tmp = 1; break; }
+	case kCGTextInvisible:	{ tmp = 3; break; }
+	case kCGTextFillClip:	{ tmp = 5; break; }
+	default:				{ error = kCGErrorFailure; break; }
+	}
+
+	if (ripc_GetRenderingState(info, rendering, state))
+	{
+		flatness = CGGStateGetFlatness(state);
+
+	}
+
+	return error;
+}
+
+
+CGError ripc_DrawLines(CGContextDelegateRef ctxDelegate, 
+					   CGRenderingStateRef rendering, 
+					   CGGStateRef state,
+					   const CGPoint points[],
+					   size_t count)
+{
+	CGError error;
+
+	return error;
+}
+
+void ripc_GetRenderStroke(CGGStateRef state)
+{
+
+}
+
+
+
 RIPContextRef 
 ripc_Initialize()
 {
@@ -156,6 +212,40 @@ ripc_DrawWindowContents()
 {
 	return kCGErrorFailure;
 }
+
+ //// get the timebase info -- different on phone and OSX
+ //   mach_timebase_info_data_t info;
+ //   mach_timebase_info(&info);
+
+ //   // get the time
+ //   uint64_t absTime = mach_absolute_time();
+
+ //   // apply the timebase info
+ //   absTime *= info.numer;
+ //   absTime /= info.denom;
+
+ //   // convert nanoseconds into seconds and return
+ //   return (NSTimeInterval) ((double) absTime / 1000000000.0);
+double ripc_Timestamp(RIPContextRef ripc)
+{
+	/*mach_timebase_info_data_t info;
+	uint64_t absTime;
+
+	if (ripc->info.denom == 0)
+	{
+		 if (mach_timebase_info(&info))
+			 abort();
+
+	}
+	absTime = mach_absolute_time();
+	absTime *= info.numer;
+	absTime /= info.denom;
+
+	 return (double) ((double) absTime / 1000000000.0);*/
+	return 0;
+}
+
+
 
 
 
