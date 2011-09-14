@@ -229,6 +229,7 @@ CG_EXTERN CGColorRef		CGGStateGetFillColor(CGGStateRef state);
 CG_EXTERN CGColorRef		CGGStateGetStrokeColor(CGGStateRef state);
 CG_EXTERN void				CGGStateSetAlpha(CGGStateRef state, CGFloat alpha);
 CG_EXTERN CGFloat			CGGStateGetLineWidth(CGGStateRef state);
+CG_EXTERN CGFloat			CGGStateGetFlatness(CGGStateRef state);
 
 /* setters */
 CG_EXTERN void				CGGStateSetCTM(CGGStateRef state, CGAffineTransform ctm);

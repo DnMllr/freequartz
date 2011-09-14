@@ -15,14 +15,16 @@
 #ifndef RIPCONTEXT_H_
 #define RIPCONTEXT_H_
 
+#include <mach/mach_time.h>
 #include "RIPBase.h"
 #include "RIPDevice.h"
 
 typedef struct RIPContext {
 
-	CGContextDelegateRef ctxDelegate;	//+8
-	CGColorTransformRef colorTransform;	//+20
-	RIPDeviceRef ripd;					//+36
+	CGContextDelegateRef ctxDelegate;		//+8
+	CGColorTransformRef colorTransform;		//+20
+	mach_timebase_info_data_t info;			//0x1C
+	RIPDeviceRef ripd;						//+36
 
 } RIPContext, *RIPContextRef;
 
@@ -34,6 +36,16 @@ RIP_EXTERN CGContextDelegateRef _CGWindowContextDelegateCreate(CGBitmapContextIn
 															   CFDictionaryRef theDict);
 
 RIP_EXTERN RIPContextRef ripc_Initialize();
+
+
+RIP_EXTERN CGError	ripc_DrawPath(CGContextDelegateRef ctxDelegate, CGRenderingStateRef rendering,
+								  CGGStateRef state, CGPathDrawingMode mode, CGMutablePathRef path);
+
+RIP_EXTERN CGError	ripc_DrawLines(CGContextDelegateRef ctxDelegate, CGRenderingStateRef rendering, 
+								  CGGStateRef state, const CGPoint points[], size_t count);
+
+RIP_EXTERN bool		ripc_GetRenderingState(CGContextDelegateInfoRef info, CGRenderingStateRef rendering, CGGStateRef state);
+
 
 RIP_EXTERN uint32_t ripc_InitializeFormat(CGBitmapContextInfoRef bitmapContextInfo);
 

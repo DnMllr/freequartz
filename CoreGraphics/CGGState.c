@@ -601,6 +601,13 @@ void CGGStateSetStrokeAdjust(CGGStateRef state, CGFloat strokeAdjust)
 }
 
 
+CGFloat	CGGStateGetFlatness(CGGStateRef state)
+{
+	return state->device->flatness;
+}
+
+
+
 void CGGStateSetBlackGeneration(CGGStateRef gstate, CGFunctionRef blackGeneration)
 {
 

@@ -64,7 +64,7 @@ void check_capabilities()
 }
 
 
-CGZoneRef CGSZoneGetMallocZone()
+CGZoneRef CGSZoneGetMallocZone(int zoneID)
 {
   return CGSZoneCreate();
 }

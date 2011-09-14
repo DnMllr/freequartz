@@ -16,6 +16,7 @@ __BEGIN_DECLS
 
 int		mach_timebase_info(mach_timebase_info_t	info);
 
+uint64_t mach_absolute_time(void);
 
 __END_DECLS
 
